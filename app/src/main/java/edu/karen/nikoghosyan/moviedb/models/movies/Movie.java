@@ -1,0 +1,91 @@
+package edu.karen.nikoghosyan.moviedb.models.movies;
+
+import com.google.gson.annotations.SerializedName;
+
+import java.util.Arrays;
+
+public class Movie {
+
+    @SerializedName("genre_ids")
+    private int[] genres;
+
+    @SerializedName("original_language")
+    private String language;
+
+    @SerializedName("overview")
+    private String overview;
+
+    @SerializedName("poster_path")
+    private String movieImage;
+
+    @SerializedName("release_date")
+    private String releaseDate;
+
+    @SerializedName("title")
+    private String title;
+
+    @SerializedName("vote_average")
+    private double rating;
+
+    public Movie(){}
+
+    public int[] getGenres() {
+        return genres;
+    }
+    public void setGenres(int[] genres) {
+        this.genres = genres;
+    }
+    public String getLanguage() {
+        return language;
+    }
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+    public String getOverview() {
+        return overview;
+    }
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
+    public String getMovieImage() {
+        return movieImage;
+    }
+    public void setMovieImage(String movieImage) {
+        this.movieImage = movieImage;
+    }
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+    public String getTitle() {
+        return title;
+    }
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    public double getRating() {
+        return rating;
+    }
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+    public String getImageURL(){
+        String url = "https://image.tmdb.org/t/p/w500";
+        return url + getMovieImage();
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "genres=" + Arrays.toString(genres) +
+                ", language='" + language + '\'' +
+                ", overview='" + overview + '\'' +
+                ", movieImage='" + movieImage + '\'' +
+                ", releaseDate='" + releaseDate + '\'' +
+                ", title='" + title + '\'' +
+                ", rating=" + rating +
+                '}';
+    }
+}
