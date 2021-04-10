@@ -13,8 +13,9 @@
     </item>
 
     <item
-        android:title="@string/favorite"
-        android:id="@+id/nav_favorite"
-        android:icon="@drawable/ic_baseline_star_24">
+        android:id="@+id/nav_favorites"
+        android:icon="@drawable/ic_baseline_star_24"
+        android:title="@string/favorites">
     </item>
+
 </menu>

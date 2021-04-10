@@ -1,6 +1,7 @@
 package edu.karen.nikoghosyan.moviedb.ui.home;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -15,7 +18,9 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import edu.karen.nikoghosyan.moviedb.R;
+import edu.karen.nikoghosyan.moviedb.models.movies.Constants;
 import edu.karen.nikoghosyan.moviedb.models.movies.Movie;
+import edu.karen.nikoghosyan.moviedb.ui.information.InformationMovieFragment;
 
 public class TopTrendingAdapter extends RecyclerView.Adapter<TopTrendingAdapter.ViewHolder> {
     private List<Movie> moviesList;
@@ -49,7 +54,21 @@ public class TopTrendingAdapter extends RecyclerView.Adapter<TopTrendingAdapter.
         holder.ivTopTrending.setOnClickListener(v -> {
             movie = moviesList.get(position);
 
-            Toast.makeText(mContext, movie.getTitle(), Toast.LENGTH_SHORT).show();
+            AppCompatActivity activity = (AppCompatActivity) v.getContext();
+            Fragment fragment = new InformationMovieFragment();
+
+            Bundle args = new Bundle();
+            args.putString(Constants.MOVIE_TITLE, movie.getTitle());
+            args.putDouble(Constants.MOVIE_RATING, movie.getRating());
+            args.putString(Constants.MOVIE_BACKDROP_URL, movie.getBackdropImageURL());
+            fragment.setArguments(args);
+
+            activity
+                    .getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragmentContainer, fragment)
+                    .addToBackStack(null)
+                    .commit();
         });
     }
 

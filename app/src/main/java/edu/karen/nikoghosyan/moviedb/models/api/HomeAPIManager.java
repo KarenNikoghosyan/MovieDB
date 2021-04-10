@@ -13,7 +13,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class APIManager {
+public class HomeAPIManager {
 
     private final Retrofit retrofit =
             new Retrofit
@@ -22,11 +22,11 @@ public class APIManager {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
-    private final MovieService movieService = retrofit.create(MovieService.class);
+    private final HomeMovieService homeMovieService = retrofit.create(HomeMovieService.class);
 
     public void getTopTrending(MutableLiveData<List<Movie>> moviesLiveData) {
 
-        Call<MovieResponse> movieHTTPRequest = movieService.getTopTrending();
+        Call<MovieResponse> movieHTTPRequest = homeMovieService.getTopTrending();
 
         movieHTTPRequest.enqueue(new Callback<MovieResponse>() {
             @Override
@@ -50,7 +50,7 @@ public class APIManager {
 
     public void getTopRated(MutableLiveData<List<Movie>> movieLiveData) {
 
-        Call<MovieResponse> movieHTTPRequest = movieService.getTopRated();
+        Call<MovieResponse> movieHTTPRequest = homeMovieService.getTopRated();
 
         movieHTTPRequest.enqueue(new Callback<MovieResponse>() {
             @Override

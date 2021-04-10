@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-import edu.karen.nikoghosyan.moviedb.models.api.APIManager;
+import edu.karen.nikoghosyan.moviedb.models.api.HomeAPIManager;
 import edu.karen.nikoghosyan.moviedb.models.movies.Movie;
 
 public class HomeMovieViewModel extends ViewModel {
@@ -15,9 +15,11 @@ public class HomeMovieViewModel extends ViewModel {
     private final MutableLiveData<List<Movie>> topRatedLiveData = new MutableLiveData<>();
 
     public HomeMovieViewModel(){
-        APIManager manager = new APIManager();
+
+        HomeAPIManager manager = new HomeAPIManager();
         manager.getTopTrending(topTrendingLiveData);
         manager.getTopRated(topRatedLiveData);
+
     }
 
     public LiveData<List<Movie>> getTopTrendingLiveData(){

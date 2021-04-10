@@ -2,10 +2,9 @@ package edu.karen.nikoghosyan.moviedb;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.view.View;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -16,13 +15,11 @@ import edu.karen.nikoghosyan.moviedb.ui.search.SearchMovieFragment;
 import nl.joery.animatedbottombar.AnimatedBottomBar;
 
 public class MainActivity extends AppCompatActivity {
-    AnimatedBottomBar animatedBottomBar;
-    FragmentManager fragmentManager;
-    FragmentTransaction fragmentTransaction;
-    Fragment fragment = null;
+    private AnimatedBottomBar animatedBottomBar;
+    private Fragment fragment = null;
 
-    int currentPosition = 0;
-    int newPosition = 0;
+    private int currentPosition = 0;
+    private int newPosition = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,20 +29,20 @@ public class MainActivity extends AppCompatActivity {
             loadFragment();
         }
 
-        animatedBottomBar = findViewById(R.id.bottom_bar);
+        animatedBottomBar = findViewById(R.id.animatedBottomBar);
         animatedBottomBar.setOnTabSelectListener(new AnimatedBottomBar.OnTabSelectListener() {
             @Override
             public void onTabSelected(int lastIndex, @Nullable AnimatedBottomBar.Tab lastTab, int newIndex, @NotNull AnimatedBottomBar.Tab newTab) {
 
                 int id = newTab.getId();
-                
+
                 if (id == R.id.nav_home) {
                     fragment = new HomeMovieFragment();
                     newPosition = 1;
                 } else if (id == R.id.nav_search) {
                     fragment = new SearchMovieFragment();
                     newPosition = 2;
-                } else if (id == R.id.nav_favorite) {
+                } else if (id == R.id.nav_favorites) {
                     fragment = new FavoriteMovieFragment();
                     newPosition = 3;
                 }
@@ -59,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+
     }
 
     private void loadFragment() {
@@ -86,5 +85,11 @@ public class MainActivity extends AppCompatActivity {
                         .commit();
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        animatedBottomBar.setVisibility(View.VISIBLE);
     }
 }

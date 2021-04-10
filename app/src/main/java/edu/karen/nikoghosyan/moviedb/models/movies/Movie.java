@@ -6,8 +6,14 @@ import java.util.Arrays;
 
 public class Movie {
 
+    @SerializedName("backdrop_path")
+    private String backdropImage;
+
     @SerializedName("genre_ids")
     private int[] genres;
+
+    @SerializedName("id")
+    private int movieID;
 
     @SerializedName("original_language")
     private String language;
@@ -27,13 +33,27 @@ public class Movie {
     @SerializedName("vote_average")
     private double rating;
 
+    private final String url = "https://image.tmdb.org/t/p/w500";
+
     public Movie(){}
 
+    public String getBackdropImage() {
+        return backdropImage;
+    }
+    public void setBackdropImage(String backdropImage) {
+        this.backdropImage = backdropImage;
+    }
     public int[] getGenres() {
         return genres;
     }
     public void setGenres(int[] genres) {
         this.genres = genres;
+    }
+    public int getMovieID() {
+        return movieID;
+    }
+    public void setMovieID(int movieID) {
+        this.movieID = movieID;
     }
     public String getLanguage() {
         return language;
@@ -72,20 +92,25 @@ public class Movie {
         this.rating = rating;
     }
     public String getImageURL(){
-        String url = "https://image.tmdb.org/t/p/w500";
         return url + getMovieImage();
+    }
+    public String getBackdropImageURL(){
+        return url + getBackdropImage();
     }
 
     @Override
     public String toString() {
         return "Movie{" +
-                "genres=" + Arrays.toString(genres) +
+                "backdropImage='" + backdropImage + '\'' +
+                ", genres=" + Arrays.toString(genres) +
+                ", movieID=" + movieID +
                 ", language='" + language + '\'' +
                 ", overview='" + overview + '\'' +
                 ", movieImage='" + movieImage + '\'' +
                 ", releaseDate='" + releaseDate + '\'' +
                 ", title='" + title + '\'' +
                 ", rating=" + rating +
+                ", url='" + url + '\'' +
                 '}';
     }
 }

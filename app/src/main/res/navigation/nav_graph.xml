@@ -19,4 +19,9 @@
         android:name="edu.karen.nikoghosyan.moviedb.ui.favorite.FavoriteMovieFragment"
         android:label="favorite_movie_fragment"
         tools:layout="@layout/favorite_movie_fragment" />
+    <fragment
+        android:id="@+id/informationMovieFragment"
+        android:name="edu.karen.nikoghosyan.moviedb.ui.information.InformationMovieFragment"
+        android:label="information_movie_fragment"
+        tools:layout="@layout/information_movie_fragment" />
 </navigation>

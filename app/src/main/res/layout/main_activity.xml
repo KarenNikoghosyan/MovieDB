@@ -18,7 +18,7 @@
     </FrameLayout>
 
     <nl.joery.animatedbottombar.AnimatedBottomBar
-        android:id="@+id/bottom_bar"
+        android:id="@+id/animatedBottomBar"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="#FFF"
