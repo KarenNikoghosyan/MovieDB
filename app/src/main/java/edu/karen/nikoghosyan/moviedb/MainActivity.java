@@ -1,10 +1,10 @@
 package edu.karen.nikoghosyan.moviedb;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -18,8 +18,8 @@ public class MainActivity extends AppCompatActivity {
     private AnimatedBottomBar animatedBottomBar;
     private Fragment fragment = null;
 
-    private int currentPosition = 0;
-    private int newPosition = 0;
+    private static int currentPosition = 0;
+    private static int newPosition = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
                     fragment = new FavoriteMovieFragment();
                     newPosition = 3;
                 }
+                System.out.println("Current: " + currentPosition);
+                System.out.println("New: " + newPosition);
 
                 loadFragment();
                 currentPosition = newPosition;
@@ -56,15 +58,14 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 
-    private void loadFragment() {
+    public void loadFragment() {
         if (currentPosition == 0) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragmentContainer, HomeMovieFragment.newInstance())
                     .commitNow();
+            currentPosition = 1;
         }
 
         if (fragment != null) {
@@ -91,5 +92,15 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         animatedBottomBar.setVisibility(View.VISIBLE);
+    }
+
+    public Fragment getCurrentFragment() {
+        if (currentPosition == 1) {
+            return new HomeMovieFragment();
+        }
+        else if (currentPosition == 2) {
+            return new SearchMovieFragment();
+        }
+        return new FavoriteMovieFragment();
     }
 }

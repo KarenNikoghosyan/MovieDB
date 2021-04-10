@@ -1,10 +1,8 @@
-package edu.karen.nikoghosyan.moviedb.models.api;
+package edu.karen.nikoghosyan.moviedb.models.api.home;
 
-import edu.karen.nikoghosyan.moviedb.models.movies.MovieResponse;
+import edu.karen.nikoghosyan.moviedb.models.movies.movie.MovieResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 public interface HomeMovieService {
     @GET("trending/movie/day?api_key=e40d9c03e1a4a736af381ffa2799b376")

@@ -1,12 +1,12 @@
-package edu.karen.nikoghosyan.moviedb.models.api;
+package edu.karen.nikoghosyan.moviedb.models.api.home;
 
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.karen.nikoghosyan.moviedb.models.movies.Movie;
-import edu.karen.nikoghosyan.moviedb.models.movies.MovieResponse;
+import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
+import edu.karen.nikoghosyan.moviedb.models.movies.movie.MovieResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

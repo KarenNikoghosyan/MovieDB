@@ -1,4 +1,4 @@
-package edu.karen.nikoghosyan.moviedb.models.movies;
+package edu.karen.nikoghosyan.moviedb.models.movies.movie;
 
 import com.google.gson.annotations.SerializedName;
 

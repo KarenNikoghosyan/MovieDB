@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,9 +16,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import edu.karen.nikoghosyan.moviedb.Constants;
 import edu.karen.nikoghosyan.moviedb.R;
-import edu.karen.nikoghosyan.moviedb.models.movies.Constants;
-import edu.karen.nikoghosyan.moviedb.models.movies.Movie;
+import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
 import edu.karen.nikoghosyan.moviedb.ui.information.InformationMovieFragment;
 
 public class TopTrendingAdapter extends RecyclerView.Adapter<TopTrendingAdapter.ViewHolder> {
@@ -61,11 +60,15 @@ public class TopTrendingAdapter extends RecyclerView.Adapter<TopTrendingAdapter.
             args.putString(Constants.MOVIE_TITLE, movie.getTitle());
             args.putDouble(Constants.MOVIE_RATING, movie.getRating());
             args.putString(Constants.MOVIE_BACKDROP_URL, movie.getBackdropImageURL());
+            args.putIntArray(Constants.MOVIE_GENRE_IDS, movie.getGenres());
+            args.putString(Constants.MOVIE_RELEASE_DATE, movie.getReleaseDate());
+            args.putString(Constants.MOVIE_OVERVIEW, movie.getOverview());
             fragment.setArguments(args);
 
             activity
                     .getSupportFragmentManager()
                     .beginTransaction()
+                    .setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_down)
                     .replace(R.id.fragmentContainer, fragment)
                     .addToBackStack(null)
                     .commit();

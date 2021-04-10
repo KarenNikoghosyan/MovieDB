@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-import edu.karen.nikoghosyan.moviedb.models.api.HomeAPIManager;
-import edu.karen.nikoghosyan.moviedb.models.movies.Movie;
+import edu.karen.nikoghosyan.moviedb.models.api.home.HomeAPIManager;
+import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
 
 public class HomeMovieViewModel extends ViewModel {
 
