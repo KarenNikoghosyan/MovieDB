@@ -22,7 +22,7 @@ import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
 import edu.karen.nikoghosyan.moviedb.ui.information.InformationMovieFragment;
 
 public class TopTrendingAdapter extends RecyclerView.Adapter<TopTrendingAdapter.ViewHolder> {
-    private List<Movie> moviesList;
+    private final List<Movie> moviesList;
     Context mContext;
     Movie movie;
 
@@ -63,6 +63,9 @@ public class TopTrendingAdapter extends RecyclerView.Adapter<TopTrendingAdapter.
             args.putIntArray(Constants.MOVIE_GENRE_IDS, movie.getGenres());
             args.putString(Constants.MOVIE_RELEASE_DATE, movie.getReleaseDate());
             args.putString(Constants.MOVIE_OVERVIEW, movie.getOverview());
+            Constants.MOVIE_ID = movie.getMovieID();
+            args.putString(Constants.MOVIE_IMAGE_URL, movie.getImageURL());
+            args.putString(Constants.MOVIE_Language, movie.getLanguage());
             fragment.setArguments(args);
 
             activity

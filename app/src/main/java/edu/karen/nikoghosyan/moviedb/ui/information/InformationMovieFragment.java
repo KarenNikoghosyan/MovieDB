@@ -13,12 +13,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
 import edu.karen.nikoghosyan.moviedb.Constants;
 import edu.karen.nikoghosyan.moviedb.MainActivity;
 import edu.karen.nikoghosyan.moviedb.R;
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 import nl.joery.animatedbottombar.AnimatedBottomBar;
 
 public class InformationMovieFragment extends Fragment {
@@ -29,9 +32,13 @@ public class InformationMovieFragment extends Fragment {
     TextView tvTitle;
     TextView tvRating;
     ImageView ivBackdrop;
+    ImageView ivSmallPoster;
     TextView tvGenre;
     TextView tvReleaseDate;
     TextView tvOverview;
+    TextView tvLanguage;
+
+    RecyclerView rvSimilar;
 
     private InformationMovieViewModel informationMovieViewModel;
 
@@ -58,7 +65,10 @@ public class InformationMovieFragment extends Fragment {
         tvRating.setText(String.valueOf(getArguments().getDouble(Constants.MOVIE_RATING)));
 
         ivBackdrop = view.findViewById(R.id.ivBackdrop);
-        Picasso.get().load(getArguments().getString(Constants.MOVIE_BACKDROP_URL)).fit().into(ivBackdrop);
+        Picasso.get().load(getArguments().getString(Constants.MOVIE_BACKDROP_URL)).transform(new RoundedCornersTransformation(10, 10)).fit().into(ivBackdrop);
+
+        ivSmallPoster = view.findViewById(R.id.ivSmallPoster);
+        Picasso.get().load(getArguments().getString(Constants.MOVIE_IMAGE_URL)).transform(new RoundedCornersTransformation(15, 15)).fit().into(ivSmallPoster);
 
         informationMovieViewModel = new ViewModelProvider(this).get(InformationMovieViewModel.class);
         informationMovieViewModel.getGenresNames().observe(getViewLifecycleOwner(), (genres -> {
@@ -86,9 +96,20 @@ public class InformationMovieFragment extends Fragment {
         tvReleaseDate = view.findViewById(R.id.tvReleaseDate);
         tvReleaseDate.setText(getArguments().getString(Constants.MOVIE_RELEASE_DATE));
 
+        tvLanguage = view.findViewById(R.id.tvLanguage);
+        tvLanguage.setText(getArguments().getString(Constants.MOVIE_Language));
+
         tvOverview = view.findViewById(R.id.tvOverview);
         tvOverview.setText(getArguments().getString(Constants.MOVIE_OVERVIEW));
         tvOverview.setMovementMethod(new ScrollingMovementMethod());
+
+        rvSimilar = view.findViewById(R.id.rvSimilar);
+        informationMovieViewModel.getSimilarMoviesByID().observe(getViewLifecycleOwner(), (movies -> {
+
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false);
+            rvSimilar.setLayoutManager(linearLayoutManager);
+            rvSimilar.setAdapter(new SimilarMovieAdapter(movies));
+        }));
 
         animatedBottomBar = getActivity().findViewById(R.id.animatedBottomBar);
         animatedBottomBar.setVisibility(View.INVISIBLE);

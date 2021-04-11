@@ -54,9 +54,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onTabReselected(int i, @NotNull AnimatedBottomBar.Tab tab) {
-
-            }
+            public void onTabReselected(int i, @NotNull AnimatedBottomBar.Tab tab) {}
         });
     }
 
