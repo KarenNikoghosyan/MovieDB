@@ -102,6 +102,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@+id/guideline19"
             app:layout_constraintEnd_toStartOf="@+id/guideline18"
             app:layout_constraintHorizontal_bias="0.0"
@@ -152,7 +153,7 @@
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="@+id/ibBack"
             app:layout_constraintStart_toEndOf="@+id/ibBack"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/ibBack" />
 
         <TextView
             android:id="@+id/textView11"
@@ -213,6 +214,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="3dp"
             android:fontFamily="@font/abeezee"
             android:textColor="@color/white"
             android:textSize="13sp"
@@ -225,6 +227,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="3dp"
             android:fontFamily="@font/abeezee"
             android:textColor="@color/white"
             android:textSize="13sp"
@@ -248,6 +251,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="3dp"
             android:fontFamily="@font/abeezee"
             android:textColor="@color/white"
             android:textSize="14sp"

@@ -89,8 +89,8 @@ public class InformationMovieFragment extends Fragment {
                         }
                     }
                 }
-                tvGenre.setText(genresNames.substring(0, genresNames.length() - 1));
             }).run();
+            tvGenre.setText(genresNames.substring(0, genresNames.length() - 1));
         }));
 
         tvReleaseDate = view.findViewById(R.id.tvReleaseDate);

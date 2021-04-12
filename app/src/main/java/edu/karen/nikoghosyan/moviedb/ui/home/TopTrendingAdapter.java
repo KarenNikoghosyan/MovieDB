@@ -6,12 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -48,7 +50,17 @@ public class TopTrendingAdapter extends RecyclerView.Adapter<TopTrendingAdapter.
                 .get()
                 .load(movie.getImageURL())
                 .fit()
-                .into(holder.ivTopTrending);
+                .into(holder.ivTopTrending, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        holder.pbHomeTopTrending.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        e.getMessage();
+                    }
+                });
 
         holder.ivTopTrending.setOnClickListener(v -> {
             movie = moviesList.get(position);
@@ -56,17 +68,7 @@ public class TopTrendingAdapter extends RecyclerView.Adapter<TopTrendingAdapter.
             AppCompatActivity activity = (AppCompatActivity) v.getContext();
             Fragment fragment = new InformationMovieFragment();
 
-            Bundle args = new Bundle();
-            args.putString(Constants.MOVIE_TITLE, movie.getTitle());
-            args.putDouble(Constants.MOVIE_RATING, movie.getRating());
-            args.putString(Constants.MOVIE_BACKDROP_URL, movie.getBackdropImageURL());
-            args.putIntArray(Constants.MOVIE_GENRE_IDS, movie.getGenres());
-            args.putString(Constants.MOVIE_RELEASE_DATE, movie.getReleaseDate());
-            args.putString(Constants.MOVIE_OVERVIEW, movie.getOverview());
-            Constants.MOVIE_ID = movie.getMovieID();
-            args.putString(Constants.MOVIE_IMAGE_URL, movie.getImageURL());
-            args.putString(Constants.MOVIE_Language, movie.getLanguage());
-            fragment.setArguments(args);
+            getBundle(fragment);
 
             activity
                     .getSupportFragmentManager()
@@ -78,6 +80,20 @@ public class TopTrendingAdapter extends RecyclerView.Adapter<TopTrendingAdapter.
         });
     }
 
+    private void getBundle(Fragment fragment) {
+        Bundle args = new Bundle();
+        args.putString(Constants.MOVIE_TITLE, movie.getTitle());
+        args.putDouble(Constants.MOVIE_RATING, movie.getRating());
+        args.putString(Constants.MOVIE_BACKDROP_URL, movie.getBackdropImageURL());
+        args.putIntArray(Constants.MOVIE_GENRE_IDS, movie.getGenres());
+        args.putString(Constants.MOVIE_RELEASE_DATE, movie.getReleaseDate());
+        args.putString(Constants.MOVIE_OVERVIEW, movie.getOverview());
+        Constants.MOVIE_ID = movie.getMovieID();
+        args.putString(Constants.MOVIE_IMAGE_URL, movie.getImageURL());
+        args.putString(Constants.MOVIE_Language, movie.getLanguage());
+        fragment.setArguments(args);
+    }
+
     @Override
     public int getItemCount() {
         return moviesList.size();
@@ -85,10 +101,12 @@ public class TopTrendingAdapter extends RecyclerView.Adapter<TopTrendingAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView ivTopTrending;
+        ProgressBar pbHomeTopTrending;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ivTopTrending = itemView.findViewById(R.id.ivTopTrendingHome);
+            pbHomeTopTrending = itemView.findViewById(R.id.pbHomeTopTrending);
         }
     }
 }

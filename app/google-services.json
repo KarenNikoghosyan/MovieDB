@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "666958988622",
+    "project_id": "moviedb-932ba",
+    "storage_bucket": "moviedb-932ba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:666958988622:android:39fd58e0675f64052d4a1f",
+        "android_client_info": {
+          "package_name": "edu.karen.nikoghosyan.moviedb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "666958988622-akat78ks6m9aat2gkubck0kctivutdp3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBomazZUuRWrAMm4e9VPC9hm9nSHibraVs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "666958988622-akat78ks6m9aat2gkubck0kctivutdp3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

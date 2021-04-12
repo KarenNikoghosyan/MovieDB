@@ -46,8 +46,6 @@ public class MainActivity extends AppCompatActivity {
                     fragment = new FavoriteMovieFragment();
                     newPosition = 3;
                 }
-                System.out.println("Current: " + currentPosition);
-                System.out.println("New: " + newPosition);
 
                 loadFragment();
                 currentPosition = newPosition;
@@ -60,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void loadFragment() {
         if (currentPosition == 0) {
+            System.out.println(".");
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragmentContainer, HomeMovieFragment.newInstance())
                     .commitNow();
