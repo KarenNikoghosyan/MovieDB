@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MovieDB</string>
+    <string name="explore">Обследовать…</string>
+    <string name="trending_today">"В Tренде"</string>
+    <string name="welcome_back">"Добро Пожаловать, "</string>
+    <string name="home">Дом</string>
+    <string name="search">Поиск</string>
+    <string name="favorites">Избранное</string>
+    <string name="top_rated">Самые Популярные</string>
+    <string name="genre">Жанр:</string>
+    <string name="release_date">Дата Выпуска:</string>
+    <string name="language">Язык:</string>
+    <string name="similar_movies">Похожие Фильмы</string>
+</resources>
