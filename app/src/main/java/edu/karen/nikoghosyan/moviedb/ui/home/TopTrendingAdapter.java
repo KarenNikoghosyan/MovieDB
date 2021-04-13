@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Callback;
@@ -25,8 +26,8 @@ import edu.karen.nikoghosyan.moviedb.ui.information.InformationMovieFragment;
 
 public class TopTrendingAdapter extends RecyclerView.Adapter<TopTrendingAdapter.ViewHolder> {
     private final List<Movie> moviesList;
-    Context mContext;
-    Movie movie;
+    private Context mContext;
+    private Movie movie;
 
     public TopTrendingAdapter(List<Movie> movies) {
         this.moviesList = movies;

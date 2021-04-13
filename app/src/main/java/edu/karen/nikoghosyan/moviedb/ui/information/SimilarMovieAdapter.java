@@ -23,7 +23,7 @@ import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
 
 public class SimilarMovieAdapter extends RecyclerView.Adapter<SimilarMovieAdapter.ViewHolder>{
     private final List<Movie> movieList;
-    Movie movie;
+    private Movie movie;
 
     public SimilarMovieAdapter(List<Movie> movieList) {
         this.movieList = movieList;

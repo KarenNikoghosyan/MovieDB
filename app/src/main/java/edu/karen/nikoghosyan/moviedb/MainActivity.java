@@ -1,10 +1,14 @@
 package edu.karen.nikoghosyan.moviedb;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -12,6 +16,7 @@ import org.jetbrains.annotations.Nullable;
 import edu.karen.nikoghosyan.moviedb.ui.favorite.FavoriteMovieFragment;
 import edu.karen.nikoghosyan.moviedb.ui.home.HomeMovieFragment;
 import edu.karen.nikoghosyan.moviedb.ui.search.SearchMovieFragment;
+import maes.tech.intentanim.CustomIntent;
 import nl.joery.animatedbottombar.AnimatedBottomBar;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         if (savedInstanceState == null) {
+            currentPosition = 0;
             loadFragment();
         }
 
@@ -57,8 +63,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loadFragment() {
+
         if (currentPosition == 0) {
-            System.out.println(".");
+
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragmentContainer, HomeMovieFragment.newInstance())
                     .commitNow();
@@ -72,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                         .beginTransaction()
                         .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
                         .replace(R.id.fragmentContainer, fragment)
-                        .commit();
+                        .commitNow();
             }
             if (currentPosition < newPosition) {
 
@@ -80,15 +87,25 @@ public class MainActivity extends AppCompatActivity {
                         .beginTransaction()
                         .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_right, R.anim.slide_out_left)
                         .replace(R.id.fragmentContainer, fragment)
-                        .commit();
+                        .commitNow();
             }
         }
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        animatedBottomBar.setVisibility(View.VISIBLE);
+        if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
+            overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_down);
+            animatedBottomBar.setVisibility(View.VISIBLE);
+        }
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
+        }
+        else {
+            currentPosition = 0;
+            finish();
+            System.exit(0);
+        }
     }
 
     public Fragment getCurrentFragment() {

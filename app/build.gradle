@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -52,6 +53,7 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-database'
     implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
     implementation 'com.github.ibrahimsn98:CirclesLoadingView:1.0'
-
+    implementation 'com.github.hajiyevelnur92:intentanimation:1.0'
 }

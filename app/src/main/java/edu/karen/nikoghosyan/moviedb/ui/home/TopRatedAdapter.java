@@ -25,8 +25,8 @@ import edu.karen.nikoghosyan.moviedb.ui.information.InformationMovieFragment;
 
 public class TopRatedAdapter extends RecyclerView.Adapter<TopRatedAdapter.ViewHolder> {
     private List<Movie> moviesList;
-    Context mContext;
-    Movie movie;
+    private Context mContext;
+    private Movie movie;
 
     public TopRatedAdapter(List<Movie> moviesList) {
         this.moviesList = moviesList;

@@ -26,19 +26,20 @@ import nl.joery.animatedbottombar.AnimatedBottomBar;
 
 public class InformationMovieFragment extends Fragment {
 
-    AnimatedBottomBar animatedBottomBar;
-    ImageButton ibBack;
+    private AnimatedBottomBar animatedBottomBar;
+    private ImageButton ibBack;
 
-    TextView tvTitle;
-    TextView tvRating;
-    ImageView ivBackdrop;
-    ImageView ivSmallPoster;
-    TextView tvGenre;
-    TextView tvReleaseDate;
-    TextView tvOverview;
-    TextView tvLanguage;
+    private TextView tvTitle;
+    private TextView tvRating;
+    private ImageView ivBackdrop;
+    private ImageView ivSmallPoster;
+    private TextView tvGenre;
+    private TextView tvReleaseDate;
+    private TextView tvOverview;
+    private TextView tvLanguage;
+    private TextView tvNoSimilarMovies;
 
-    RecyclerView rvSimilar;
+    private RecyclerView rvSimilar;
 
     private InformationMovieViewModel informationMovieViewModel;
 
@@ -56,6 +57,9 @@ public class InformationMovieFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        tvNoSimilarMovies = view.findViewById(R.id.tvNoSimilarMovies);
+        tvNoSimilarMovies.setVisibility(View.INVISIBLE);
+
         tvGenre = view.findViewById(R.id.tvGenre);
 
         tvTitle = view.findViewById(R.id.tvTitle);
@@ -65,10 +69,20 @@ public class InformationMovieFragment extends Fragment {
         tvRating.setText(String.valueOf(getArguments().getDouble(Constants.MOVIE_RATING)));
 
         ivBackdrop = view.findViewById(R.id.ivBackdrop);
-        Picasso.get().load(getArguments().getString(Constants.MOVIE_BACKDROP_URL)).transform(new RoundedCornersTransformation(10, 10)).fit().into(ivBackdrop);
+        Picasso
+                .get()
+                .load(getArguments().getString(Constants.MOVIE_BACKDROP_URL))
+                .transform(new RoundedCornersTransformation(10, 10))
+                .fit()
+                .into(ivBackdrop);
 
         ivSmallPoster = view.findViewById(R.id.ivSmallPoster);
-        Picasso.get().load(getArguments().getString(Constants.MOVIE_IMAGE_URL)).transform(new RoundedCornersTransformation(15, 15)).fit().into(ivSmallPoster);
+        Picasso
+                .get()
+                .load(getArguments().getString(Constants.MOVIE_IMAGE_URL))
+                .transform(new RoundedCornersTransformation(15, 15))
+                .fit()
+                .into(ivSmallPoster);
 
         informationMovieViewModel = new ViewModelProvider(this).get(InformationMovieViewModel.class);
         informationMovieViewModel.getGenresNames().observe(getViewLifecycleOwner(), (genres -> {
@@ -90,7 +104,9 @@ public class InformationMovieFragment extends Fragment {
                     }
                 }
             }).run();
+
             tvGenre.setText(genresNames.substring(0, genresNames.length() - 1));
+
         }));
 
         tvReleaseDate = view.findViewById(R.id.tvReleaseDate);
@@ -106,12 +122,16 @@ public class InformationMovieFragment extends Fragment {
         rvSimilar = view.findViewById(R.id.rvSimilar);
         informationMovieViewModel.getSimilarMoviesByID().observe(getViewLifecycleOwner(), (movies -> {
 
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false);
-            rvSimilar.setLayoutManager(linearLayoutManager);
+            if (movies.size() == 0) {
+                tvNoSimilarMovies.setVisibility(View.VISIBLE);
+                return;
+            }
+
+            rvSimilar.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
             rvSimilar.setAdapter(new SimilarMovieAdapter(movies));
         }));
 
-        animatedBottomBar = getActivity().findViewById(R.id.animatedBottomBar);
+        animatedBottomBar = requireActivity().findViewById(R.id.animatedBottomBar);
         animatedBottomBar.setVisibility(View.INVISIBLE);
 
         ibBack = view.findViewById(R.id.ibBack);
