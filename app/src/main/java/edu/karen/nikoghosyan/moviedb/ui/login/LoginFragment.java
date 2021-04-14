@@ -115,7 +115,7 @@ public class LoginFragment extends Fragment {
         if (progressDialog == null) {
             progressDialog = new ProgressDialog(getContext());
             progressDialog.setTitle("Please Wait");
-            progressDialog.setMessage("Connecting to the remote server");
+            progressDialog.setMessage("Connecting, Please Wait");
         }
 
         if (shouldShow)

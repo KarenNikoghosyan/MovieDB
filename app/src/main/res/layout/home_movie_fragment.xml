@@ -78,7 +78,7 @@
             android:id="@+id/imageView"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="16dp"
             android:src="@drawable/temp_image"
             app:layout_constraintBottom_toBottomOf="@+id/btnLogout"
             app:layout_constraintEnd_toStartOf="@+id/btnLogout"
@@ -112,13 +112,13 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginEnd="8dp"
             android:background="@null"
+            android:foreground="?android:attr/selectableItemBackground"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/icon_logout"
-            android:foreground="?android:attr/selectableItemBackground"/>
+            app:srcCompat="@drawable/icon_logout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

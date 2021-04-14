@@ -1,8 +1,10 @@
 package edu.karen.nikoghosyan.moviedb;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -102,9 +104,24 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().popBackStack();
         }
         else {
-            currentPosition = 0;
-            finish();
-            System.exit(0);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                    .setTitle("Quit")
+                    .setCancelable(false)
+                    .setIcon(R.drawable.ic_baseline_power_settings_new_24)
+                    .setMessage("You're about to quit the app, are you sure?")
+                    .setNegativeButton("Cancel", (dialog, which) -> {
+
+                    }).setPositiveButton("OK", (dialog, which) -> {
+                        currentPosition = 0;
+                        finish();
+                        System.exit(0);
+                    });
+
+            AlertDialog dialog = builder.show();
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(this.getColor(R.color.dark_purple));
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(this.getColor(R.color.dark_purple));
+
         }
     }
 

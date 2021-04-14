@@ -1,5 +1,7 @@
 package edu.karen.nikoghosyan.moviedb.ui.home;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -42,10 +44,6 @@ public class HomeMovieFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        new Handler().postDelayed(() -> {
-            Snackbar.make(view, "Welcome Back", Snackbar.LENGTH_LONG).show();
-        },300);
-
         rvMoviesHome = view.findViewById(R.id.rvMoviesHome);
         rvTopRated = view.findViewById(R.id.rvTopRated);
         btnLogout = view.findViewById(R.id.btnLogout);
@@ -65,8 +63,25 @@ public class HomeMovieFragment extends Fragment {
         }));
 
         btnLogout.setOnClickListener(v -> {
-            FirebaseAuth.getInstance().signOut();
-            Toast.makeText(getContext(), "Good Bye", Toast.LENGTH_LONG).show();
+            if (getContext() == null) {
+                return;
+            }
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
+                    .setTitle("Logout")
+                    .setCancelable(false)
+                    .setIcon(R.drawable.ic_baseline_exit_to_app_24)
+                    .setMessage("You're about to logout, are you sure?")
+                    .setNegativeButton("Cancel", (dialog, which) -> {
+
+                    }).setPositiveButton("OK", (dialog, which) -> {
+                        FirebaseAuth.getInstance().signOut();
+                        Toast.makeText(getContext(), "Until The Next Time", Toast.LENGTH_LONG).show();
+                    });
+
+            AlertDialog dialog = builder.show();
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getContext().getColor(R.color.dark_purple));
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getContext().getColor(R.color.dark_purple));
         });
 
     }
