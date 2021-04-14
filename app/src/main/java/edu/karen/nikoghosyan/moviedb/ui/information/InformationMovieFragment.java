@@ -21,6 +21,9 @@ import com.squareup.picasso.Picasso;
 import edu.karen.nikoghosyan.moviedb.Constants;
 import edu.karen.nikoghosyan.moviedb.MainActivity;
 import edu.karen.nikoghosyan.moviedb.R;
+import edu.karen.nikoghosyan.moviedb.ui.favorite.FavoriteMovieFragment;
+import edu.karen.nikoghosyan.moviedb.ui.home.HomeMovieFragment;
+import edu.karen.nikoghosyan.moviedb.ui.search.SearchMovieFragment;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 import nl.joery.animatedbottombar.AnimatedBottomBar;
 
@@ -57,6 +60,8 @@ public class InformationMovieFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        if (getArguments() == null) { return; }
+
         tvNoSimilarMovies = view.findViewById(R.id.tvNoSimilarMovies);
         tvNoSimilarMovies.setVisibility(View.INVISIBLE);
 
@@ -84,31 +89,6 @@ public class InformationMovieFragment extends Fragment {
                 .fit()
                 .into(ivSmallPoster);
 
-        informationMovieViewModel = new ViewModelProvider(this).get(InformationMovieViewModel.class);
-        informationMovieViewModel.getGenresNames().observe(getViewLifecycleOwner(), (genres -> {
-
-            int[] moviesIDs = getArguments().getIntArray(Constants.MOVIE_GENRE_IDS);
-
-            StringBuilder genresNames = new StringBuilder();
-
-            ((Runnable) () -> {
-
-                int limit = moviesIDs.length;
-                if (moviesIDs.length > 3) limit = 3;
-
-                for (int i = 0; i < limit; i++) {
-                    for (int j = 0; j < genres.size(); j++) {
-                        if (moviesIDs[i] == genres.get(j).getGenreId()) {
-                            genresNames.append(genres.get(j).getGenreName()).append(",");
-                        }
-                    }
-                }
-            }).run();
-
-            tvGenre.setText(genresNames.substring(0, genresNames.length() - 1));
-
-        }));
-
         tvReleaseDate = view.findViewById(R.id.tvReleaseDate);
         tvReleaseDate.setText(getArguments().getString(Constants.MOVIE_RELEASE_DATE));
 
@@ -120,8 +100,38 @@ public class InformationMovieFragment extends Fragment {
         tvOverview.setMovementMethod(new ScrollingMovementMethod());
 
         rvSimilar = view.findViewById(R.id.rvSimilar);
-        informationMovieViewModel.getSimilarMoviesByID().observe(getViewLifecycleOwner(), (movies -> {
 
+        ibBack = view.findViewById(R.id.ibBack);
+        ibBack.setOnClickListener(v -> {
+            animatedBottomBar.setVisibility(View.VISIBLE);
+            getParentFragmentManager().popBackStack();
+        });
+
+        animatedBottomBar = requireActivity().findViewById(R.id.animatedBottomBar);
+        animatedBottomBar.setVisibility(View.INVISIBLE);
+
+        informationMovieViewModel = new ViewModelProvider(this).get(InformationMovieViewModel.class);
+
+        informationMovieViewModel.getGenresNames().observe(getViewLifecycleOwner(), (genres -> {
+            int[] moviesIDs = getArguments().getIntArray(Constants.MOVIE_GENRE_IDS);
+            StringBuilder genresNames = new StringBuilder();
+
+            ((Runnable) () -> {
+                int limit = moviesIDs.length;
+                if (moviesIDs.length > 3) limit = 3;
+
+                for (int i = 0; i < limit; i++) {
+                    for (int j = 0; j < genres.size(); j++) {
+                        if (moviesIDs[i] == genres.get(j).getGenreId()) {
+                            genresNames.append(genres.get(j).getGenreName()).append(",");
+                        }
+                    }
+                }
+            }).run();
+            tvGenre.setText(genresNames.substring(0, genresNames.length() - 1));
+        }));
+
+        informationMovieViewModel.getSimilarMoviesByID().observe(getViewLifecycleOwner(), (movies -> {
             if (movies.size() == 0) {
                 tvNoSimilarMovies.setVisibility(View.VISIBLE);
                 return;
@@ -130,25 +140,5 @@ public class InformationMovieFragment extends Fragment {
             rvSimilar.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
             rvSimilar.setAdapter(new SimilarMovieAdapter(movies));
         }));
-
-        animatedBottomBar = requireActivity().findViewById(R.id.animatedBottomBar);
-        animatedBottomBar.setVisibility(View.INVISIBLE);
-
-        ibBack = view.findViewById(R.id.ibBack);
-        ibBack.setOnClickListener(v -> {
-
-            animatedBottomBar.setVisibility(View.VISIBLE);
-            transitionAnim();
-        });
-    }
-
-    public void transitionAnim() {
-        MainActivity mainActivity = new MainActivity();
-
-        getParentFragmentManager()
-                .beginTransaction()
-                .setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_down)
-                .replace(R.id.fragmentContainer, mainActivity.getCurrentFragment())
-                .commit();
     }
 }

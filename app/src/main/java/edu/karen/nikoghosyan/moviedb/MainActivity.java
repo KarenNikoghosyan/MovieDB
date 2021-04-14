@@ -25,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
     private AnimatedBottomBar animatedBottomBar;
     private Fragment fragment = null;
 
-    private static int currentPosition = 0;
-    private static int newPosition = 0;
+    public static int currentPosition = 0;
+    public static int newPosition = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
-            overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_down);
             animatedBottomBar.setVisibility(View.VISIBLE);
         }
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
@@ -123,15 +122,5 @@ public class MainActivity extends AppCompatActivity {
             dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(this.getColor(R.color.dark_purple));
 
         }
-    }
-
-    public Fragment getCurrentFragment() {
-        if (currentPosition == 1) {
-            return new HomeMovieFragment();
-        }
-        else if (currentPosition == 2) {
-            return new SearchMovieFragment();
-        }
-        return new FavoriteMovieFragment();
     }
 }

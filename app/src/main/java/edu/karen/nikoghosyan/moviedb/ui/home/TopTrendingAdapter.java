@@ -69,30 +69,16 @@ public class TopTrendingAdapter extends RecyclerView.Adapter<TopTrendingAdapter.
             AppCompatActivity activity = (AppCompatActivity) v.getContext();
             Fragment fragment = new InformationMovieFragment();
 
-            getBundle(fragment);
+            Constants.getBundle(fragment, movie);
 
             activity
                     .getSupportFragmentManager()
                     .beginTransaction()
-                    .setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_down)
+                    .setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_down, R.anim.slide_in_up, R.anim.slide_out_down)
                     .replace(R.id.fragmentContainer, fragment)
                     .addToBackStack(null)
                     .commit();
         });
-    }
-
-    private void getBundle(Fragment fragment) {
-        Bundle args = new Bundle();
-        args.putString(Constants.MOVIE_TITLE, movie.getTitle());
-        args.putDouble(Constants.MOVIE_RATING, movie.getRating());
-        args.putString(Constants.MOVIE_BACKDROP_URL, movie.getBackdropImageURL());
-        args.putIntArray(Constants.MOVIE_GENRE_IDS, movie.getGenres());
-        args.putString(Constants.MOVIE_RELEASE_DATE, movie.getReleaseDate());
-        args.putString(Constants.MOVIE_OVERVIEW, movie.getOverview());
-        Constants.MOVIE_ID = movie.getMovieID();
-        args.putString(Constants.MOVIE_IMAGE_URL, movie.getImageURL());
-        args.putString(Constants.MOVIE_Language, movie.getLanguage());
-        fragment.setArguments(args);
     }
 
     @Override

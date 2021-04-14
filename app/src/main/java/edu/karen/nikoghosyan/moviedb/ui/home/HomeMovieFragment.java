@@ -49,7 +49,6 @@ public class HomeMovieFragment extends Fragment {
         btnLogout = view.findViewById(R.id.btnLogout);
 
         homeMovieViewModel = new ViewModelProvider(this).get(HomeMovieViewModel.class);
-
         homeMovieViewModel.getTopTrendingLiveData().observe(getViewLifecycleOwner(), (movies -> {
 
             rvMoviesHome.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
