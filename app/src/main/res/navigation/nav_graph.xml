@@ -14,27 +14,15 @@
         android:id="@+id/homeMovieFragment"
         android:name="edu.karen.nikoghosyan.moviedb.ui.home.HomeMovieFragment"
         android:label="HomeMovieFragment"
-        tools:layout="@layout/home_movie_fragment">
-        <action
-            android:id="@+id/action_homeMovieFragment_to_informationMovieFragment"
-            app:destination="@id/informationMovieFragment" />
-    </fragment>
+        tools:layout="@layout/home_movie_fragment"/>
     <fragment
         android:id="@+id/favoriteMovieFragment"
         android:name="edu.karen.nikoghosyan.moviedb.ui.favorite.FavoriteMovieFragment"
         android:label="favorite_movie_fragment"
-        tools:layout="@layout/favorite_movie_fragment" >
-        <action
-            android:id="@+id/action_favoriteMovieFragment_to_informationMovieFragment"
-            app:destination="@id/informationMovieFragment" />
-    </fragment>
+        tools:layout="@layout/favorite_movie_fragment" />
     <fragment
         android:id="@+id/searchMovieFragment"
         android:name="edu.karen.nikoghosyan.moviedb.ui.search.SearchMovieFragment"
         android:label="search_movie_fragment"
-        tools:layout="@layout/search_movie_fragment" >
-        <action
-            android:id="@+id/action_searchMovieFragment_to_informationMovieFragment"
-            app:destination="@id/informationMovieFragment" />
-    </fragment>
+        tools:layout="@layout/search_movie_fragment" />
 </navigation>

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -103,8 +104,9 @@ public class InformationMovieFragment extends Fragment {
 
         ibBack = view.findViewById(R.id.ibBack);
         ibBack.setOnClickListener(v -> {
+
+            getParentFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             animatedBottomBar.setVisibility(View.VISIBLE);
-            getParentFragmentManager().popBackStack();
         });
 
         animatedBottomBar = requireActivity().findViewById(R.id.animatedBottomBar);

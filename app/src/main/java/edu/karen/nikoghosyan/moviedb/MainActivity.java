@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragmentContainer, HomeMovieFragment.newInstance())
                     .commitNow();
+
             currentPosition = 1;
         }
 
@@ -96,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+
         if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
             animatedBottomBar.setVisibility(View.VISIBLE);
         }
@@ -113,8 +115,8 @@ public class MainActivity extends AppCompatActivity {
 
                     }).setPositiveButton("OK", (dialog, which) -> {
                         currentPosition = 0;
+                        super.onBackPressed();
                         finish();
-                        System.exit(0);
                     });
 
             AlertDialog dialog = builder.show();
