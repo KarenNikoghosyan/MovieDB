@@ -71,7 +71,9 @@ public class HomeMovieFragment extends Fragment {
                     .setNegativeButton("Cancel", (dialog, which) -> {
 
                     }).setPositiveButton("OK", (dialog, which) -> {
-                        if (getActivity() == null) { return; }
+                        if (getActivity() == null) {
+                            return;
+                        }
                         getActivity().finish();
 
                         LoadingActivity.isLogged = false;

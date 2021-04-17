@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,19 +20,16 @@ import java.util.List;
 
 import edu.karen.nikoghosyan.moviedb.Constants;
 import edu.karen.nikoghosyan.moviedb.R;
-import edu.karen.nikoghosyan.moviedb.models.movies.genre.Genre;
 import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
 import edu.karen.nikoghosyan.moviedb.ui.information.InformationMovieFragment;
 
-public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.ViewHolder>{
+public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.ViewHolder> {
     private List<Movie> movieList;
-    private List<Genre> genreList;
     private Context mContext;
     private Movie movie;
 
-    public SearchMovieAdapter(List<Movie> movieList, List<Genre> genresList) {
+    public SearchMovieAdapter(List<Movie> movieList) {
         this.movieList = movieList;
-        this.genreList = genresList;
     }
 
     @NonNull
@@ -53,15 +49,16 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
                 .get()
                 .load(movie.getImageURL())
                 .fit()
-                .into(holder.ivSearchPoster, new Callback() {
+                .into(holder.ivSearch, new Callback() {
                     @Override
                     public void onSuccess() {
-                        holder.pbSearchPoster.setVisibility(View.GONE);
+                        holder.pbSearch.setVisibility(View.GONE);
                     }
 
                     @Override
                     public void onError(Exception e) {
-                        holder.ivSearchPoster.setImageResource(R.drawable.placeholder_image);
+                        holder.ivSearch.setImageResource(R.drawable.placeholder_image);
+                        holder.pbSearch.setVisibility(View.GONE);
                     }
                 });
 
@@ -81,37 +78,6 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
                     .addToBackStack(null)
                     .commit();
         });
-
-        holder.tvSearchTitle.setText(movie.getTitle());
-        getGenres(holder);
-        holder.tvSearchReleaseDate.setText(movie.getReleaseDate());
-    }
-
-    private void getGenres(@NonNull ViewHolder holder) {
-        int[] movieIDs = movie.getGenres();
-        StringBuilder genresNames = new StringBuilder();
-
-        ((Runnable) () -> {
-            int limit = movieIDs.length;
-            if (movieIDs.length > 3) limit = 3;
-
-            for (int i = 0; i < limit; i++) {
-                for (int j = 0; j < genreList.size(); j++) {
-                    if (movieIDs[i] == genreList.get(j).getGenreId()){
-                        genresNames.append(genreList.get(j).getGenreName()).append(",");
-                    }
-                }
-            }
-        }).run();
-
-        if (genresNames.length() > 0) {
-            holder.tvSearchGenre.setText(genresNames.substring(0, genresNames.length() - 1));
-        }
-        else {
-            holder.tvSearchGenre.setText("No genres were found");
-        }
-        holder.tvSearchLanguage.setText(movie.getLanguage());
-        holder.tvSearchRating.setText(String.valueOf(movie.getRating()));
     }
 
     @Override
@@ -119,27 +85,16 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
         return movieList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        ImageView ivSearchPoster;
-        TextView tvSearchReleaseDate;
-        TextView tvSearchTitle;
-        TextView tvSearchGenre;
-        TextView tvSearchRating;
-        TextView tvSearchLanguage;
-        ProgressBar pbSearchPoster;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView ivSearch;
         CardView searchCardView;
+        ProgressBar pbSearch;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            ivSearchPoster = itemView.findViewById(R.id.ivSearchPoster);
-            tvSearchReleaseDate = itemView.findViewById(R.id.tvSearchReleaseDate);
-            tvSearchTitle = itemView.findViewById(R.id.tvSearchTitle);
-            tvSearchGenre = itemView.findViewById(R.id.tvSearchGenre);
-            tvSearchRating = itemView.findViewById(R.id.tvSearchRating);
-            tvSearchLanguage = itemView.findViewById(R.id.tvSearchLanguage);
-            pbSearchPoster = itemView.findViewById(R.id.pbSearchPoster);
             searchCardView = itemView.findViewById(R.id.searchCardView);
+            ivSearch = itemView.findViewById(R.id.ivSearch);
+            pbSearch = itemView.findViewById(R.id.pbSearch);
         }
     }
 }

@@ -79,14 +79,14 @@ public class SimilarMovieAdapter extends RecyclerView.Adapter<SimilarMovieAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        ImageView ivSimilarMovie;
-        ProgressBar pbInfoSimilarMovies;
+        private ImageView ivSimilarMovie;
+        private ProgressBar pbInfoSimilarMovies;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            ivSimilarMovie = itemView.findViewById(R.id.ivSimilarMovie);
-            pbInfoSimilarMovies = itemView.findViewById(R.id.pbInfoSimilarMovies);
+            ivSimilarMovie = itemView.findViewById(R.id.ivSearch);
+            pbInfoSimilarMovies = itemView.findViewById(R.id.pbSearch);
         }
     }
 }

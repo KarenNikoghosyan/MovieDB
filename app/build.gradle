@@ -58,4 +58,5 @@ dependencies {
     implementation 'com.github.hajiyevelnur92:intentanimation:1.0'
     implementation "androidx.viewpager2:viewpager2:1.0.0"
     implementation 'com.stone.vega.library:VegaLayoutManager:1.0.6'
+
 }

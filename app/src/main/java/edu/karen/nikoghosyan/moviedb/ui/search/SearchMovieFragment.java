@@ -14,9 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.stone.vega.library.VegaLayoutManager;
 
 import edu.karen.nikoghosyan.moviedb.Constants;
 import edu.karen.nikoghosyan.moviedb.R;
@@ -25,7 +24,6 @@ import me.ibrahimsn.lib.CirclesLoadingView;
 public class SearchMovieFragment extends Fragment {
 
     //TODO: Remove this line later
-    private SearchMovieAdapter adapter;
     private EditText etSearch;
     private ImageButton ibSearch;
     private CirclesLoadingView clSearch;
@@ -34,10 +32,6 @@ public class SearchMovieFragment extends Fragment {
     private RecyclerView rvMovieSearch;
 
     private SearchMovieViewModel searchMovieViewModel;
-
-    public static SearchMovieFragment newInstance() {
-        return new SearchMovieFragment();
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -55,12 +49,14 @@ public class SearchMovieFragment extends Fragment {
         clSearch = view.findViewById(R.id.clSearch);
         clSearch.setVisibility(View.GONE);
 
-        rvMovieSearch.setLayoutManager(new VegaLayoutManager());
+        rvMovieSearch.setLayoutManager(new GridLayoutManager(getContext(), 3));
+
 
         ibSearch.setOnClickListener(v -> {
-            if (getActivity() == null) return;
-            InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            if (getActivity() != null) {
+                InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
 
             if (etSearch.getText().toString().equals("")) {
                 etSearch.setError("Type Something");
@@ -79,20 +75,15 @@ public class SearchMovieFragment extends Fragment {
                 return;
             }
 
-            new Handler().postDelayed(() -> {
-                searchMovieViewModel.getMoviesWithSearching().observe(getViewLifecycleOwner(), (movies -> {
-                    searchMovieViewModel.getGenresNames().observe(getViewLifecycleOwner(), genres -> {
+            searchMovieViewModel.getMoviesWithSearching().observe(getViewLifecycleOwner(), (movies -> {
 
-                        adapter = new SearchMovieAdapter(movies, genres);
-                        rvMovieSearch.setAdapter(adapter);
-                        rvMovieSearch.scheduleLayoutAnimation();
-                        clSearch.setVisibility(View.GONE);
-                        isClicked = true;
-
-                    });
-                }));
-            },1000);
-
+                new Handler().postDelayed(() -> {
+                    rvMovieSearch.setAdapter(new SearchMovieAdapter(movies));
+                    rvMovieSearch.scheduleLayoutAnimation();
+                    clSearch.setVisibility(View.GONE);
+                    isClicked = true;
+                }, 1000);
+            }));
         });
     }
 }

@@ -1,6 +1,7 @@
 package edu.karen.nikoghosyan.moviedb.ui.information;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -23,6 +25,7 @@ import com.squareup.picasso.Picasso;
 import edu.karen.nikoghosyan.moviedb.Constants;
 import edu.karen.nikoghosyan.moviedb.R;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
+import me.ibrahimsn.lib.CirclesLoadingView;
 import nl.joery.animatedbottombar.AnimatedBottomBar;
 
 public class InformationMovieFragment extends Fragment {
@@ -39,6 +42,8 @@ public class InformationMovieFragment extends Fragment {
     private TextView tvOverview;
     private TextView tvLanguage;
     private TextView tvNoSimilarMovies;
+    private CirclesLoadingView clSimilar;
+    private ViewPager viewPager;
 
     private RecyclerView rvSimilar;
 
@@ -58,7 +63,14 @@ public class InformationMovieFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (getArguments() == null) { return; }
+        if (getActivity() != null) {
+            viewPager = getActivity().findViewById(R.id.viewPager);
+            viewPager.setVisibility(View.INVISIBLE);
+        }
+
+        if (getArguments() == null) {
+            return;
+        }
 
         tvNoSimilarMovies = view.findViewById(R.id.tvNoSimilarMovies);
         tvNoSimilarMovies.setVisibility(View.INVISIBLE);
@@ -121,6 +133,7 @@ public class InformationMovieFragment extends Fragment {
 
         ibBack = view.findViewById(R.id.ibBack);
         ibBack.setOnClickListener(v -> {
+            viewPager.setVisibility(View.VISIBLE);
 
             getParentFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             animatedBottomBar.setVisibility(View.VISIBLE);
@@ -151,20 +164,26 @@ public class InformationMovieFragment extends Fragment {
             if (genresNames.length() > 0) {
                 tvGenre.setText(genresNames.substring(0, genresNames.length() - 1));
 
-            }
-            else {
+            } else {
                 tvGenre.setText("No genres were found");
             }
         }));
 
+        clSimilar = view.findViewById(R.id.clSimilar);
         informationMovieViewModel.getSimilarMoviesByID().observe(getViewLifecycleOwner(), (movies -> {
-            if (movies.size() == 0) {
-                tvNoSimilarMovies.setVisibility(View.VISIBLE);
-                return;
-            }
 
-            rvSimilar.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-            rvSimilar.setAdapter(new SimilarMovieAdapter(movies));
+            new Handler().postDelayed(() -> {
+
+                if (movies.size() == 0) {
+                    tvNoSimilarMovies.setVisibility(View.VISIBLE);
+                    clSimilar.setVisibility(View.GONE);
+                    return;
+                }
+                rvSimilar.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+                rvSimilar.setAdapter(new SimilarMovieAdapter(movies));
+                clSimilar.setVisibility(View.GONE);
+            }, 300);
+
         }));
     }
 }
