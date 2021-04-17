@@ -1,7 +1,6 @@
 package edu.karen.nikoghosyan.moviedb.ui.home;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +56,7 @@ public class TopRatedAdapter extends RecyclerView.Adapter<TopRatedAdapter.ViewHo
 
                     @Override
                     public void onError(Exception e) {
-                        e.getMessage();
+                        holder.ivTopRatedHome.setImageResource(R.drawable.placeholder_image);
                     }
                 });
 

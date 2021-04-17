@@ -17,6 +17,7 @@ public class Constants {
     public static final String MOVIE_Language = "movieLanguage";
 
     public static int MOVIE_ID = 0;
+    public static String MOVIE_SEARCH = "";
 
     public static void getBundle(Fragment fragment, Movie movie){
         Bundle args = new Bundle();

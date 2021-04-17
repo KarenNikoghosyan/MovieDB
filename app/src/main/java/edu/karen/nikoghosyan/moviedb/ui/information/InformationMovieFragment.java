@@ -17,14 +17,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import edu.karen.nikoghosyan.moviedb.Constants;
-import edu.karen.nikoghosyan.moviedb.MainActivity;
 import edu.karen.nikoghosyan.moviedb.R;
-import edu.karen.nikoghosyan.moviedb.ui.favorite.FavoriteMovieFragment;
-import edu.karen.nikoghosyan.moviedb.ui.home.HomeMovieFragment;
-import edu.karen.nikoghosyan.moviedb.ui.search.SearchMovieFragment;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 import nl.joery.animatedbottombar.AnimatedBottomBar;
 
@@ -80,7 +77,17 @@ public class InformationMovieFragment extends Fragment {
                 .load(getArguments().getString(Constants.MOVIE_BACKDROP_URL))
                 .transform(new RoundedCornersTransformation(10, 10))
                 .fit()
-                .into(ivBackdrop);
+                .into(ivBackdrop, new Callback() {
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        ivBackdrop.setImageResource(R.drawable.placeholder_image);
+                    }
+                });
 
         ivSmallPoster = view.findViewById(R.id.ivSmallPoster);
         Picasso
@@ -88,7 +95,17 @@ public class InformationMovieFragment extends Fragment {
                 .load(getArguments().getString(Constants.MOVIE_IMAGE_URL))
                 .transform(new RoundedCornersTransformation(15, 15))
                 .fit()
-                .into(ivSmallPoster);
+                .into(ivSmallPoster, new Callback() {
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        ivSmallPoster.setImageResource(R.drawable.placeholder_image);
+                    }
+                });
 
         tvReleaseDate = view.findViewById(R.id.tvReleaseDate);
         tvReleaseDate.setText(getArguments().getString(Constants.MOVIE_RELEASE_DATE));
@@ -130,7 +147,14 @@ public class InformationMovieFragment extends Fragment {
                     }
                 }
             }).run();
-            tvGenre.setText(genresNames.substring(0, genresNames.length() - 1));
+
+            if (genresNames.length() > 0) {
+                tvGenre.setText(genresNames.substring(0, genresNames.length() - 1));
+
+            }
+            else {
+                tvGenre.setText("No genres were found");
+            }
         }));
 
         informationMovieViewModel.getSimilarMoviesByID().observe(getViewLifecycleOwner(), (movies -> {

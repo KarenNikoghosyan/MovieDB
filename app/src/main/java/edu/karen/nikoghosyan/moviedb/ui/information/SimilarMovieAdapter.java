@@ -1,6 +1,5 @@
 package edu.karen.nikoghosyan.moviedb.ui.information;
 
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +51,7 @@ public class SimilarMovieAdapter extends RecyclerView.Adapter<SimilarMovieAdapte
 
                     @Override
                     public void onError(Exception e) {
-                        e.getMessage();
+                        holder.ivSimilarMovie.setImageResource(R.drawable.placeholder_image);
                     }
                 });
 

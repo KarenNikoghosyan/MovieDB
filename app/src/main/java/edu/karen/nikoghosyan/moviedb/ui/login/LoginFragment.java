@@ -4,12 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
-
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,9 +13,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
+
 import com.google.firebase.auth.FirebaseAuth;
 
-import edu.karen.nikoghosyan.moviedb.LoginActivity;
+import edu.karen.nikoghosyan.moviedb.LoadingActivity;
 import edu.karen.nikoghosyan.moviedb.MainActivity;
 import edu.karen.nikoghosyan.moviedb.R;
 import maes.tech.intentanim.CustomIntent;
@@ -54,6 +53,11 @@ public class LoginFragment extends Fragment {
                     .navigate(R.id.action_loginFragment_to_registerFragment);
         });
 
+        //TODO: Delete this line
+        if (LoadingActivity.isLogged) {
+            goToMainActivity();
+        }
+
         btnLogin.setOnClickListener(v -> {
 
             if (!isEmailValid() | !isPasswordValid()) {
@@ -61,6 +65,8 @@ public class LoginFragment extends Fragment {
             }
 
             toggleProgressDialog(true);
+
+            if (getActivity() == null) { return; }
 
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
             mAuth.signInWithEmailAndPassword(getEmail(), getPassword())
@@ -78,6 +84,8 @@ public class LoginFragment extends Fragment {
     }
 
     private void goToMainActivity() {
+        if (getActivity() == null) { return; }
+
         toggleProgressDialog(false);
         Intent intent = new Intent(getContext(), MainActivity.class);
         startActivity(intent);

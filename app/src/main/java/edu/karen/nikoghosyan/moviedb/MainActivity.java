@@ -1,16 +1,11 @@
 package edu.karen.nikoghosyan.moviedb;
 
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -18,11 +13,13 @@ import org.jetbrains.annotations.Nullable;
 import edu.karen.nikoghosyan.moviedb.ui.favorite.FavoriteMovieFragment;
 import edu.karen.nikoghosyan.moviedb.ui.home.HomeMovieFragment;
 import edu.karen.nikoghosyan.moviedb.ui.search.SearchMovieFragment;
-import maes.tech.intentanim.CustomIntent;
 import nl.joery.animatedbottombar.AnimatedBottomBar;
 
 public class MainActivity extends AppCompatActivity {
     private AnimatedBottomBar animatedBottomBar;
+    //ViewPager2 pager2;
+    //SectionsPagerAdapter adapter;
+
     private Fragment fragment = null;
 
     public static int currentPosition = 0;
@@ -35,9 +32,17 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             currentPosition = 0;
             loadFragment();
+
+            animatedBottomBar = findViewById(R.id.animatedBottomBar);
+            //pager2 = findViewById(R.id.viewPager2);
+
+            //FragmentManager fm = getSupportFragmentManager();
+            //adapter = new SectionsPagerAdapter(fm, getLifecycle());
+            //pager2.setAdapter(adapter);
+
+            //animatedBottomBar.setupWithViewPager2(pager2);
         }
 
-        animatedBottomBar = findViewById(R.id.animatedBottomBar);
         animatedBottomBar.setOnTabSelectListener(new AnimatedBottomBar.OnTabSelectListener() {
             @Override
             public void onTabSelected(int lastIndex, @Nullable AnimatedBottomBar.Tab lastTab, int newIndex, @NotNull AnimatedBottomBar.Tab newTab) {
@@ -58,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
                 loadFragment();
                 currentPosition = newPosition;
             }
-
             @Override
             public void onTabReselected(int i, @NotNull AnimatedBottomBar.Tab tab) {}
         });
@@ -115,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
                     }).setPositiveButton("OK", (dialog, which) -> {
                         currentPosition = 0;
-                        super.onBackPressed();
+                        finishAffinity();
                         finish();
                     });
 

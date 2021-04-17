@@ -21,4 +21,5 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="click_here_to_login">Click Here To Login</string>
     <string name="already_a_member">Already A Member?</string>
+    <string name="bookmarks">Bookmarks</string>
 </resources>

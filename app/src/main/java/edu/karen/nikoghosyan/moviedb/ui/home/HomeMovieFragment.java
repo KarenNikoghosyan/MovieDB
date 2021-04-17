@@ -1,10 +1,7 @@
 package edu.karen.nikoghosyan.moviedb.ui.home;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +15,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
+import edu.karen.nikoghosyan.moviedb.LoadingActivity;
 import edu.karen.nikoghosyan.moviedb.R;
 
 public class HomeMovieFragment extends Fragment {
@@ -74,6 +71,10 @@ public class HomeMovieFragment extends Fragment {
                     .setNegativeButton("Cancel", (dialog, which) -> {
 
                     }).setPositiveButton("OK", (dialog, which) -> {
+                        if (getActivity() == null) { return; }
+                        getActivity().finish();
+
+                        LoadingActivity.isLogged = false;
                         FirebaseAuth.getInstance().signOut();
                         Toast.makeText(getContext(), "Until The Next Time", Toast.LENGTH_LONG).show();
                     });

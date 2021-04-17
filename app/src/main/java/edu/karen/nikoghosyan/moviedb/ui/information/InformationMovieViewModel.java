@@ -1,7 +1,5 @@
 package edu.karen.nikoghosyan.moviedb.ui.information;
 
-import android.os.Bundle;
-
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 

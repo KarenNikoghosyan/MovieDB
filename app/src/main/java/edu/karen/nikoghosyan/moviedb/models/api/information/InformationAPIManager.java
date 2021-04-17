@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class InformationAPIManager {
 
-    ConnectionPool pool = new ConnectionPool(5, 20000, TimeUnit.MILLISECONDS);
+    ConnectionPool pool = new ConnectionPool(5, 30000, TimeUnit.MILLISECONDS);
     OkHttpClient client = new OkHttpClient
             .Builder()
             .connectionPool(pool)

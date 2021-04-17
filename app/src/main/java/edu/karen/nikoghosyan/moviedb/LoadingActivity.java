@@ -1,18 +1,16 @@
 package edu.karen.nikoghosyan.moviedb;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.google.android.material.snackbar.Snackbar;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import maes.tech.intentanim.CustomIntent;
-
 public class LoadingActivity extends AppCompatActivity {
+    public static boolean isLogged = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +31,7 @@ public class LoadingActivity extends AppCompatActivity {
                 else {
                     Intent intentToMainActivity = new Intent(this, MainActivity.class);
                     startActivity(intentToMainActivity);
+                    isLogged = true;
                     finish();
                 }
             });

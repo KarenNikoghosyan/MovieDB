@@ -1,4 +1,4 @@
-package edu.karen.nikoghosyan.moviedb.models.api.home;
+package edu.karen.nikoghosyan.moviedb.models.api.search;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -16,15 +16,15 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class HomeAPIManager {
+public class SearchAPIManager {
 
     ConnectionPool pool = new ConnectionPool(5, 30000, TimeUnit.MILLISECONDS);
     OkHttpClient client = new OkHttpClient
-                                .Builder()
-                                .connectionPool(pool)
-                                .build();
+            .Builder()
+            .connectionPool(pool)
+            .build();
 
-    private final Retrofit retrofit =
+    Retrofit retrofit =
             new Retrofit
                     .Builder()
                     .baseUrl("https://api.themoviedb.org/3/")
@@ -32,12 +32,11 @@ public class HomeAPIManager {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
-    private final HomeMovieService homeMovieService = retrofit.create(HomeMovieService.class);
+    private final SearchMovieService searchMovieService = retrofit.create(SearchMovieService.class);
 
-    public void getTopTrending(MutableLiveData<List<Movie>> moviesLiveData) {
+    public void getMoviesWithSearching(MutableLiveData<List<Movie>> moviesLiveData, String query){
 
-        Call<MovieResponse> movieHTTPRequest = homeMovieService.getTopTrending();
-
+        Call<MovieResponse> movieHTTPRequest = searchMovieService.getMoviesWithSearching(query);
         movieHTTPRequest.enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
@@ -47,7 +46,6 @@ public class HomeAPIManager {
 
                     ArrayList<Movie> movies = movieResponse.getMovies();
                     moviesLiveData.postValue(movies);
-
                 }
             }
 
@@ -58,26 +56,4 @@ public class HomeAPIManager {
         });
     }
 
-    public void getTopRated(MutableLiveData<List<Movie>> movieLiveData) {
-
-        Call<MovieResponse> movieHTTPRequest = homeMovieService.getTopRated();
-
-        movieHTTPRequest.enqueue(new Callback<MovieResponse>() {
-            @Override
-            public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
-                MovieResponse movieResponse = response.body();
-
-                if (movieResponse != null) {
-
-                    ArrayList<Movie> movies = movieResponse.getMovies();
-                    movieLiveData.postValue(movies);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<MovieResponse> call, Throwable t) {
-                t.getMessage();
-            }
-        });
-    }
 }
