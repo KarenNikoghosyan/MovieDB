@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Callback;
@@ -96,5 +97,10 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
             ivSearch = itemView.findViewById(R.id.ivSearch);
             pbSearch = itemView.findViewById(R.id.pbSearch);
         }
+    }
+
+    public void updateData(List<Movie> movies) {
+        movies.clear();
+        notifyDataSetChanged();
     }
 }

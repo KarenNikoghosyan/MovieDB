@@ -11,16 +11,16 @@
 
         <ImageButton
 
-            android:id="@+id/ibBookmark2"
+            android:id="@+id/ibBookmark"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
             android:background="?selectableItemBackgroundBorderless"
             android:scaleType="fitCenter"
-            app:layout_constraintBottom_toTopOf="@+id/guideline19"
+            android:elevation="1dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline15"
+            app:layout_constraintTop_toTopOf="@+id/guideline12"
             app:srcCompat="@drawable/icon_bookmark_unselected" />
 
         <ImageView
@@ -87,7 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.3" />
+            app:layout_constraintGuide_percent="0.2995896" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline18"
@@ -270,7 +270,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/playfair_display_bold"
-            android:text="No Similar Movies Were Found"
+            android:text="@string/no_similar_movies_were_found"
             android:textColor="@color/white"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"

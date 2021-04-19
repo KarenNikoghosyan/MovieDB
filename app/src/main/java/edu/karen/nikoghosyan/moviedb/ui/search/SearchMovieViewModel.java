@@ -12,7 +12,7 @@ import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
 public class SearchMovieViewModel extends ViewModel {
 
     private final MutableLiveData<List<Movie>> moviesSearching = new MutableLiveData<>();
-    private SearchAPIManager searchManager;
+    private final SearchAPIManager searchManager;
 
     public SearchMovieViewModel() {
 

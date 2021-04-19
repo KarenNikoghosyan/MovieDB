@@ -10,4 +10,7 @@ public interface HomeMovieService {
 
     @GET("movie/top_rated?api_key=e40d9c03e1a4a736af381ffa2799b376&language=en-US&page=1")
     Call<MovieResponse> getTopRated();
+
+    @GET("movie/upcoming?api_key=e40d9c03e1a4a736af381ffa2799b376&language=en-US&page=1")
+    Call<MovieResponse> getUpcoming();
 }

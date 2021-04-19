@@ -25,6 +25,7 @@ public class HomeMovieFragment extends Fragment {
     private HomeMovieViewModel homeMovieViewModel;
     private RecyclerView rvMoviesHome;
     private RecyclerView rvTopRated;
+    private RecyclerView rvUpcoming;
     private ImageButton btnLogout;
 
     public static HomeMovieFragment newInstance() {
@@ -43,6 +44,7 @@ public class HomeMovieFragment extends Fragment {
 
         rvMoviesHome = view.findViewById(R.id.rvMoviesHome);
         rvTopRated = view.findViewById(R.id.rvTopRated);
+        rvUpcoming = view.findViewById(R.id.rvUpcoming);
         btnLogout = view.findViewById(R.id.btnLogout);
 
         homeMovieViewModel = new ViewModelProvider(this).get(HomeMovieViewModel.class);
@@ -56,6 +58,12 @@ public class HomeMovieFragment extends Fragment {
 
             rvTopRated.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
             rvTopRated.setAdapter(new TopRatedAdapter(movies));
+        }));
+
+        homeMovieViewModel.getUpcomingLiveData().observe(getViewLifecycleOwner(), (movies -> {
+
+            rvUpcoming.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+            rvUpcoming.setAdapter(new UpcomingAdapter(movies));
         }));
 
         btnLogout.setOnClickListener(v -> {

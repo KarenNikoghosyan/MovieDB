@@ -90,8 +90,8 @@ public class TopRatedAdapter extends RecyclerView.Adapter<TopRatedAdapter.ViewHo
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            ivTopRatedHome = itemView.findViewById(R.id.ivTopRatedHome);
-            pbHomeTopRated = itemView.findViewById(R.id.pbHomeTopRated);
+            ivTopRatedHome = itemView.findViewById(R.id.ivUpcomingHome);
+            pbHomeTopRated = itemView.findViewById(R.id.pbHomeUpcoming);
         }
     }
 }

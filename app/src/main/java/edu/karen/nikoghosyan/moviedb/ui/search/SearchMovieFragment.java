@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,17 +19,23 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.karen.nikoghosyan.moviedb.Constants;
 import edu.karen.nikoghosyan.moviedb.R;
+import edu.karen.nikoghosyan.moviedb.models.movies.adapters.TextChangedAdapter;
+import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
 import me.ibrahimsn.lib.CirclesLoadingView;
 
 public class SearchMovieFragment extends Fragment {
 
-    //TODO: Remove this line later
     private EditText etSearch;
-    private ImageButton ibSearch;
     private CirclesLoadingView clSearch;
-    private boolean isClicked = false;
+    private SearchMovieAdapter adapter;
+    private ImageView ivSearchError;
+    private TextView tvSearchErrorMessage;
+    private List<Movie> moviesList;
 
     private RecyclerView rvMovieSearch;
 
@@ -44,46 +52,64 @@ public class SearchMovieFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         etSearch = view.findViewById(R.id.etSearch);
-        ibSearch = view.findViewById(R.id.ibSearch);
         rvMovieSearch = view.findViewById(R.id.rvMovieSearch);
+
         clSearch = view.findViewById(R.id.clSearch);
         clSearch.setVisibility(View.GONE);
 
+        ivSearchError = view.findViewById(R.id.ivSearchError);
+        ivSearchError.setVisibility(View.GONE);
+
+        tvSearchErrorMessage = view.findViewById(R.id.tvSearchErrorMessage);
+        tvSearchErrorMessage.setVisibility(View.GONE);
+
         rvMovieSearch.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
-
-        ibSearch.setOnClickListener(v -> {
-            if (getActivity() != null) {
-                InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-            }
-
-            if (etSearch.getText().toString().equals("")) {
-                etSearch.setError("Type Something");
-                return;
-            }
-
+        etSearch.addTextChangedListener((TextChangedAdapter) (s, start, before, count) -> {
             Constants.MOVIE_SEARCH = etSearch.getText().toString();
 
             searchMovieViewModel = new ViewModelProvider(this).get(SearchMovieViewModel.class);
             clSearch.setVisibility(View.VISIBLE);
 
-            if (isClicked) {
-                searchMovieViewModel.updateMovieWithSearching();
-                clSearch.setVisibility(View.GONE);
-                rvMovieSearch.scheduleLayoutAnimation();
-                return;
-            }
+            searchMovieViewModel.updateMovieWithSearching();
+            //rvMovieSearch.scheduleLayoutAnimation();
 
             searchMovieViewModel.getMoviesWithSearching().observe(getViewLifecycleOwner(), (movies -> {
+                moviesList = movies;
 
-                new Handler().postDelayed(() -> {
-                    rvMovieSearch.setAdapter(new SearchMovieAdapter(movies));
-                    rvMovieSearch.scheduleLayoutAnimation();
-                    clSearch.setVisibility(View.GONE);
-                    isClicked = true;
-                }, 1000);
+                rvMovieSearch.setAdapter(new SearchMovieAdapter(movies));
+
+                clSearch.setVisibility(View.GONE);
+                ivSearchError.setVisibility(View.GONE);
+                tvSearchErrorMessage.setVisibility(View.GONE);
+
+                if (etSearch.getText().length() <= 0) {
+                    adapter = new SearchMovieAdapter(movies);
+                    adapter.updateData(movies);
+                }
             }));
+
+            new Handler().postDelayed(() -> {
+                if (moviesList.size() == 0 && etSearch.getText().length() > 0) {
+                    ivSearchError.setVisibility(View.VISIBLE);
+                    tvSearchErrorMessage.setVisibility(View.VISIBLE);
+                }
+            }, 3000);
+
+        });
+
+        rvMovieSearch.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy != 0) {
+                    View view = getActivity().getCurrentFocus();
+                    if (view != null) {
+                        InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    }
+                }
+            }
         });
     }
 }

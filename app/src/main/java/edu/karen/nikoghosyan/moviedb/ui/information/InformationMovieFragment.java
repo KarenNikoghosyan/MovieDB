@@ -1,11 +1,13 @@
 package edu.karen.nikoghosyan.moviedb.ui.information;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -64,6 +66,7 @@ public class InformationMovieFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         if (getActivity() != null) {
+            hideKeyboard();
             viewPager = getActivity().findViewById(R.id.viewPager);
             viewPager.setVisibility(View.INVISIBLE);
         }
@@ -185,5 +188,13 @@ public class InformationMovieFragment extends Fragment {
             }, 300);
 
         }));
+    }
+
+    public void hideKeyboard() {
+        View view = getActivity().getCurrentFocus();
+        if (view != null) {
+            InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
     }
 }
