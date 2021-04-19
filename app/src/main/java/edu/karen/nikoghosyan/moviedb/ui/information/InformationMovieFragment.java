@@ -26,9 +26,8 @@ import com.squareup.picasso.Picasso;
 
 import edu.karen.nikoghosyan.moviedb.Constants;
 import edu.karen.nikoghosyan.moviedb.R;
-import edu.karen.nikoghosyan.moviedb.ui.information.adapters.SimilarMovieAdapter;
+import edu.karen.nikoghosyan.moviedb.ui.information.adapters.InformationMovieAdapter;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
-import me.ibrahimsn.lib.CirclesLoadingView;
 import nl.joery.animatedbottombar.AnimatedBottomBar;
 
 public class InformationMovieFragment extends Fragment {
@@ -45,16 +44,13 @@ public class InformationMovieFragment extends Fragment {
     private TextView tvOverview;
     private TextView tvLanguage;
     private TextView tvNoSimilarMovies;
-    private CirclesLoadingView clSimilar;
+    private TextView tvNoRecommendations;
     private ViewPager viewPager;
 
     private RecyclerView rvSimilar;
+    private RecyclerView rvRecommendations;
 
     private InformationMovieViewModel informationMovieViewModel;
-
-    public static InformationMovieFragment newInstance() {
-        return new InformationMovieFragment();
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -78,6 +74,9 @@ public class InformationMovieFragment extends Fragment {
 
         tvNoSimilarMovies = view.findViewById(R.id.tvNoSimilarMovies);
         tvNoSimilarMovies.setVisibility(View.INVISIBLE);
+
+        tvNoRecommendations = view.findViewById(R.id.tvNoRecommendations);
+        tvNoRecommendations.setVisibility(View.INVISIBLE);
 
         tvGenre = view.findViewById(R.id.tvGenre);
 
@@ -131,9 +130,9 @@ public class InformationMovieFragment extends Fragment {
 
         tvOverview = view.findViewById(R.id.tvOverview);
         tvOverview.setText(getArguments().getString(Constants.MOVIE_OVERVIEW));
-        tvOverview.setMovementMethod(new ScrollingMovementMethod());
 
         rvSimilar = view.findViewById(R.id.rvSimilar);
+        rvRecommendations = view.findViewById(R.id.rvRecommendations);
 
         ibBack = view.findViewById(R.id.ibBack);
         ibBack.setOnClickListener(v -> {
@@ -146,6 +145,10 @@ public class InformationMovieFragment extends Fragment {
         animatedBottomBar = requireActivity().findViewById(R.id.animatedBottomBar);
         animatedBottomBar.setVisibility(View.INVISIBLE);
 
+        getObservers();
+    }
+
+    private void getObservers() {
         informationMovieViewModel = new ViewModelProvider(this).get(InformationMovieViewModel.class);
 
         informationMovieViewModel.getGenresNames().observe(getViewLifecycleOwner(), (genres -> {
@@ -173,29 +176,32 @@ public class InformationMovieFragment extends Fragment {
             }
         }));
 
-        clSimilar = view.findViewById(R.id.clSimilar);
         informationMovieViewModel.getSimilarMoviesByID().observe(getViewLifecycleOwner(), (movies -> {
+            if (movies.size() == 0) {
+                tvNoSimilarMovies.setVisibility(View.VISIBLE);
+            }
 
-            new Handler().postDelayed(() -> {
+            rvSimilar.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+            rvSimilar.setAdapter(new InformationMovieAdapter(movies));
+        }));
 
-                if (movies.size() == 0) {
-                    tvNoSimilarMovies.setVisibility(View.VISIBLE);
-                    clSimilar.setVisibility(View.GONE);
-                    return;
-                }
-                rvSimilar.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-                rvSimilar.setAdapter(new SimilarMovieAdapter(movies));
-                clSimilar.setVisibility(View.GONE);
-            }, 300);
+        informationMovieViewModel.getMoviesRecommendations().observe(getViewLifecycleOwner(), (movies -> {
+            if (movies.size() == 0) {
+                tvNoRecommendations.setVisibility(View.VISIBLE);
+            }
 
+            rvRecommendations.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+            rvRecommendations.setAdapter(new InformationMovieAdapter(movies));
         }));
     }
 
     public void hideKeyboard() {
-        View view = getActivity().getCurrentFocus();
-        if (view != null) {
-            InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        if (getActivity() != null) {
+            View view = getActivity().getCurrentFocus();
+            if (view != null) {
+                InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
         }
     }
 }

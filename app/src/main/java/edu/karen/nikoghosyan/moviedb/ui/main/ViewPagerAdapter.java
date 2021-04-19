@@ -20,11 +20,11 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 1:
-                return new SearchMovieFragment();
+                return new HomeMovieFragment();
             case 2:
                 return new FavoriteMovieFragment();
             default:
-                return new HomeMovieFragment();
+                return new SearchMovieFragment();
         }
     }
 

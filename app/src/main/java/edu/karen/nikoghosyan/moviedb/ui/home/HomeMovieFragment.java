@@ -2,6 +2,7 @@ package edu.karen.nikoghosyan.moviedb.ui.home;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +20,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import edu.karen.nikoghosyan.moviedb.LoadingActivity;
 import edu.karen.nikoghosyan.moviedb.R;
-import edu.karen.nikoghosyan.moviedb.ui.home.adapters.HorrorAdapter;
-import edu.karen.nikoghosyan.moviedb.ui.home.adapters.TopRatedAdapter;
+import edu.karen.nikoghosyan.moviedb.ui.home.adapters.MovieAdapter;
 import edu.karen.nikoghosyan.moviedb.ui.home.adapters.TopTrendingAdapter;
-import edu.karen.nikoghosyan.moviedb.ui.home.adapters.UpcomingAdapter;
 
 public class HomeMovieFragment extends Fragment {
 
@@ -31,11 +30,11 @@ public class HomeMovieFragment extends Fragment {
     private RecyclerView rvTopRated;
     private RecyclerView rvUpcoming;
     private RecyclerView rvHorror;
+    private RecyclerView rvComedy;
+    private RecyclerView rvCrime;
+    private RecyclerView rvAnimation;
+    private RecyclerView rvScienceFiction;
     private ImageButton btnLogout;
-
-    public static HomeMovieFragment newInstance() {
-        return new HomeMovieFragment();
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -51,33 +50,14 @@ public class HomeMovieFragment extends Fragment {
         rvTopRated = view.findViewById(R.id.rvTopRated);
         rvUpcoming = view.findViewById(R.id.rvUpcoming);
         rvHorror = view.findViewById(R.id.rvHorror);
+        rvComedy = view.findViewById(R.id.rvComedy);
+        rvCrime = view.findViewById(R.id.rvCrime);
+        rvAnimation = view.findViewById(R.id.rvAnimation);
+        rvScienceFiction = view.findViewById(R.id.rvScienceFiction);
 
         btnLogout = view.findViewById(R.id.btnLogout);
 
-        homeMovieViewModel = new ViewModelProvider(this).get(HomeMovieViewModel.class);
-        homeMovieViewModel.getTopTrendingLiveData().observe(getViewLifecycleOwner(), (movies -> {
-
-            rvMoviesHome.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-            rvMoviesHome.setAdapter(new TopTrendingAdapter(movies));
-        }));
-
-        homeMovieViewModel.getTopRatedLiveData().observe(getViewLifecycleOwner(), (movies -> {
-
-            rvTopRated.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-            rvTopRated.setAdapter(new TopRatedAdapter(movies));
-        }));
-
-        homeMovieViewModel.getUpcomingLiveData().observe(getViewLifecycleOwner(), (movies -> {
-
-            rvUpcoming.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-            rvUpcoming.setAdapter(new UpcomingAdapter(movies));
-        }));
-
-        homeMovieViewModel.getHorrorLiveData().observe(getViewLifecycleOwner(), (movies -> {
-
-            rvHorror.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-            rvHorror.setAdapter(new HorrorAdapter(movies));
-        }));
+        getLiveDataObservers();
 
         btnLogout.setOnClickListener(v -> {
             if (getContext() == null) {
@@ -106,6 +86,56 @@ public class HomeMovieFragment extends Fragment {
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getContext().getColor(R.color.dark_purple));
             dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getContext().getColor(R.color.dark_purple));
         });
+    }
 
+    private void getLiveDataObservers() {
+        homeMovieViewModel = new ViewModelProvider(this).get(HomeMovieViewModel.class);
+        homeMovieViewModel.getTopTrendingLiveData().observe(getViewLifecycleOwner(), (movies -> {
+
+            rvMoviesHome.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+            rvMoviesHome.setAdapter(new TopTrendingAdapter(movies));
+        }));
+
+        homeMovieViewModel.getTopRatedLiveData().observe(getViewLifecycleOwner(), (movies -> {
+
+            rvTopRated.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+            rvTopRated.setAdapter(new MovieAdapter(movies));
+        }));
+
+        homeMovieViewModel.getUpcomingLiveData().observe(getViewLifecycleOwner(), (movies -> {
+
+            rvUpcoming.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+            rvUpcoming.setAdapter(new MovieAdapter(movies));
+        }));
+
+        homeMovieViewModel.getHorrorLiveData().observe(getViewLifecycleOwner(), (movies -> {
+
+            rvHorror.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+            rvHorror.setAdapter(new MovieAdapter(movies));
+        }));
+
+        homeMovieViewModel.getComedyLiveData().observe(getViewLifecycleOwner(), (movies -> {
+
+            rvComedy.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+            rvComedy.setAdapter(new MovieAdapter(movies));
+        }));
+
+        homeMovieViewModel.getCrimeLiveData().observe(getViewLifecycleOwner(), (movies -> {
+
+            rvCrime.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+            rvCrime.setAdapter(new MovieAdapter(movies));
+        }));
+
+        homeMovieViewModel.getAnimationLiveData().observe(getViewLifecycleOwner(), (movies -> {
+
+            rvAnimation.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+            rvAnimation.setAdapter(new MovieAdapter(movies));
+        }));
+
+        homeMovieViewModel.getScienceFictionLiveData().observe(getViewLifecycleOwner(), (movies -> {
+
+            rvScienceFiction.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+            rvScienceFiction.setAdapter(new MovieAdapter(movies));
+        }));
     }
 }

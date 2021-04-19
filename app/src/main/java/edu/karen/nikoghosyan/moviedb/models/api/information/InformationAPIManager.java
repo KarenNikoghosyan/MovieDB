@@ -54,4 +54,25 @@ public class InformationAPIManager {
             }
         });
     }
+
+    public void getRecommendations(MutableLiveData<List<Movie>> moviesLiveData, int movieID) {
+
+        Call<MovieResponse> movieHTTPRequest = informationService.getRecommendations(movieID);
+        movieHTTPRequest.enqueue(new Callback<MovieResponse>() {
+            @Override
+            public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+                MovieResponse movieResponse = response.body();
+
+                if (movieResponse != null) {
+                    ArrayList<Movie> movies = movieResponse.getMovies();
+                    moviesLiveData.postValue(movies);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MovieResponse> call, Throwable t) {
+                t.getMessage();
+            }
+        });
+    }
 }

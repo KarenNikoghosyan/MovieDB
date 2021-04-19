@@ -2,9 +2,11 @@ package edu.karen.nikoghosyan.moviedb;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import edu.karen.nikoghosyan.moviedb.ui.main.ViewPagerAdapter;
@@ -24,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
             viewPager = findViewById(R.id.viewPager);
             adapter = new ViewPagerAdapter(getSupportFragmentManager(), 1);
             viewPager.setAdapter(adapter);
+            viewPager.setOffscreenPageLimit(2);
+            viewPager.setCurrentItem(1);
 
             animatedBottomBar = findViewById(R.id.animatedBottomBar);
             animatedBottomBar.setupWithViewPager(viewPager);

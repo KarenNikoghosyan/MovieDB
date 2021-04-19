@@ -1,5 +1,6 @@
-package edu.karen.nikoghosyan.moviedb.ui.information.adapters;
+package edu.karen.nikoghosyan.moviedb.ui.home.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,43 +22,46 @@ import edu.karen.nikoghosyan.moviedb.R;
 import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
 import edu.karen.nikoghosyan.moviedb.ui.information.InformationMovieFragment;
 
-public class SimilarMovieAdapter extends RecyclerView.Adapter<SimilarMovieAdapter.ViewHolder>{
-    private final List<Movie> movieList;
+public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
+    private final List<Movie> moviesList;
+    private Context mContext;
     private Movie movie;
 
-    public SimilarMovieAdapter(List<Movie> movieList) {
-        this.movieList = movieList;
+    public MovieAdapter(List<Movie> movieList) {
+        this.moviesList = movieList;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        this.mContext = parent.getContext();
+
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        return new ViewHolder(inflater.inflate(R.layout.information_similar_movie_item, parent, false));
+        return new ViewHolder(inflater.inflate(R.layout.home_small_movie_item, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        movie = movieList.get(position);
+    public void onBindViewHolder(@NonNull MovieAdapter.ViewHolder holder, int position) {
+        movie = moviesList.get(position);
 
         Picasso
                 .get()
                 .load(movie.getImageURL())
                 .fit()
-                .into(holder.ivSimilarMovie, new Callback() {
+                .into(holder.ivHome, new Callback() {
                     @Override
                     public void onSuccess() {
-                        holder.pbInfoSimilarMovies.setVisibility(View.GONE);
+                        holder.pbHome.setVisibility(View.GONE);
                     }
 
                     @Override
                     public void onError(Exception e) {
-                        holder.ivSimilarMovie.setImageResource(R.drawable.placeholder_image);
+                        holder.ivHome.setImageResource(R.drawable.placeholder_image);
                     }
                 });
 
-        holder.ivSimilarMovie.setOnClickListener(v -> {
-            movie = movieList.get(position);
+        holder.ivHome.setOnClickListener(v -> {
+            movie = moviesList.get(position);
 
             AppCompatActivity activity = (AppCompatActivity) v.getContext();
             Fragment fragment = new InformationMovieFragment();
@@ -67,7 +71,7 @@ public class SimilarMovieAdapter extends RecyclerView.Adapter<SimilarMovieAdapte
             activity
                     .getSupportFragmentManager()
                     .beginTransaction()
-                    .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
+                    .setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_down, R.anim.slide_in_up, R.anim.slide_out_down)
                     .replace(R.id.fragmentContainer, fragment)
                     .addToBackStack(null)
                     .commit();
@@ -76,18 +80,19 @@ public class SimilarMovieAdapter extends RecyclerView.Adapter<SimilarMovieAdapte
 
     @Override
     public int getItemCount() {
-        return movieList.size();
+        return moviesList.size();
     }
 
+
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private ImageView ivSimilarMovie;
-        private ProgressBar pbInfoSimilarMovies;
+        private ImageView ivHome;
+        private ProgressBar pbHome;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            ivSimilarMovie = itemView.findViewById(R.id.ivSearch);
-            pbInfoSimilarMovies = itemView.findViewById(R.id.pbSearch);
+            ivHome = itemView.findViewById(R.id.ivHome);
+            pbHome = itemView.findViewById(R.id.pbHome);
         }
     }
 }

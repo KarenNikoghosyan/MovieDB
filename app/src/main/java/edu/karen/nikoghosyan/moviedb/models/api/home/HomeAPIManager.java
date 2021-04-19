@@ -126,4 +126,96 @@ public class HomeAPIManager {
             }
         });
     }
+
+    public void getComedy(MutableLiveData<List<Movie>> movieLiveData) {
+
+        Call<MovieResponse> movieHTTPRequest = homeMovieService.getComedy();
+
+        movieHTTPRequest.enqueue(new Callback<MovieResponse>() {
+            @Override
+            public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+                MovieResponse movieResponse = response.body();
+
+                if (movieResponse != null) {
+
+                    ArrayList<Movie> movies = movieResponse.getMovies();
+                    movieLiveData.postValue(movies);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MovieResponse> call, Throwable t) {
+                t.getMessage();
+            }
+        });
+    }
+
+    public void getCrime(MutableLiveData<List<Movie>> movieLiveData) {
+
+        Call<MovieResponse> movieHTTPRequest = homeMovieService.getCrime();
+
+        movieHTTPRequest.enqueue(new Callback<MovieResponse>() {
+            @Override
+            public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+                MovieResponse movieResponse = response.body();
+
+                if (movieResponse != null) {
+
+                    ArrayList<Movie> movies = movieResponse.getMovies();
+                    movieLiveData.postValue(movies);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MovieResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void getAnimation(MutableLiveData<List<Movie>> movieLiveData) {
+
+        Call<MovieResponse> movieHTTPRequest = homeMovieService.getAnimation();
+
+        movieHTTPRequest.enqueue(new Callback<MovieResponse>() {
+            @Override
+            public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+                MovieResponse movieResponse = response.body();
+
+                if (movieResponse != null) {
+
+                    ArrayList<Movie> movies = movieResponse.getMovies();
+                    movieLiveData.postValue(movies);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MovieResponse> call, Throwable t) {
+                t.getMessage();
+            }
+        });
+    }
+
+    public void getScienceFiction(MutableLiveData<List<Movie>> movieLiveData) {
+
+        Call<MovieResponse> movieHTTPRequest = homeMovieService.getScienceFiction();
+
+        movieHTTPRequest.enqueue(new Callback<MovieResponse>() {
+            @Override
+            public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+                MovieResponse movieResponse = response.body();
+
+                if (movieResponse != null) {
+
+                    ArrayList<Movie> movies = movieResponse.getMovies();
+                    movieLiveData.postValue(movies);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MovieResponse> call, Throwable t) {
+                t.getMessage();
+            }
+        });
+    }
 }

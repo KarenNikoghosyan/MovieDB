@@ -29,7 +29,7 @@
         app:abb_indicatorHeight="4dp"
         app:abb_indicatorMargin="16dp"
         app:abb_rippleEnabled="true"
-        app:abb_selectedIndex="0"
+        app:abb_selectedIndex="1"
         app:abb_selectedTabType="text"
         app:abb_tabColor="@color/dark_purple"
         app:abb_tabColorDisabled="@color/purple_700"
