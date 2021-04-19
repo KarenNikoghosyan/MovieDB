@@ -67,7 +67,7 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="16dp"
             android:fontFamily="@font/alfa_slab_one"
             android:text="@string/top_rated"
             android:textColor="@color/white"
@@ -97,7 +97,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.77" />
+            app:layout_constraintGuide_percent="0.74" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvTopRated"
@@ -125,7 +125,7 @@
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="16dp"
             android:fontFamily="@font/alfa_slab_one"
             android:text="Upcoming"
             android:textColor="@color/white"
