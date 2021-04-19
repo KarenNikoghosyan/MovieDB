@@ -26,6 +26,7 @@ import com.squareup.picasso.Picasso;
 
 import edu.karen.nikoghosyan.moviedb.Constants;
 import edu.karen.nikoghosyan.moviedb.R;
+import edu.karen.nikoghosyan.moviedb.ui.information.adapters.SimilarMovieAdapter;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 import me.ibrahimsn.lib.CirclesLoadingView;
 import nl.joery.animatedbottombar.AnimatedBottomBar;

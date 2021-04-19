@@ -19,6 +19,10 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import edu.karen.nikoghosyan.moviedb.LoadingActivity;
 import edu.karen.nikoghosyan.moviedb.R;
+import edu.karen.nikoghosyan.moviedb.ui.home.adapters.HorrorAdapter;
+import edu.karen.nikoghosyan.moviedb.ui.home.adapters.TopRatedAdapter;
+import edu.karen.nikoghosyan.moviedb.ui.home.adapters.TopTrendingAdapter;
+import edu.karen.nikoghosyan.moviedb.ui.home.adapters.UpcomingAdapter;
 
 public class HomeMovieFragment extends Fragment {
 
@@ -26,6 +30,7 @@ public class HomeMovieFragment extends Fragment {
     private RecyclerView rvMoviesHome;
     private RecyclerView rvTopRated;
     private RecyclerView rvUpcoming;
+    private RecyclerView rvHorror;
     private ImageButton btnLogout;
 
     public static HomeMovieFragment newInstance() {
@@ -45,6 +50,8 @@ public class HomeMovieFragment extends Fragment {
         rvMoviesHome = view.findViewById(R.id.rvMoviesHome);
         rvTopRated = view.findViewById(R.id.rvTopRated);
         rvUpcoming = view.findViewById(R.id.rvUpcoming);
+        rvHorror = view.findViewById(R.id.rvHorror);
+
         btnLogout = view.findViewById(R.id.btnLogout);
 
         homeMovieViewModel = new ViewModelProvider(this).get(HomeMovieViewModel.class);
@@ -64,6 +71,12 @@ public class HomeMovieFragment extends Fragment {
 
             rvUpcoming.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
             rvUpcoming.setAdapter(new UpcomingAdapter(movies));
+        }));
+
+        homeMovieViewModel.getHorrorLiveData().observe(getViewLifecycleOwner(), (movies -> {
+
+            rvHorror.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+            rvHorror.setAdapter(new HorrorAdapter(movies));
         }));
 
         btnLogout.setOnClickListener(v -> {

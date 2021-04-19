@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,13 +18,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import edu.karen.nikoghosyan.moviedb.Constants;
 import edu.karen.nikoghosyan.moviedb.R;
 import edu.karen.nikoghosyan.moviedb.models.movies.adapters.TextChangedAdapter;
 import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
+import edu.karen.nikoghosyan.moviedb.ui.search.adapters.SearchMovieAdapter;
 import me.ibrahimsn.lib.CirclesLoadingView;
 
 public class SearchMovieFragment extends Fragment {
@@ -90,6 +89,8 @@ public class SearchMovieFragment extends Fragment {
             }));
 
             new Handler().postDelayed(() -> {
+                if (moviesList == null) return;
+
                 if (moviesList.size() == 0 && etSearch.getText().length() > 0) {
                     ivSearchError.setVisibility(View.VISIBLE);
                     tvSearchErrorMessage.setVisibility(View.VISIBLE);
@@ -103,6 +104,7 @@ public class SearchMovieFragment extends Fragment {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (dy != 0) {
+
                     View view = getActivity().getCurrentFocus();
                     if (view != null) {
                         InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);

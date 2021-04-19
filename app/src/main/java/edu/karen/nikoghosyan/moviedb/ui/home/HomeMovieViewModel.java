@@ -14,6 +14,7 @@ public class HomeMovieViewModel extends ViewModel {
     private final MutableLiveData<List<Movie>> topTrendingLiveData = new MutableLiveData<>();
     private final MutableLiveData<List<Movie>> topRatedLiveData = new MutableLiveData<>();
     private final MutableLiveData<List<Movie>> upcomingLiveData = new MutableLiveData<>();
+    private final MutableLiveData<List<Movie>> horrorLiveData = new MutableLiveData<>();
 
     public HomeMovieViewModel(){
 
@@ -21,6 +22,7 @@ public class HomeMovieViewModel extends ViewModel {
         manager.getTopTrending(topTrendingLiveData);
         manager.getTopRated(topRatedLiveData);
         manager.getUpcoming(upcomingLiveData);
+        manager.getHorror(horrorLiveData);
     }
 
     public LiveData<List<Movie>> getTopTrendingLiveData(){
@@ -29,5 +31,8 @@ public class HomeMovieViewModel extends ViewModel {
     public LiveData<List<Movie>> getTopRatedLiveData() { return topRatedLiveData; }
     public MutableLiveData<List<Movie>> getUpcomingLiveData() {
         return upcomingLiveData;
+    }
+    public MutableLiveData<List<Movie>> getHorrorLiveData() {
+        return horrorLiveData;
     }
 }

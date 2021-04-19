@@ -1,4 +1,4 @@
-package edu.karen.nikoghosyan.moviedb.ui.search;
+package edu.karen.nikoghosyan.moviedb.ui.home.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,9 +9,7 @@ import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Callback;
@@ -24,47 +22,46 @@ import edu.karen.nikoghosyan.moviedb.R;
 import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
 import edu.karen.nikoghosyan.moviedb.ui.information.InformationMovieFragment;
 
-public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.ViewHolder> {
-    private List<Movie> movieList;
+public class HorrorAdapter extends RecyclerView.Adapter<HorrorAdapter.ViewHolder>{
+    private final List<Movie> moviesList;
     private Context mContext;
     private Movie movie;
 
-    public SearchMovieAdapter(List<Movie> movieList) {
-        this.movieList = movieList;
+    public HorrorAdapter(List<Movie> movieList) {
+        this.moviesList = movieList;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        mContext = parent.getContext();
+        this.mContext = parent.getContext();
 
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        return new ViewHolder(layoutInflater.inflate(R.layout.search_movie_item, parent, false));
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        return new ViewHolder(inflater.inflate(R.layout.home_horror_item, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        movie = movieList.get(position);
+    public void onBindViewHolder(@NonNull HorrorAdapter.ViewHolder holder, int position) {
+        movie = moviesList.get(position);
 
         Picasso
                 .get()
                 .load(movie.getImageURL())
                 .fit()
-                .into(holder.ivSearch, new Callback() {
+                .into(holder.ivHorrorHome, new Callback() {
                     @Override
                     public void onSuccess() {
-                        holder.pbSearch.setVisibility(View.GONE);
+                        holder.pbHomeHorror.setVisibility(View.GONE);
                     }
 
                     @Override
                     public void onError(Exception e) {
-                        holder.ivSearch.setImageResource(R.drawable.placeholder_image);
-                        holder.pbSearch.setVisibility(View.GONE);
+                        holder.ivHorrorHome.setImageResource(R.drawable.placeholder_image);
                     }
                 });
 
-        holder.searchCardView.setOnClickListener(v -> {
-            movie = movieList.get(position);
+        holder.ivHorrorHome.setOnClickListener(v -> {
+            movie = moviesList.get(position);
 
             AppCompatActivity activity = (AppCompatActivity) v.getContext();
             Fragment fragment = new InformationMovieFragment();
@@ -83,24 +80,19 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
 
     @Override
     public int getItemCount() {
-        return movieList.size();
+        return moviesList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView ivSearch;
-        CardView searchCardView;
-        ProgressBar pbSearch;
+
+    public class ViewHolder extends RecyclerView.ViewHolder{
+        ImageView ivHorrorHome;
+        ProgressBar pbHomeHorror;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            searchCardView = itemView.findViewById(R.id.searchCardView);
-            ivSearch = itemView.findViewById(R.id.ivSearch);
-            pbSearch = itemView.findViewById(R.id.pbSearch);
-        }
-    }
 
-    public void updateData(List<Movie> movies) {
-        movies.clear();
-        notifyDataSetChanged();
+            ivHorrorHome = itemView.findViewById(R.id.ivHorrorHome);
+            pbHomeHorror = itemView.findViewById(R.id.pbHomeHorror);
+        }
     }
 }

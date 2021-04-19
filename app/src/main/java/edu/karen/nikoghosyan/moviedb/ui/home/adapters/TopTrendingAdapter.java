@@ -1,4 +1,4 @@
-package edu.karen.nikoghosyan.moviedb.ui.home;
+package edu.karen.nikoghosyan.moviedb.ui.home.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -22,22 +22,22 @@ import edu.karen.nikoghosyan.moviedb.R;
 import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
 import edu.karen.nikoghosyan.moviedb.ui.information.InformationMovieFragment;
 
-public class TopRatedAdapter extends RecyclerView.Adapter<TopRatedAdapter.ViewHolder> {
-    private List<Movie> moviesList;
+public class TopTrendingAdapter extends RecyclerView.Adapter<TopTrendingAdapter.ViewHolder> {
+    private final List<Movie> moviesList;
     private Context mContext;
     private Movie movie;
 
-    public TopRatedAdapter(List<Movie> moviesList) {
-        this.moviesList = moviesList;
+    public TopTrendingAdapter(List<Movie> movies) {
+        this.moviesList = movies;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        mContext = parent.getContext();
+        this.mContext = parent.getContext();
 
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        return new ViewHolder(layoutInflater.inflate(R.layout.home_top_rated_item, parent, false));
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        return new ViewHolder(inflater.inflate(R.layout.home_toptrending_item, parent, false));
     }
 
     @Override
@@ -48,19 +48,19 @@ public class TopRatedAdapter extends RecyclerView.Adapter<TopRatedAdapter.ViewHo
                 .get()
                 .load(movie.getImageURL())
                 .fit()
-                .into(holder.ivTopRatedHome, new Callback() {
+                .into(holder.ivTopTrending, new Callback() {
                     @Override
                     public void onSuccess() {
-                        holder.pbHomeTopRated.setVisibility(View.GONE);
+                        holder.pbHomeTopTrending.setVisibility(View.GONE);
                     }
 
                     @Override
                     public void onError(Exception e) {
-                        holder.ivTopRatedHome.setImageResource(R.drawable.placeholder_image);
+                        holder.ivTopTrending.setImageResource(R.drawable.placeholder_image);
                     }
                 });
 
-        holder.ivTopRatedHome.setOnClickListener(v -> {
+        holder.ivTopTrending.setOnClickListener(v -> {
             movie = moviesList.get(position);
 
             AppCompatActivity activity = (AppCompatActivity) v.getContext();
@@ -83,15 +83,14 @@ public class TopRatedAdapter extends RecyclerView.Adapter<TopRatedAdapter.ViewHo
         return moviesList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView ivTopRatedHome;
-        ProgressBar pbHomeTopRated;
+    public class ViewHolder extends RecyclerView.ViewHolder{
+        private ImageView ivTopTrending;
+        private ProgressBar pbHomeTopTrending;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            ivTopRatedHome = itemView.findViewById(R.id.ivUpcomingHome);
-            pbHomeTopRated = itemView.findViewById(R.id.pbHomeUpcoming);
+            ivTopTrending = itemView.findViewById(R.id.ivTopTrendingHome);
+            pbHomeTopTrending = itemView.findViewById(R.id.pbHomeTopTrending);
         }
     }
 }

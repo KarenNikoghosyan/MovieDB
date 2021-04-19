@@ -1,6 +1,5 @@
-package edu.karen.nikoghosyan.moviedb.ui.home;
+package edu.karen.nikoghosyan.moviedb.ui.information.adapters;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,23 +21,19 @@ import edu.karen.nikoghosyan.moviedb.R;
 import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
 import edu.karen.nikoghosyan.moviedb.ui.information.InformationMovieFragment;
 
-public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHolder>{
+public class SimilarMovieAdapter extends RecyclerView.Adapter<SimilarMovieAdapter.ViewHolder>{
     private final List<Movie> movieList;
-    private Context mContext;
     private Movie movie;
 
-    public UpcomingAdapter(List<Movie> movieList) {
+    public SimilarMovieAdapter(List<Movie> movieList) {
         this.movieList = movieList;
     }
-
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        this.mContext = parent.getContext();
-
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        return new ViewHolder(inflater.inflate(R.layout.home_upcoming_item, parent, false));
+        return new ViewHolder(inflater.inflate(R.layout.information_similar_movie_item, parent, false));
     }
 
     @Override
@@ -49,19 +44,19 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
                 .get()
                 .load(movie.getImageURL())
                 .fit()
-                .into(holder.ivUpcomingHome, new Callback() {
+                .into(holder.ivSimilarMovie, new Callback() {
                     @Override
                     public void onSuccess() {
-                        holder.pbHomeUpcoming.setVisibility(View.GONE);
+                        holder.pbInfoSimilarMovies.setVisibility(View.GONE);
                     }
 
                     @Override
                     public void onError(Exception e) {
-                        holder.ivUpcomingHome.setImageResource(R.drawable.placeholder_image);
+                        holder.ivSimilarMovie.setImageResource(R.drawable.placeholder_image);
                     }
                 });
 
-        holder.ivUpcomingHome.setOnClickListener(v -> {
+        holder.ivSimilarMovie.setOnClickListener(v -> {
             movie = movieList.get(position);
 
             AppCompatActivity activity = (AppCompatActivity) v.getContext();
@@ -72,7 +67,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
             activity
                     .getSupportFragmentManager()
                     .beginTransaction()
-                    .setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_down, R.anim.slide_in_up, R.anim.slide_out_down)
+                    .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
                     .replace(R.id.fragmentContainer, fragment)
                     .addToBackStack(null)
                     .commit();
@@ -85,14 +80,14 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private ImageView ivUpcomingHome;
-        private ProgressBar pbHomeUpcoming;
+        private ImageView ivSimilarMovie;
+        private ProgressBar pbInfoSimilarMovies;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            ivUpcomingHome = itemView.findViewById(R.id.ivUpcomingHome);
-            pbHomeUpcoming = itemView.findViewById(R.id.pbHomeUpcoming);
+            ivSimilarMovie = itemView.findViewById(R.id.ivSearch);
+            pbInfoSimilarMovies = itemView.findViewById(R.id.pbSearch);
         }
     }
 }
