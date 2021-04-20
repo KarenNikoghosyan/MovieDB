@@ -1,12 +1,14 @@
 package edu.karen.nikoghosyan.moviedb.ui.home;
 
 import android.app.AlertDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,6 +37,9 @@ public class HomeMovieFragment extends Fragment {
     private RecyclerView rvAnimation;
     private RecyclerView rvScienceFiction;
     private ImageButton btnLogout;
+    private TextView tvName;
+
+    private SharedPreferences prefs;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -46,6 +51,10 @@ public class HomeMovieFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        if (getActivity() != null) {
+            prefs = getActivity().getApplicationContext().getSharedPreferences("MovieDBPrefs", 0);
+        }
+
         rvMoviesHome = view.findViewById(R.id.rvMoviesHome);
         rvTopRated = view.findViewById(R.id.rvTopRated);
         rvUpcoming = view.findViewById(R.id.rvUpcoming);
@@ -56,6 +65,9 @@ public class HomeMovieFragment extends Fragment {
         rvScienceFiction = view.findViewById(R.id.rvScienceFiction);
 
         btnLogout = view.findViewById(R.id.btnLogout);
+        tvName = view.findViewById(R.id.tvName);
+
+        tvName.setText(prefs.getString("name", null));
 
         getLiveDataObservers();
 
