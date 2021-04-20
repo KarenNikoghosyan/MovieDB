@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import edu.karen.nikoghosyan.moviedb.ui.main.ViewPagerAdapter;
 import nl.joery.animatedbottombar.AnimatedBottomBar;
@@ -21,17 +23,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-        if (savedInstanceState == null) {
 
-            viewPager = findViewById(R.id.viewPager);
-            adapter = new ViewPagerAdapter(getSupportFragmentManager(), 1);
-            viewPager.setAdapter(adapter);
-            viewPager.setOffscreenPageLimit(2);
-            viewPager.setCurrentItem(1);
+        adapter = new ViewPagerAdapter(getSupportFragmentManager(), 1);
 
-            animatedBottomBar = findViewById(R.id.animatedBottomBar);
-            animatedBottomBar.setupWithViewPager(viewPager);
-        }
+        viewPager = findViewById(R.id.viewPager);
+        viewPager.setOffscreenPageLimit(2);
+        viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(1);
+
+        animatedBottomBar = findViewById(R.id.animatedBottomBar);
+        animatedBottomBar.setupWithViewPager(viewPager);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        animatedBottomBar.selectTabAt(viewPager.getCurrentItem(), false);
     }
 
     @Override
@@ -43,8 +50,7 @@ public class MainActivity extends AppCompatActivity {
         }
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager().popBackStack();
-        }
-        else {
+        } else {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this)
                     .setTitle("Quit")

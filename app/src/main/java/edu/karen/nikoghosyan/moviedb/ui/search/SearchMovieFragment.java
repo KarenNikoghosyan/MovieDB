@@ -1,6 +1,7 @@
 package edu.karen.nikoghosyan.moviedb.ui.search;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -62,43 +64,66 @@ public class SearchMovieFragment extends Fragment {
         tvSearchErrorMessage = view.findViewById(R.id.tvSearchErrorMessage);
         tvSearchErrorMessage.setVisibility(View.GONE);
 
-        rvMovieSearch.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        getCurrentScreenOrientation();
 
         etSearch.addTextChangedListener((TextChangedAdapter) (s, start, before, count) -> {
-            Constants.MOVIE_SEARCH = etSearch.getText().toString();
-
-            searchMovieViewModel = new ViewModelProvider(this).get(SearchMovieViewModel.class);
-            clSearch.setVisibility(View.VISIBLE);
-
-            searchMovieViewModel.updateMovieWithSearching();
-            //rvMovieSearch.scheduleLayoutAnimation();
-
-            searchMovieViewModel.getMoviesWithSearching().observe(getViewLifecycleOwner(), (movies -> {
-                moviesList = movies;
-
-                rvMovieSearch.setAdapter(new SearchMovieAdapter(movies));
-
-                clSearch.setVisibility(View.GONE);
-                ivSearchError.setVisibility(View.GONE);
-                tvSearchErrorMessage.setVisibility(View.GONE);
-
-                if (etSearch.getText().length() <= 0) {
-                    adapter = new SearchMovieAdapter(movies);
-                    adapter.updateData(movies);
-                }
-            }));
-
-            new Handler().postDelayed(() -> {
-                if (moviesList == null) return;
-
-                if (moviesList.size() == 0 && etSearch.getText().length() > 0) {
-                    ivSearchError.setVisibility(View.VISIBLE);
-                    tvSearchErrorMessage.setVisibility(View.VISIBLE);
-                }
-            }, 3000);
-
+            getObservers();
         });
 
+        onScrollListener();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        clSearch.setVisibility(View.GONE);
+    }
+
+    private void getCurrentScreenOrientation() {
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            rvMovieSearch.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        }
+
+        else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            rvMovieSearch.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        }
+    }
+
+    private void getObservers() {
+        Constants.MOVIE_SEARCH = etSearch.getText().toString();
+
+        searchMovieViewModel = new ViewModelProvider(this).get(SearchMovieViewModel.class);
+        clSearch.setVisibility(View.VISIBLE);
+
+        searchMovieViewModel.updateMovieWithSearching();
+
+        searchMovieViewModel.getMoviesWithSearching().observe(getViewLifecycleOwner(), (movies -> {
+            moviesList = movies;
+
+            rvMovieSearch.setAdapter(new SearchMovieAdapter(movies));
+
+            clSearch.setVisibility(View.GONE);
+            ivSearchError.setVisibility(View.GONE);
+            tvSearchErrorMessage.setVisibility(View.GONE);
+
+            if (etSearch.getText().length() <= 0) {
+                adapter = new SearchMovieAdapter(movies);
+                adapter.updateData(movies);
+            }
+        }));
+
+        new Handler().postDelayed(() -> {
+            if (moviesList == null) return;
+
+            if (moviesList.size() == 0 && etSearch.getText().length() > 0) {
+                ivSearchError.setVisibility(View.VISIBLE);
+                tvSearchErrorMessage.setVisibility(View.VISIBLE);
+            }
+        }, 2000);
+    }
+
+    private void onScrollListener() {
         rvMovieSearch.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
@@ -113,5 +138,16 @@ public class SearchMovieFragment extends Fragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            rvMovieSearch.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        }
+        else if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            rvMovieSearch.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        }
     }
 }

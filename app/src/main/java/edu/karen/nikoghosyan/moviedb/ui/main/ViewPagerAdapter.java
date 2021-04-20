@@ -1,15 +1,23 @@
 package edu.karen.nikoghosyan.moviedb.ui.main;
 
+import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.lifecycle.Lifecycle;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import edu.karen.nikoghosyan.moviedb.ui.favorite.FavoriteMovieFragment;
 import edu.karen.nikoghosyan.moviedb.ui.home.HomeMovieFragment;
 import edu.karen.nikoghosyan.moviedb.ui.search.SearchMovieFragment;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
+
+    private final Fragment[] fragments = {new SearchMovieFragment(), new HomeMovieFragment(), new FavoriteMovieFragment()};
 
     public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
@@ -18,18 +26,11 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        switch (position) {
-            case 1:
-                return new HomeMovieFragment();
-            case 2:
-                return new FavoriteMovieFragment();
-            default:
-                return new SearchMovieFragment();
-        }
+        return fragments[position];
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return fragments.length;
     }
 }

@@ -90,8 +90,6 @@ public class InformationMovieFragment extends Fragment {
         Picasso
                 .get()
                 .load(getArguments().getString(Constants.MOVIE_BACKDROP_URL))
-                .transform(new RoundedCornersTransformation(10, 10))
-                .fit()
                 .into(ivBackdrop, new Callback() {
                     @Override
                     public void onSuccess() {

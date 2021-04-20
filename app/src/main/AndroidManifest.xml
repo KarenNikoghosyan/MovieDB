@@ -27,8 +27,7 @@
         </activity>
 
         <activity android:name=".MainActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize|adjustNothing"
-            android:configChanges="orientation|screenSize|screenLayout">
+            android:windowSoftInputMode="stateHidden|adjustResize|adjustNothing">
 
         </activity>
 

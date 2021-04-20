@@ -16,7 +16,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="8dp"
         android:textColorHint="@color/white"
         app:boxCornerRadiusBottomEnd="15dp"
         app:boxCornerRadiusBottomStart="15dp"
@@ -25,9 +24,10 @@
         app:boxStrokeColor="@color/white"
         app:endIconMode="clear_text"
         app:endIconTint="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/guideline13"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:startIconDrawable="@drawable/ic_baseline_search_24"
         app:startIconTint="@color/white">
 
@@ -39,23 +39,14 @@
             android:textColor="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.12" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMovieSearch"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"
         android:layoutAnimation="@anim/layout_animation"
-        app:layout_constraintBottom_toTopOf="@+id/guideline16"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline13" />
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
     <me.ibrahimsn.lib.CirclesLoadingView
         android:id="@+id/clSearch"
@@ -63,33 +54,27 @@
         android:layout_height="0dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="@+id/rvMovieSearch"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline13" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.93" />
+        app:layout_constraintEnd_toEndOf="@+id/rvMovieSearch"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/rvMovieSearch"
+        app:layout_constraintTop_toTopOf="@+id/rvMovieSearch"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/ivSearchError"
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginTop="16dp"
         android:src="@drawable/icon_error"
-        app:layout_constraintBottom_toBottomOf="@+id/rvMovieSearch"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/rvMovieSearch" />
+        app:layout_constraintEnd_toEndOf="@+id/rvMovieSearch"
+        app:layout_constraintStart_toStartOf="@+id/rvMovieSearch"
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
     <TextView
         android:id="@+id/tvSearchErrorMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/playfair_display_bold"
         android:text="NO MOVIES FOUND!"
         android:textColor="@color/white"
@@ -97,5 +82,12 @@
         app:layout_constraintEnd_toEndOf="@+id/ivSearchError"
         app:layout_constraintStart_toStartOf="@+id/ivSearchError"
         app:layout_constraintTop_toBottomOf="@+id/ivSearchError" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.31" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

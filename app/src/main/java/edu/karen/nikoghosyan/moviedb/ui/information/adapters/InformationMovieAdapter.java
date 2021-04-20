@@ -44,19 +44,20 @@ public class InformationMovieAdapter extends RecyclerView.Adapter<InformationMov
                 .get()
                 .load(movie.getImageURL())
                 .fit()
-                .into(holder.ivSimilarMovie, new Callback() {
+                .into(holder.ivInformation, new Callback() {
                     @Override
                     public void onSuccess() {
-                        holder.pbInfoSimilarMovies.setVisibility(View.GONE);
+                        holder.pbInformation.setVisibility(View.GONE);
                     }
 
                     @Override
                     public void onError(Exception e) {
-                        holder.ivSimilarMovie.setImageResource(R.drawable.placeholder_image);
+                        holder.pbInformation.setVisibility(View.GONE);
+                        holder.ivInformation.setImageResource(R.drawable.placeholder_image);
                     }
                 });
 
-        holder.ivSimilarMovie.setOnClickListener(v -> {
+        holder.ivInformation.setOnClickListener(v -> {
             movie = movieList.get(position);
 
             AppCompatActivity activity = (AppCompatActivity) v.getContext();
@@ -80,14 +81,14 @@ public class InformationMovieAdapter extends RecyclerView.Adapter<InformationMov
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private ImageView ivSimilarMovie;
-        private ProgressBar pbInfoSimilarMovies;
+        private ImageView ivInformation;
+        private ProgressBar pbInformation;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            ivSimilarMovie = itemView.findViewById(R.id.ivSearch);
-            pbInfoSimilarMovies = itemView.findViewById(R.id.pbSearch);
+            ivInformation = itemView.findViewById(R.id.ivInformation);
+            pbInformation = itemView.findViewById(R.id.pbInformation);
         }
     }
 }

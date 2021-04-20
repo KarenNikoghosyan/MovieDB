@@ -93,8 +93,8 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             searchCardView = itemView.findViewById(R.id.searchCardView);
-            ivSearch = itemView.findViewById(R.id.ivSearch);
-            pbSearch = itemView.findViewById(R.id.pbSearch);
+            ivSearch = itemView.findViewById(R.id.ivInformation);
+            pbSearch = itemView.findViewById(R.id.pbInformation);
         }
     }
 
