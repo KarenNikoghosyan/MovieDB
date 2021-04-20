@@ -87,6 +87,7 @@ public class HomeMovieFragment extends Fragment {
                         if (getActivity() == null) {
                             return;
                         }
+                        getActivity().finishAffinity();
                         getActivity().finish();
 
                         LoadingActivity.isLogged = false;
