@@ -1,4 +1,4 @@
-package edu.karen.nikoghosyan.moviedb.ui.favorite;
+package edu.karen.nikoghosyan.moviedb.ui.bookmarks;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,24 +12,24 @@ import androidx.lifecycle.ViewModelProvider;
 
 import edu.karen.nikoghosyan.moviedb.R;
 
-public class FavoriteMovieFragment extends Fragment {
+public class BookmarksMovieFragment extends Fragment {
 
-    private FavoriteMovieViewModel mViewModel;
+    private BookmarksMovieViewModel mViewModel;
 
-    public static FavoriteMovieFragment newInstance() {
-        return new FavoriteMovieFragment();
+    public static BookmarksMovieFragment newInstance() {
+        return new BookmarksMovieFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.favorite_movie_fragment, container, false);
+        return inflater.inflate(R.layout.bookmarks_movie_fragment, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(FavoriteMovieViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(BookmarksMovieViewModel.class);
         // TODO: Use the ViewModel
     }
 

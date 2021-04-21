@@ -1,4 +1,4 @@
-package edu.karen.nikoghosyan.moviedb.models.api.information;
+package edu.karen.nikoghosyan.moviedb.models.api.details;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -16,7 +16,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class InformationAPIManager {
+public class DetailsAPIManager {
 
     ConnectionPool pool = new ConnectionPool(5, 30000, TimeUnit.MILLISECONDS);
     OkHttpClient client = new OkHttpClient
@@ -32,7 +32,7 @@ public class InformationAPIManager {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
-    private final InformationMovieService informationService = retrofit.create(InformationMovieService.class);
+    private final DetailsMovieService informationService = retrofit.create(DetailsMovieService.class);
 
     public void getMoviesBySimilarID(MutableLiveData<List<Movie>> moviesLiveData, int movieID) {
 

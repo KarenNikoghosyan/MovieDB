@@ -1,23 +1,17 @@
 package edu.karen.nikoghosyan.moviedb.ui.main;
 
-import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.lifecycle.Lifecycle;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import edu.karen.nikoghosyan.moviedb.ui.favorite.FavoriteMovieFragment;
+import edu.karen.nikoghosyan.moviedb.ui.bookmarks.BookmarksMovieFragment;
 import edu.karen.nikoghosyan.moviedb.ui.home.HomeMovieFragment;
 import edu.karen.nikoghosyan.moviedb.ui.search.SearchMovieFragment;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
-    private final Fragment[] fragments = {new SearchMovieFragment(), new HomeMovieFragment(), new FavoriteMovieFragment()};
+    private final Fragment[] fragments = {new SearchMovieFragment(), new HomeMovieFragment(), new BookmarksMovieFragment()};
 
     public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);

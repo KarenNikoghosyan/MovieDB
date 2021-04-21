@@ -1,4 +1,4 @@
-package edu.karen.nikoghosyan.moviedb.ui.information.adapters;
+package edu.karen.nikoghosyan.moviedb.ui.details.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,13 +19,13 @@ import java.util.List;
 import edu.karen.nikoghosyan.moviedb.Constants;
 import edu.karen.nikoghosyan.moviedb.R;
 import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
-import edu.karen.nikoghosyan.moviedb.ui.information.InformationMovieFragment;
+import edu.karen.nikoghosyan.moviedb.ui.details.DetailsMovieFragment;
 
-public class InformationMovieAdapter extends RecyclerView.Adapter<InformationMovieAdapter.ViewHolder>{
+public class DetailsMovieAdapter extends RecyclerView.Adapter<DetailsMovieAdapter.ViewHolder>{
     private final List<Movie> movieList;
     private Movie movie;
 
-    public InformationMovieAdapter(List<Movie> movieList) {
+    public DetailsMovieAdapter(List<Movie> movieList) {
         this.movieList = movieList;
     }
 
@@ -33,7 +33,7 @@ public class InformationMovieAdapter extends RecyclerView.Adapter<InformationMov
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        return new ViewHolder(inflater.inflate(R.layout.information_movie_item, parent, false));
+        return new ViewHolder(inflater.inflate(R.layout.details_movie_item, parent, false));
     }
 
     @Override
@@ -61,7 +61,7 @@ public class InformationMovieAdapter extends RecyclerView.Adapter<InformationMov
             movie = movieList.get(position);
 
             AppCompatActivity activity = (AppCompatActivity) v.getContext();
-            Fragment fragment = new InformationMovieFragment();
+            Fragment fragment = new DetailsMovieFragment();
 
             Constants.getBundle(fragment, movie);
 

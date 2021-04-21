@@ -1,9 +1,7 @@
-package edu.karen.nikoghosyan.moviedb.ui.information;
+package edu.karen.nikoghosyan.moviedb.ui.details;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
-import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,11 +24,11 @@ import com.squareup.picasso.Picasso;
 
 import edu.karen.nikoghosyan.moviedb.Constants;
 import edu.karen.nikoghosyan.moviedb.R;
-import edu.karen.nikoghosyan.moviedb.ui.information.adapters.InformationMovieAdapter;
+import edu.karen.nikoghosyan.moviedb.ui.details.adapters.DetailsMovieAdapter;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 import nl.joery.animatedbottombar.AnimatedBottomBar;
 
-public class InformationMovieFragment extends Fragment {
+public class DetailsMovieFragment extends Fragment {
 
     private AnimatedBottomBar animatedBottomBar;
     private ImageButton ibBack;
@@ -50,12 +48,12 @@ public class InformationMovieFragment extends Fragment {
     private RecyclerView rvSimilar;
     private RecyclerView rvRecommendations;
 
-    private InformationMovieViewModel informationMovieViewModel;
+    private DetailsMovieViewModel detailsMovieViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.information_movie_fragment, container, false);
+        return inflater.inflate(R.layout.details_movie_fragment, container, false);
     }
 
     @Override
@@ -147,9 +145,9 @@ public class InformationMovieFragment extends Fragment {
     }
 
     private void getObservers() {
-        informationMovieViewModel = new ViewModelProvider(this).get(InformationMovieViewModel.class);
+        detailsMovieViewModel = new ViewModelProvider(this).get(DetailsMovieViewModel.class);
 
-        informationMovieViewModel.getGenresNames().observe(getViewLifecycleOwner(), (genres -> {
+        detailsMovieViewModel.getGenresNames().observe(getViewLifecycleOwner(), (genres -> {
             int[] moviesIDs = getArguments().getIntArray(Constants.MOVIE_GENRE_IDS);
             StringBuilder genresNames = new StringBuilder();
 
@@ -174,22 +172,22 @@ public class InformationMovieFragment extends Fragment {
             }
         }));
 
-        informationMovieViewModel.getSimilarMoviesByID().observe(getViewLifecycleOwner(), (movies -> {
+        detailsMovieViewModel.getSimilarMoviesByID().observe(getViewLifecycleOwner(), (movies -> {
             if (movies.size() == 0) {
                 tvNoSimilarMovies.setVisibility(View.VISIBLE);
             }
 
             rvSimilar.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-            rvSimilar.setAdapter(new InformationMovieAdapter(movies));
+            rvSimilar.setAdapter(new DetailsMovieAdapter(movies));
         }));
 
-        informationMovieViewModel.getMoviesRecommendations().observe(getViewLifecycleOwner(), (movies -> {
+        detailsMovieViewModel.getMoviesRecommendations().observe(getViewLifecycleOwner(), (movies -> {
             if (movies.size() == 0) {
                 tvNoRecommendations.setVisibility(View.VISIBLE);
             }
 
             rvRecommendations.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-            rvRecommendations.setAdapter(new InformationMovieAdapter(movies));
+            rvRecommendations.setAdapter(new DetailsMovieAdapter(movies));
         }));
     }
 

@@ -21,7 +21,7 @@ import java.util.List;
 import edu.karen.nikoghosyan.moviedb.Constants;
 import edu.karen.nikoghosyan.moviedb.R;
 import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
-import edu.karen.nikoghosyan.moviedb.ui.information.InformationMovieFragment;
+import edu.karen.nikoghosyan.moviedb.ui.details.DetailsMovieFragment;
 
 public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.ViewHolder> {
     private List<Movie> movieList;
@@ -66,7 +66,7 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
             movie = movieList.get(position);
 
             AppCompatActivity activity = (AppCompatActivity) v.getContext();
-            Fragment fragment = new InformationMovieFragment();
+            Fragment fragment = new DetailsMovieFragment();
 
             Constants.getBundle(fragment, movie);
 

@@ -12,7 +12,7 @@
             android:background="#1C212F"
             android:clickable="true"
             android:focusable="true"
-            tools:context=".ui.information.InformationMovieFragment">
+            tools:context=".ui.details.DetailsMovieFragment">
 
                 <ImageButton
 

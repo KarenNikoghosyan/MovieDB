@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#1C212F"
-    tools:context=".ui.favorite.FavoriteMovieFragment"
+    tools:context=".ui.bookmarks.BookmarksMovieFragment"
     android:clickable="true"
     android:focusable="true">
 
