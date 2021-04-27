@@ -34,7 +34,7 @@ public class SearchAPIManager {
 
     private final SearchMovieService searchMovieService = retrofit.create(SearchMovieService.class);
 
-    public void getMoviesWithSearching(MutableLiveData<List<Movie>> moviesLiveData, String query){
+    public void getMoviesWithSearching(MutableLiveData<List<Movie>> moviesLiveData, MutableLiveData<Throwable> exceptionCallback,String query){
 
         Call<MovieResponse> movieHTTPRequest = searchMovieService.getMoviesWithSearching(query);
         movieHTTPRequest.enqueue(new Callback<MovieResponse>() {
@@ -51,7 +51,7 @@ public class SearchAPIManager {
 
             @Override
             public void onFailure(Call<MovieResponse> call, Throwable t) {
-                t.getMessage();
+                exceptionCallback.postValue(t);
             }
         });
     }

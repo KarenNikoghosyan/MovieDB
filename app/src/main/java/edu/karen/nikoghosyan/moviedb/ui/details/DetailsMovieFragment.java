@@ -2,6 +2,7 @@ package edu.karen.nikoghosyan.moviedb.ui.details;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +20,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.core.Tag;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import edu.karen.nikoghosyan.moviedb.Constants;
 import edu.karen.nikoghosyan.moviedb.R;
@@ -35,6 +48,7 @@ public class DetailsMovieFragment extends Fragment {
 
     private TextView tvTitle;
     private TextView tvRating;
+    private ImageButton ibBookmark;
     private ImageView ivBackdrop;
     private ImageView ivSmallPoster;
     private TextView tvGenre;
@@ -47,6 +61,11 @@ public class DetailsMovieFragment extends Fragment {
 
     private RecyclerView rvSimilar;
     private RecyclerView rvRecommendations;
+
+    private StringBuilder genresNames;
+    private FirebaseFirestore fStore;
+    private String userID;
+    private boolean isBookmarked = false;
 
     private DetailsMovieViewModel detailsMovieViewModel;
 
@@ -83,6 +102,42 @@ public class DetailsMovieFragment extends Fragment {
 
         tvRating = view.findViewById(R.id.tvRating);
         tvRating.setText(String.valueOf(getArguments().getDouble(Constants.MOVIE_RATING)));
+
+        ibBookmark = view.findViewById(R.id.ibBookmark);
+        ibBookmark.setOnClickListener(v -> {
+            if (!isBookmarked) {
+                isBookmarked = true;
+
+                ibBookmark.setImageResource(R.drawable.icon_bookmark_selected);
+                if (getView() != null) Snackbar.make(getView(), "Added To Bookmarks", Snackbar.LENGTH_SHORT).show();
+
+                if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                    fStore = FirebaseFirestore.getInstance();
+                    userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    DocumentReference documentReference = fStore.collection("users").document(userID);
+
+                    Map<String, Object> user = new HashMap<>();
+                    user.put("movieID", Constants.MOVIE_ID);
+                    user.put("movieTitle", getArguments().getString(Constants.MOVIE_TITLE));
+                    user.put("movieRating", getArguments().getDouble(Constants.MOVIE_RATING));
+                    user.put("movieBackdropURL", getArguments().getString(Constants.MOVIE_BACKDROP_URL));
+                    user.put("movieGenresIDs", Arrays.asList(genresNames));
+                    user.put("movieReleaseDate", getArguments().getString(Constants.MOVIE_RELEASE_DATE));
+                    user.put("movieOverview", getArguments().getString(Constants.MOVIE_OVERVIEW));
+                    user.put("movieImageURL", getArguments().getString(Constants.MOVIE_IMAGE_URL));
+                    user.put("movieLanguage", getArguments().getString(Constants.MOVIE_Language));
+
+                    documentReference.set(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was added for user" + userID));
+                }
+
+            }
+            else {
+                isBookmarked = false;
+
+                ibBookmark.setImageResource(R.drawable.icon_bookmark_unselected);
+                if (getView() != null) Snackbar.make(getView(), "Removed From Bookmarks", Snackbar.LENGTH_SHORT).show();
+            }
+        });
 
         ivBackdrop = view.findViewById(R.id.ivBackdrop);
         Picasso
@@ -149,7 +204,7 @@ public class DetailsMovieFragment extends Fragment {
 
         detailsMovieViewModel.getGenresNames().observe(getViewLifecycleOwner(), (genres -> {
             int[] moviesIDs = getArguments().getIntArray(Constants.MOVIE_GENRE_IDS);
-            StringBuilder genresNames = new StringBuilder();
+            genresNames = new StringBuilder();
 
             ((Runnable) () -> {
                 int limit = moviesIDs.length;

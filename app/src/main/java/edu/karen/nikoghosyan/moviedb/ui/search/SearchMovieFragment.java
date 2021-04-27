@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -94,16 +96,15 @@ public class SearchMovieFragment extends Fragment {
         Constants.MOVIE_SEARCH = etSearch.getText().toString();
 
         searchMovieViewModel = new ViewModelProvider(this).get(SearchMovieViewModel.class);
-        clSearch.setVisibility(View.VISIBLE);
 
         searchMovieViewModel.updateMovieWithSearching();
 
         searchMovieViewModel.getMoviesWithSearching().observe(getViewLifecycleOwner(), (movies -> {
+            clSearch.setVisibility(View.GONE);
             moviesList = movies;
 
             rvMovieSearch.setAdapter(new SearchMovieAdapter(movies));
 
-            clSearch.setVisibility(View.GONE);
             ivSearchError.setVisibility(View.GONE);
             tvSearchErrorMessage.setVisibility(View.GONE);
 
@@ -121,6 +122,11 @@ public class SearchMovieFragment extends Fragment {
                 tvSearchErrorMessage.setVisibility(View.VISIBLE);
             }
         }, 2000);
+
+        searchMovieViewModel.getException().observe(getViewLifecycleOwner(), (throwable -> {
+            //TODO: Add error dialog and clSearch to another place
+            clSearch.setVisibility(View.VISIBLE);
+        }));
     }
 
     private void onScrollListener() {

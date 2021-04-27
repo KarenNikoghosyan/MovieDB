@@ -18,6 +18,8 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import edu.karen.nikoghosyan.moviedb.R;
 
@@ -28,6 +30,8 @@ public class RegisterFragment extends Fragment {
     private EditText etEmailRegister;
     private EditText etPasswordRegister;
     private EditText etConfirmPassword;
+    private FirebaseFirestore fStore;
+    private String userID;
 
     @Nullable
     @Override
@@ -66,6 +70,8 @@ public class RegisterFragment extends Fragment {
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
             mAuth.createUserWithEmailAndPassword(getEmail(), getPassword())
                     .addOnSuccessListener(getActivity(), authResult -> {
+                        userID = mAuth.getCurrentUser().getUid();
+                        fStore.collection("users").document(userID);
                         gotoLoginFragment();
                     }).addOnFailureListener(getActivity(), e -> {
                 showError(e);

@@ -12,20 +12,24 @@ import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
 public class SearchMovieViewModel extends ViewModel {
 
     private final MutableLiveData<List<Movie>> moviesSearching = new MutableLiveData<>();
+    private final MutableLiveData<Throwable> exception = new MutableLiveData<>();
     private final SearchAPIManager searchManager;
 
     public SearchMovieViewModel() {
 
         searchManager = new SearchAPIManager();
-        searchManager.getMoviesWithSearching(moviesSearching, Constants.MOVIE_SEARCH);
+        searchManager.getMoviesWithSearching(moviesSearching, exception, Constants.MOVIE_SEARCH);
     }
 
     public MutableLiveData<List<Movie>> getMoviesWithSearching() {
         return moviesSearching;
     }
+    public MutableLiveData<Throwable> getException() {
+        return exception;
+    }
 
     public void updateMovieWithSearching() {
-        searchManager.getMoviesWithSearching(moviesSearching, Constants.MOVIE_SEARCH);
+        searchManager.getMoviesWithSearching(moviesSearching, exception ,Constants.MOVIE_SEARCH);
     }
 
 }
