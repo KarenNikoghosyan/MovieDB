@@ -70,8 +70,9 @@ public class RegisterFragment extends Fragment {
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
             mAuth.createUserWithEmailAndPassword(getEmail(), getPassword())
                     .addOnSuccessListener(getActivity(), authResult -> {
-                        userID = mAuth.getCurrentUser().getUid();
-                        fStore.collection("users").document(userID);
+//                        userID = mAuth.getCurrentUser().getUid();
+//                        fStore = FirebaseFirestore.getInstance();
+//                        fStore.collection("users").document(userID).collection("movies");
                         gotoLoginFragment();
                     }).addOnFailureListener(getActivity(), e -> {
                 showError(e);

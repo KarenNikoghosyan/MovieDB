@@ -1,6 +1,7 @@
 package edu.karen.nikoghosyan.moviedb.ui.home.adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,7 +67,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
             AppCompatActivity activity = (AppCompatActivity) v.getContext();
             Fragment fragment = new DetailsMovieFragment();
 
-            Constants.getBundle(fragment, movie);
+            getBundle(fragment, movie);
 
             activity
                     .getSupportFragmentManager()
@@ -83,7 +84,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
         return moviesList.size();
     }
 
-
     public class ViewHolder extends RecyclerView.ViewHolder{
         private ImageView ivHome;
         private ProgressBar pbHome;
@@ -94,5 +94,19 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
             ivHome = itemView.findViewById(R.id.ivHome);
             pbHome = itemView.findViewById(R.id.pbHome);
         }
+    }
+
+    public void getBundle(Fragment fragment, Movie movie){
+        Bundle args = new Bundle();
+        args.putString(Constants.MOVIE_TITLE, movie.getTitle());
+        args.putDouble(Constants.MOVIE_RATING, movie.getRating());
+        args.putString(Constants.MOVIE_BACKDROP_URL, movie.getBackdropImageURL());
+        args.putIntArray(Constants.MOVIE_GENRE_IDS, movie.getGenres());
+        args.putString(Constants.MOVIE_RELEASE_DATE, movie.getReleaseDate());
+        args.putString(Constants.MOVIE_OVERVIEW, movie.getOverview());
+        Constants.MOVIE_ID = movie.getMovieID();
+        args.putString(Constants.MOVIE_IMAGE_URL, movie.getImageURL());
+        args.putString(Constants.MOVIE_Language, movie.getLanguage());
+        fragment.setArguments(args);
     }
 }

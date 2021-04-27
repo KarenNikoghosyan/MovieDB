@@ -23,16 +23,15 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.core.Tag;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import edu.karen.nikoghosyan.moviedb.Constants;
@@ -62,6 +61,7 @@ public class DetailsMovieFragment extends Fragment {
     private RecyclerView rvSimilar;
     private RecyclerView rvRecommendations;
 
+    private DocumentReference documentReference;
     private StringBuilder genresNames;
     private FirebaseFirestore fStore;
     private String userID;
@@ -105,6 +105,7 @@ public class DetailsMovieFragment extends Fragment {
 
         ibBookmark = view.findViewById(R.id.ibBookmark);
         ibBookmark.setOnClickListener(v -> {
+
             if (!isBookmarked) {
                 isBookmarked = true;
 
@@ -114,28 +115,32 @@ public class DetailsMovieFragment extends Fragment {
                 if (FirebaseAuth.getInstance().getCurrentUser() != null) {
                     fStore = FirebaseFirestore.getInstance();
                     userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                    DocumentReference documentReference = fStore.collection("users").document(userID);
+                    System.out.println(userID);
+                    documentReference = fStore.collection("users").document(userID);
 
                     Map<String, Object> user = new HashMap<>();
-                    user.put("movieID", Constants.MOVIE_ID);
-                    user.put("movieTitle", getArguments().getString(Constants.MOVIE_TITLE));
-                    user.put("movieRating", getArguments().getDouble(Constants.MOVIE_RATING));
-                    user.put("movieBackdropURL", getArguments().getString(Constants.MOVIE_BACKDROP_URL));
-                    user.put("movieGenresIDs", Arrays.asList(genresNames));
-                    user.put("movieReleaseDate", getArguments().getString(Constants.MOVIE_RELEASE_DATE));
-                    user.put("movieOverview", getArguments().getString(Constants.MOVIE_OVERVIEW));
-                    user.put("movieImageURL", getArguments().getString(Constants.MOVIE_IMAGE_URL));
-                    user.put("movieLanguage", getArguments().getString(Constants.MOVIE_Language));
+                    user.put("" + getArguments().getString(Constants.MOVIE_TITLE), Constants.MOVIE_ID);
 
-                    documentReference.set(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was added for user" + userID));
+                    documentReference.get().addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists()) {
+                            documentReference.update(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was added for user" + userID));
+                        }
+                        else {
+                            documentReference.set(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was added for user" + userID));
+                        }
+                    });
                 }
-
             }
             else {
                 isBookmarked = false;
 
                 ibBookmark.setImageResource(R.drawable.icon_bookmark_unselected);
                 if (getView() != null) Snackbar.make(getView(), "Removed From Bookmarks", Snackbar.LENGTH_SHORT).show();
+
+                documentReference = fStore.collection("users").document(userID);
+                Map<String, Object> user = new HashMap<>();
+                user.put("" + getArguments().getString(Constants.MOVIE_TITLE), FieldValue.delete());
+                documentReference.update(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was removed for user" + userID));
             }
         });
 
