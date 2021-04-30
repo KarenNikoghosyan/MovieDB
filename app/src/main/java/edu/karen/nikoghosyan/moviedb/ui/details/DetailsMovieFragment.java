@@ -62,7 +62,6 @@ public class DetailsMovieFragment extends Fragment {
     private RecyclerView rvRecommendations;
 
     private DocumentReference documentReference;
-    private StringBuilder genresNames;
     private FirebaseFirestore fStore;
     private String userID;
     private boolean isBookmarked = false;
@@ -104,6 +103,25 @@ public class DetailsMovieFragment extends Fragment {
         tvRating.setText(String.valueOf(getArguments().getDouble(Constants.MOVIE_RATING)));
 
         ibBookmark = view.findViewById(R.id.ibBookmark);
+
+        fStore = FirebaseFirestore.getInstance();
+
+        if (FirebaseAuth.getInstance().getCurrentUser() != null){
+
+            userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            documentReference = fStore.collection("users").document(userID);
+            documentReference.get().addOnSuccessListener(documentSnapshot -> {
+                if (documentSnapshot.contains("" + getArguments().getString(Constants.MOVIE_TITLE))){
+                    ibBookmark.setImageResource(R.drawable.icon_bookmark_selected);
+                    isBookmarked = true;
+                }
+                else {
+                    ibBookmark.setImageResource(R.drawable.icon_bookmark_unselected);
+                    isBookmarked = false;
+                }
+            });
+        }
+
         ibBookmark.setOnClickListener(v -> {
 
             if (!isBookmarked) {
@@ -113,13 +131,13 @@ public class DetailsMovieFragment extends Fragment {
                 if (getView() != null) Snackbar.make(getView(), "Added To Bookmarks", Snackbar.LENGTH_SHORT).show();
 
                 if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-                    fStore = FirebaseFirestore.getInstance();
+
                     userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                    System.out.println(userID);
                     documentReference = fStore.collection("users").document(userID);
 
                     Map<String, Object> user = new HashMap<>();
-                    user.put("" + getArguments().getString(Constants.MOVIE_TITLE), Constants.MOVIE_ID);
+                    user.put("movieIDs", FieldValue.arrayUnion(Constants.MOVIE_ID));
+                    user.put("" + getArguments().getString(Constants.MOVIE_TITLE), "Bookmarked");
 
                     documentReference.get().addOnSuccessListener(documentSnapshot -> {
                         if (documentSnapshot.exists()) {
@@ -138,8 +156,11 @@ public class DetailsMovieFragment extends Fragment {
                 if (getView() != null) Snackbar.make(getView(), "Removed From Bookmarks", Snackbar.LENGTH_SHORT).show();
 
                 documentReference = fStore.collection("users").document(userID);
+
                 Map<String, Object> user = new HashMap<>();
+                user.put("movieIDs", FieldValue.arrayRemove(Constants.MOVIE_ID));
                 user.put("" + getArguments().getString(Constants.MOVIE_TITLE), FieldValue.delete());
+
                 documentReference.update(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was removed for user" + userID));
             }
         });
@@ -209,7 +230,7 @@ public class DetailsMovieFragment extends Fragment {
 
         detailsMovieViewModel.getGenresNames().observe(getViewLifecycleOwner(), (genres -> {
             int[] moviesIDs = getArguments().getIntArray(Constants.MOVIE_GENRE_IDS);
-            genresNames = new StringBuilder();
+            StringBuilder genresNames = new StringBuilder();
 
             ((Runnable) () -> {
                 int limit = moviesIDs.length;

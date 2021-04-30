@@ -30,8 +30,6 @@ public class RegisterFragment extends Fragment {
     private EditText etEmailRegister;
     private EditText etPasswordRegister;
     private EditText etConfirmPassword;
-    private FirebaseFirestore fStore;
-    private String userID;
 
     @Nullable
     @Override
@@ -70,9 +68,6 @@ public class RegisterFragment extends Fragment {
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
             mAuth.createUserWithEmailAndPassword(getEmail(), getPassword())
                     .addOnSuccessListener(getActivity(), authResult -> {
-//                        userID = mAuth.getCurrentUser().getUid();
-//                        fStore = FirebaseFirestore.getInstance();
-//                        fStore.collection("users").document(userID).collection("movies");
                         gotoLoginFragment();
                     }).addOnFailureListener(getActivity(), e -> {
                 showError(e);

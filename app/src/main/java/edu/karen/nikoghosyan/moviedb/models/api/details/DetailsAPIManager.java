@@ -32,11 +32,11 @@ public class DetailsAPIManager {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
-    private final DetailsMovieService informationService = retrofit.create(DetailsMovieService.class);
+    private final DetailsMovieService detailsService = retrofit.create(DetailsMovieService.class);
 
     public void getMoviesBySimilarID(MutableLiveData<List<Movie>> moviesLiveData, int movieID) {
 
-        Call<MovieResponse> movieHTTPRequest = informationService.getMoviesBySimilarID(movieID);
+        Call<MovieResponse> movieHTTPRequest = detailsService.getMoviesBySimilarID(movieID);
         movieHTTPRequest.enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
@@ -57,7 +57,7 @@ public class DetailsAPIManager {
 
     public void getRecommendations(MutableLiveData<List<Movie>> moviesLiveData, int movieID) {
 
-        Call<MovieResponse> movieHTTPRequest = informationService.getRecommendations(movieID);
+        Call<MovieResponse> movieHTTPRequest = detailsService.getRecommendations(movieID);
         movieHTTPRequest.enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {

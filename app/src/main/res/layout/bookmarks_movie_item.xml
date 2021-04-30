@@ -14,7 +14,7 @@
         android:background="#22293A">
 
         <ImageView
-            android:id="@+id/ivSearchPoster"
+            android:id="@+id/ivBookmarkPoster"
             android:layout_width="140dp"
             android:layout_height="200dp"
             android:layout_marginStart="16dp"
@@ -36,7 +36,7 @@
             android:textColor="@color/white"
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ivSearchPoster"
+            app:layout_constraintStart_toEndOf="@+id/ivBookmarkPoster"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -51,7 +51,7 @@
             android:textColor="@color/white"
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ivSearchPoster"
+            app:layout_constraintStart_toEndOf="@+id/ivBookmarkPoster"
             app:layout_constraintTop_toBottomOf="@+id/tvSearchTitle" />
 
         <TextView
@@ -66,7 +66,7 @@
             android:textColor="@color/white"
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ivSearchPoster"
+            app:layout_constraintStart_toEndOf="@+id/ivBookmarkPoster"
             app:layout_constraintTop_toBottomOf="@+id/tvSearchReleaseDate" />
 
         <TextView
@@ -91,18 +91,18 @@
             android:text="@string/language"
             android:textColor="@color/white"
             android:textSize="15sp"
-            app:layout_constraintStart_toEndOf="@+id/ivSearchPoster"
+            app:layout_constraintStart_toEndOf="@+id/ivBookmarkPoster"
             app:layout_constraintTop_toBottomOf="@+id/tvSearchGenre" />
 
         <ProgressBar
-            android:id="@+id/pbSearchPoster"
+            android:id="@+id/pbBookmarkPoster"
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/ivSearchPoster"
-            app:layout_constraintEnd_toEndOf="@+id/ivSearchPoster"
-            app:layout_constraintStart_toStartOf="@+id/ivSearchPoster"
-            app:layout_constraintTop_toTopOf="@+id/ivSearchPoster" />
+            app:layout_constraintBottom_toBottomOf="@+id/ivBookmarkPoster"
+            app:layout_constraintEnd_toEndOf="@+id/ivBookmarkPoster"
+            app:layout_constraintStart_toStartOf="@+id/ivBookmarkPoster"
+            app:layout_constraintTop_toTopOf="@+id/ivBookmarkPoster" />
 
         <ImageView
             android:id="@+id/imageView3"
@@ -110,7 +110,7 @@
             android:layout_height="25dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="32dp"
-            app:layout_constraintStart_toEndOf="@+id/ivSearchPoster"
+            app:layout_constraintStart_toEndOf="@+id/ivBookmarkPoster"
             app:layout_constraintTop_toBottomOf="@+id/TextView7"
             app:srcCompat="@drawable/icon_star" />
 
