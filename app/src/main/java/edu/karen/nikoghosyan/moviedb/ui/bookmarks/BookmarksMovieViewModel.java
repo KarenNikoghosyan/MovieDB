@@ -8,21 +8,27 @@ import java.util.List;
 import edu.karen.nikoghosyan.moviedb.Constants;
 import edu.karen.nikoghosyan.moviedb.models.api.bookmarks.BookmarksAPIManager;
 import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
+import edu.karen.nikoghosyan.moviedb.ui.bookmarks.adapters.BookmarksAdapter;
 
 public class BookmarksMovieViewModel extends ViewModel {
 
     private final MutableLiveData<List<Movie>> bookmarkedMovies = new MutableLiveData<>();
     private final BookmarksAPIManager bookmarksAPIManager;
 
+
     public BookmarksMovieViewModel(){
         bookmarksAPIManager = new BookmarksAPIManager();
-        bookmarksAPIManager.getMovies(bookmarkedMovies, Constants.MOVIE_ID);
+        bookmarksAPIManager.getMovies(bookmarkedMovies);
+        bookmarksAPIManager.getSingleMovie(bookmarkedMovies);
     }
 
     public MutableLiveData<List<Movie>> getBookmarkedMovies() {
         return bookmarkedMovies;
     }
+
     public void updateBookmarks(){
-        bookmarksAPIManager.getMovies(bookmarkedMovies, Constants.MOVIE_ID);
+        bookmarksAPIManager.getMovies(bookmarkedMovies);
+        BookmarksAdapter bookmarksAdapter = new BookmarksAdapter();
+        bookmarksAdapter.notifyDataSetChanged();
     }
 }

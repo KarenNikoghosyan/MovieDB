@@ -36,6 +36,9 @@ import java.util.Map;
 
 import edu.karen.nikoghosyan.moviedb.Constants;
 import edu.karen.nikoghosyan.moviedb.R;
+import edu.karen.nikoghosyan.moviedb.ui.bookmarks.BookmarksMovieFragment;
+import edu.karen.nikoghosyan.moviedb.ui.bookmarks.BookmarksMovieViewModel;
+import edu.karen.nikoghosyan.moviedb.ui.bookmarks.adapters.BookmarksAdapter;
 import edu.karen.nikoghosyan.moviedb.ui.details.adapters.DetailsMovieAdapter;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 import nl.joery.animatedbottombar.AnimatedBottomBar;
@@ -106,16 +109,15 @@ public class DetailsMovieFragment extends Fragment {
 
         fStore = FirebaseFirestore.getInstance();
 
-        if (FirebaseAuth.getInstance().getCurrentUser() != null){
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
 
             userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
             documentReference = fStore.collection("users").document(userID);
             documentReference.get().addOnSuccessListener(documentSnapshot -> {
-                if (documentSnapshot.contains("" + getArguments().getString(Constants.MOVIE_TITLE))){
+                if (documentSnapshot.contains("" + getArguments().getString(Constants.MOVIE_TITLE))) {
                     ibBookmark.setImageResource(R.drawable.icon_bookmark_selected);
                     isBookmarked = true;
-                }
-                else {
+                } else {
                     ibBookmark.setImageResource(R.drawable.icon_bookmark_unselected);
                     isBookmarked = false;
                 }
@@ -123,12 +125,12 @@ public class DetailsMovieFragment extends Fragment {
         }
 
         ibBookmark.setOnClickListener(v -> {
-
             if (!isBookmarked) {
                 isBookmarked = true;
 
                 ibBookmark.setImageResource(R.drawable.icon_bookmark_selected);
-                if (getView() != null) Snackbar.make(getView(), "Added To Bookmarks", Snackbar.LENGTH_SHORT).show();
+                if (getView() != null)
+                    Snackbar.make(getView(), "Added To Bookmarks", Snackbar.LENGTH_SHORT).show();
 
                 if (FirebaseAuth.getInstance().getCurrentUser() != null) {
 
@@ -142,18 +144,21 @@ public class DetailsMovieFragment extends Fragment {
                     documentReference.get().addOnSuccessListener(documentSnapshot -> {
                         if (documentSnapshot.exists()) {
                             documentReference.update(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was added for user" + userID));
-                        }
-                        else {
+
+                            BookmarksMovieFragment bookmarksMovieFragment = new BookmarksMovieFragment();
+                            bookmarksMovieFragment.updateData();
+
+                        } else {
                             documentReference.set(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was added for user" + userID));
                         }
                     });
                 }
-            }
-            else {
+            } else {
                 isBookmarked = false;
 
                 ibBookmark.setImageResource(R.drawable.icon_bookmark_unselected);
-                if (getView() != null) Snackbar.make(getView(), "Removed From Bookmarks", Snackbar.LENGTH_SHORT).show();
+                if (getView() != null)
+                    Snackbar.make(getView(), "Removed From Bookmarks", Snackbar.LENGTH_SHORT).show();
 
                 documentReference = fStore.collection("users").document(userID);
 
@@ -162,6 +167,9 @@ public class DetailsMovieFragment extends Fragment {
                 user.put("" + getArguments().getString(Constants.MOVIE_TITLE), FieldValue.delete());
 
                 documentReference.update(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was removed for user" + userID));
+
+                BookmarksMovieFragment bookmarksMovieFragment = new BookmarksMovieFragment();
+                bookmarksMovieFragment.updateData();
             }
         });
 
@@ -233,13 +241,15 @@ public class DetailsMovieFragment extends Fragment {
             StringBuilder genresNames = new StringBuilder();
 
             ((Runnable) () -> {
-                int limit = moviesIDs.length;
-                if (moviesIDs.length > 3) limit = 3;
+                if (moviesIDs != null) {
+                    int limit = moviesIDs.length;
+                    if (moviesIDs.length > 3) limit = 3;
 
-                for (int i = 0; i < limit; i++) {
-                    for (int j = 0; j < genres.size(); j++) {
-                        if (moviesIDs[i] == genres.get(j).getGenreId()) {
-                            genresNames.append(genres.get(j).getGenreName()).append(",");
+                    for (int i = 0; i < limit; i++) {
+                        for (int j = 0; j < genres.size(); j++) {
+                            if (moviesIDs[i] == genres.get(j).getGenreId()) {
+                                genresNames.append(genres.get(j).getGenreName()).append(",");
+                            }
                         }
                     }
                 }

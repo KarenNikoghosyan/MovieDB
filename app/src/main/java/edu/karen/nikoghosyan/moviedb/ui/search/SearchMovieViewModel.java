@@ -31,5 +31,4 @@ public class  SearchMovieViewModel extends ViewModel {
     public void updateMovieWithSearching() {
         searchManager.getMoviesWithSearching(moviesSearching, exception ,Constants.MOVIE_SEARCH);
     }
-
 }

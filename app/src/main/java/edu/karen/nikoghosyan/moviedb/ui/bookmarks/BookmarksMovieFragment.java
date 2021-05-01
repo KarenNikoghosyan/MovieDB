@@ -35,11 +35,6 @@ public class BookmarksMovieFragment extends Fragment {
     private BookmarksMovieViewModel bookmarksMovieViewModel;
     private RecyclerView rvBookmarks;
 
-    private DocumentReference documentReference;
-    private FirebaseFirestore fStore;
-    private String userID;
-    private ArrayList<Long> movieIDs;
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -47,16 +42,27 @@ public class BookmarksMovieFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        //bookmarksMovieViewModel.updateBookmarks();
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        bookmarksMovieViewModel = new ViewModelProvider(this).get(BookmarksMovieViewModel.class);
 
         rvBookmarks = view.findViewById(R.id.rvBookmarks);
 
+        bookmarksMovieViewModel = new ViewModelProvider(this).get(BookmarksMovieViewModel.class);
+
         bookmarksMovieViewModel.getBookmarkedMovies().observe(getViewLifecycleOwner(), movies -> {
-            System.out.println(movies);
             rvBookmarks.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
             rvBookmarks.setAdapter(new BookmarksAdapter(movies));
+
         });
+    }
+
+    public void updateData(){
+        //bookmarksMovieViewModel.updateBookmarks();
     }
 }

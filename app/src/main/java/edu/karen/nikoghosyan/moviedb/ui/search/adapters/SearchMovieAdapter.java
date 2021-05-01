@@ -109,7 +109,7 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
         args.putString(Constants.MOVIE_TITLE, movie.getTitle());
         args.putDouble(Constants.MOVIE_RATING, movie.getRating());
         args.putString(Constants.MOVIE_BACKDROP_URL, movie.getBackdropImageURL());
-        args.putIntArray(Constants.MOVIE_GENRE_IDS, movie.getGenres());
+        args.putIntArray(Constants.MOVIE_GENRE_IDS, movie.getGenresIDs());
         args.putString(Constants.MOVIE_RELEASE_DATE, movie.getReleaseDate());
         args.putString(Constants.MOVIE_OVERVIEW, movie.getOverview());
         Constants.MOVIE_ID = movie.getMovieID();

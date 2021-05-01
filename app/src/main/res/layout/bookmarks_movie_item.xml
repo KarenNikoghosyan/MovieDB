@@ -25,7 +25,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvSearchTitle"
+            android:id="@+id/tvBookmarkTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -40,7 +40,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvSearchReleaseDate"
+            android:id="@+id/tvBookmarkReleaseDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -52,10 +52,10 @@
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivBookmarkPoster"
-            app:layout_constraintTop_toBottomOf="@+id/tvSearchTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/tvBookmarkTitle" />
 
         <TextView
-            android:id="@+id/tvSearchGenre"
+            android:id="@+id/tvBookmarkGenre"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -67,10 +67,10 @@
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivBookmarkPoster"
-            app:layout_constraintTop_toBottomOf="@+id/tvSearchReleaseDate" />
+            app:layout_constraintTop_toBottomOf="@+id/tvBookmarkReleaseDate" />
 
         <TextView
-            android:id="@+id/tvSearchLanguage"
+            android:id="@+id/tvBookmarkLanguage"
             android:layout_width="80dp"
             android:layout_height="17dp"
             android:fontFamily="@font/abeezee"
@@ -92,7 +92,7 @@
             android:textColor="@color/white"
             android:textSize="15sp"
             app:layout_constraintStart_toEndOf="@+id/ivBookmarkPoster"
-            app:layout_constraintTop_toBottomOf="@+id/tvSearchGenre" />
+            app:layout_constraintTop_toBottomOf="@+id/tvBookmarkGenre" />
 
         <ProgressBar
             android:id="@+id/pbBookmarkPoster"
@@ -115,7 +115,7 @@
             app:srcCompat="@drawable/icon_star" />
 
         <TextView
-            android:id="@+id/tvSearchRating"
+            android:id="@+id/tvBookmarkRating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -127,7 +127,7 @@
             app:layout_constraintTop_toTopOf="@+id/imageView3" />
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/ibBookmarkSwitch"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginTop="32dp"
@@ -136,7 +136,7 @@
             android:scaleType="fitCenter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/TextView7"
-            app:srcCompat="@drawable/icon_bookmark_unselected" />
+            app:srcCompat="@drawable/icon_bookmark_selected" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

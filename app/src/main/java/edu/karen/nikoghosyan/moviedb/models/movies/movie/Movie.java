@@ -10,7 +10,10 @@ public class Movie {
     private String backdropImage;
 
     @SerializedName("genre_ids")
-    private int[] genres;
+    private int[] genresIDs;
+
+    @SerializedName("genres")
+    private Object[] genres;
 
     @SerializedName("id")
     private int movieID;
@@ -43,10 +46,16 @@ public class Movie {
     public void setBackdropImage(String backdropImage) {
         this.backdropImage = backdropImage;
     }
-    public int[] getGenres() {
+    public int[] getGenresIDs() {
+        return genresIDs;
+    }
+    public void setGenresIDs(int[] genres) {
+        this.genresIDs = genres;
+    }
+    public Object[] getGenres() {
         return genres;
     }
-    public void setGenres(int[] genres) {
+    public void setGenres(Object[] genres) {
         this.genres = genres;
     }
     public int getMovieID() {
@@ -102,6 +111,7 @@ public class Movie {
     public String toString() {
         return "Movie{" +
                 "backdropImage='" + backdropImage + '\'' +
+                ", genresIDs=" + Arrays.toString(genresIDs) +
                 ", genres=" + Arrays.toString(genres) +
                 ", movieID=" + movieID +
                 ", language='" + language + '\'' +
