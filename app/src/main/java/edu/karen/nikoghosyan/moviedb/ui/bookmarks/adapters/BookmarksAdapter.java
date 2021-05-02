@@ -32,9 +32,10 @@ import edu.karen.nikoghosyan.moviedb.R;
 import edu.karen.nikoghosyan.moviedb.models.movies.genre.GenreObject;
 import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
 import edu.karen.nikoghosyan.moviedb.ui.details.DetailsMovieFragment;
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.ViewHolder>{
-    public List<Movie> movieList;
+    public static List<Movie> movieList;
     private Movie movie;
 
     private DocumentReference documentReference;
@@ -45,8 +46,6 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.View
     public BookmarksAdapter(List<Movie> movieList) {
         this.movieList = movieList;
     }
-
-    public BookmarksAdapter() {}
 
     @NonNull
     @Override
@@ -82,6 +81,7 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.View
                 .get()
                 .load(movie.getImageURL())
                 .fit()
+                .transform(new RoundedCornersTransformation(10, 10))
                 .into(holder.ivBookmarkPoster, new Callback() {
                     @Override
                     public void onSuccess() {

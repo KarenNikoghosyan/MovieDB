@@ -36,6 +36,7 @@ import java.util.Map;
 
 import edu.karen.nikoghosyan.moviedb.Constants;
 import edu.karen.nikoghosyan.moviedb.R;
+import edu.karen.nikoghosyan.moviedb.SharedViewModel;
 import edu.karen.nikoghosyan.moviedb.ui.bookmarks.BookmarksMovieFragment;
 import edu.karen.nikoghosyan.moviedb.ui.bookmarks.BookmarksMovieViewModel;
 import edu.karen.nikoghosyan.moviedb.ui.bookmarks.adapters.BookmarksAdapter;
@@ -68,8 +69,9 @@ public class DetailsMovieFragment extends Fragment {
     private FirebaseFirestore fStore;
     private String userID;
     private boolean isBookmarked = false;
+    private BookmarksAdapter adapter;
 
-    private DetailsMovieViewModel detailsMovieViewModel;
+    private SharedViewModel detailsMovieViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -145,11 +147,20 @@ public class DetailsMovieFragment extends Fragment {
                         if (documentSnapshot.exists()) {
                             documentReference.update(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was added for user" + userID));
 
-//                            BookmarksMovieFragment bookmarksMovieFragment = new BookmarksMovieFragment();
-//                            bookmarksMovieFragment.updateData();
-//                            BookmarksMovieViewModel bookmarksMovieViewModel = new ViewModelProvider(requireActivity()).get(BookmarksMovieViewModel.class);
-//                            bookmarksMovieViewModel.updateBookmarks();
+                            //TODO:
+                            detailsMovieViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
+                            //detailsMovieViewModel.updateBookmarks();
+                            detailsMovieViewModel.getBookmarkedMovies().observe(getViewLifecycleOwner(), movies -> {
 
+                                BookmarksAdapter.movieList.clear();
+                                System.out.println(BookmarksAdapter.movieList);
+                                BookmarksAdapter.movieList.addAll(movies);
+                                System.out.println(BookmarksAdapter.movieList);
+                                adapter = new BookmarksAdapter(movies);
+                                adapter.notifyDataSetChanged();
+                                BookmarksMovieFragment.rvBookmarks.setAdapter(adapter);
+
+                            });
 
                         } else {
                             documentReference.set(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was added for user" + userID));
@@ -171,8 +182,7 @@ public class DetailsMovieFragment extends Fragment {
 
                 documentReference.update(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was removed for user" + userID));
 
-                BookmarksMovieFragment bookmarksMovieFragment = new BookmarksMovieFragment();
-                bookmarksMovieFragment.updateData();
+                //TODO:
             }
         });
 
@@ -237,7 +247,7 @@ public class DetailsMovieFragment extends Fragment {
     }
 
     private void getObservers() {
-        detailsMovieViewModel = new ViewModelProvider(this).get(DetailsMovieViewModel.class);
+        detailsMovieViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
 
         detailsMovieViewModel.getGenresNames().observe(getViewLifecycleOwner(), (genres -> {
             int[] moviesIDs = getArguments().getIntArray(Constants.MOVIE_GENRE_IDS);

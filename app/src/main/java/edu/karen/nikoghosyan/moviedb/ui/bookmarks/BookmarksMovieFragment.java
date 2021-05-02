@@ -29,12 +29,13 @@ import java.util.ArrayList;
 
 import edu.karen.nikoghosyan.moviedb.Constants;
 import edu.karen.nikoghosyan.moviedb.R;
+import edu.karen.nikoghosyan.moviedb.SharedViewModel;
 import edu.karen.nikoghosyan.moviedb.ui.bookmarks.adapters.BookmarksAdapter;
 
 public class BookmarksMovieFragment extends Fragment {
 
-    private BookmarksMovieViewModel bookmarksMovieViewModel;
-    private RecyclerView rvBookmarks;
+    private SharedViewModel bookmarksMovieViewModel;
+    public static RecyclerView rvBookmarks;
     private BookmarksAdapter adapter;
 
     @Override
@@ -44,22 +45,12 @@ public class BookmarksMovieFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        adapter = new BookmarksAdapter();
-        System.out.println(adapter.movieList);
-
-        //adapter.notifyDataSetChanged();
-        //bookmarksMovieViewModel.updateBookmarks();
-    }
-
-    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         rvBookmarks = view.findViewById(R.id.rvBookmarks);
 
-        bookmarksMovieViewModel = new ViewModelProvider(this).get(BookmarksMovieViewModel.class);
+        bookmarksMovieViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
 
         bookmarksMovieViewModel.getBookmarkedMovies().observe(getViewLifecycleOwner(), movies -> {
             rvBookmarks.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
@@ -68,10 +59,5 @@ public class BookmarksMovieFragment extends Fragment {
             rvBookmarks.setAdapter(adapter);
             adapter.notifyDataSetChanged();
         });
-    }
-
-    public void updateData(){
-//        bookmarksMovieViewModel = new ViewModelProvider(this).get(BookmarksMovieViewModel.class);
-//        bookmarksMovieViewModel.updateBookmarks();
     }
 }
