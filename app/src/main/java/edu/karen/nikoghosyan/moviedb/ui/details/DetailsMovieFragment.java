@@ -145,8 +145,11 @@ public class DetailsMovieFragment extends Fragment {
                         if (documentSnapshot.exists()) {
                             documentReference.update(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was added for user" + userID));
 
-                            BookmarksMovieFragment bookmarksMovieFragment = new BookmarksMovieFragment();
-                            bookmarksMovieFragment.updateData();
+//                            BookmarksMovieFragment bookmarksMovieFragment = new BookmarksMovieFragment();
+//                            bookmarksMovieFragment.updateData();
+//                            BookmarksMovieViewModel bookmarksMovieViewModel = new ViewModelProvider(requireActivity()).get(BookmarksMovieViewModel.class);
+//                            bookmarksMovieViewModel.updateBookmarks();
+
 
                         } else {
                             documentReference.set(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was added for user" + userID));
@@ -238,29 +241,35 @@ public class DetailsMovieFragment extends Fragment {
 
         detailsMovieViewModel.getGenresNames().observe(getViewLifecycleOwner(), (genres -> {
             int[] moviesIDs = getArguments().getIntArray(Constants.MOVIE_GENRE_IDS);
-            StringBuilder genresNames = new StringBuilder();
+            if (moviesIDs != null) {
+                StringBuilder genresNames = new StringBuilder();
 
-            ((Runnable) () -> {
-                if (moviesIDs != null) {
-                    int limit = moviesIDs.length;
-                    if (moviesIDs.length > 3) limit = 3;
+                ((Runnable) () -> {
+                    if (moviesIDs != null) {
+                        int limit = moviesIDs.length;
+                        if (moviesIDs.length > 3) limit = 3;
 
-                    for (int i = 0; i < limit; i++) {
-                        for (int j = 0; j < genres.size(); j++) {
-                            if (moviesIDs[i] == genres.get(j).getGenreId()) {
-                                genresNames.append(genres.get(j).getGenreName()).append(",");
+                        for (int i = 0; i < limit; i++) {
+                            for (int j = 0; j < genres.size(); j++) {
+                                if (moviesIDs[i] == genres.get(j).getGenreId()) {
+                                    genresNames.append(genres.get(j).getGenreName()).append(",");
+                                }
                             }
                         }
                     }
+                }).run();
+
+                if (genresNames.length() > 0) {
+                    tvGenre.setText(genresNames.substring(0, genresNames.length() - 1));
+
+                } else {
+                    tvGenre.setText("No genres were found");
                 }
-            }).run();
-
-            if (genresNames.length() > 0) {
-                tvGenre.setText(genresNames.substring(0, genresNames.length() - 1));
-
-            } else {
-                tvGenre.setText("No genres were found");
             }
+            else {
+                tvGenre.setText(getArguments().getString(Constants.MOVIE_GENRE).substring(0, getArguments().getString(Constants.MOVIE_GENRE).length() - 1));
+            }
+
         }));
 
         detailsMovieViewModel.getSimilarMoviesByID().observe(getViewLifecycleOwner(), (movies -> {

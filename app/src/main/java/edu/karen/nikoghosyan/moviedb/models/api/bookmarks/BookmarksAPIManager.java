@@ -55,48 +55,30 @@ public class BookmarksAPIManager {
             documentReference.get().addOnSuccessListener(documentSnapshot -> {
                 if (documentSnapshot.exists()) {
                     movieIDs = (ArrayList<Long>) documentSnapshot.get("movieIDs");
-                    System.out.println(movieIDs.size());
 
-                    for (int i = 0; i < movieIDs.size(); i++) {
-                        Call<Movie> movieHTTPRequest = bookmarksService.getMovies(movieIDs.get(i).intValue());
-                        movieHTTPRequest.enqueue(new Callback<Movie>() {
-                            @Override
-                            public void onResponse(Call<Movie> call, Response<Movie> response) {
-                                Movie movieResponse = response.body();
+                    if (movieIDs != null) {
+                        for (int i = 0; i < movieIDs.size(); i++) {
+                            Call<Movie> movieHTTPRequest = bookmarksService.getMovies(movieIDs.get(i).intValue());
+                            movieHTTPRequest.enqueue(new Callback<Movie>() {
+                                @Override
+                                public void onResponse(Call<Movie> call, Response<Movie> response) {
+                                    Movie movieResponse = response.body();
 
-                                if (movieResponse != null) {
-                                    movieList.add(movieResponse);
-                                    moviesLiveData.postValue(movieList);
+                                    if (movieResponse != null) {
+                                        movieList.add(movieResponse);
+                                        moviesLiveData.postValue(movieList);
+                                    }
                                 }
-                            }
-                            @Override
-                            public void onFailure(Call<Movie> call, Throwable t) {
-                                Log.w("MyTag", "requestFailed", t);
-                            }
-                        });
+
+                                @Override
+                                public void onFailure(Call<Movie> call, Throwable t) {
+                                    Log.w("MyTag", "requestFailed", t);
+                                }
+                            });
+                        }
                     }
                 }
             });
         }
-    }
-
-    public void getSingleMovie(MutableLiveData<List<Movie>> moviesLiveData){
-        Call<Movie> movieHTTPRequest = bookmarksService.getSingleMovie(Constants.MOVIE_ID);
-        movieHTTPRequest.enqueue(new Callback<Movie>() {
-            @Override
-            public void onResponse(Call<Movie> call, Response<Movie> response) {
-                Movie movieResponse = response.body();
-
-                if (movieResponse != null) {
-                    movieList.add(movieResponse);
-                    moviesLiveData.postValue(movieList);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Movie> call, Throwable t) {
-                Log.w("MyTag", "requestFailed", t);
-            }
-        });
     }
 }

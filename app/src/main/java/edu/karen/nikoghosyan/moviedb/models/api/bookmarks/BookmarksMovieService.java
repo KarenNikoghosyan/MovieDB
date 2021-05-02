@@ -11,7 +11,4 @@ public interface BookmarksMovieService {
 
     @GET("movie/{movie_id}?api_key=e40d9c03e1a4a736af381ffa2799b376&language=en-US")
     Call<Movie> getMovies(@Path("movie_id") int movieID);
-
-    @GET("movie/{movie_id}?api_key=e40d9c03e1a4a736af381ffa2799b376&language=en-US")
-    Call<Movie> getSingleMovie(@Path("movie_id") int movieID);
 }

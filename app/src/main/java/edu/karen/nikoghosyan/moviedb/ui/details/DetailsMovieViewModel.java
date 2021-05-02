@@ -18,14 +18,12 @@ public class DetailsMovieViewModel extends ViewModel {
     private final MutableLiveData<List<Movie>> moviesRecommendations = new MutableLiveData<>();
 
     public DetailsMovieViewModel(){
-
         GenreAPIManager genreManager = new GenreAPIManager();
         genreManager.getGenreNames(genresNames);
 
         DetailsAPIManager manager = new DetailsAPIManager();
         manager.getMoviesBySimilarID(similarMoviesByID, Constants.MOVIE_ID);
         manager.getRecommendations(moviesRecommendations, Constants.MOVIE_ID);
-
     }
 
     public MutableLiveData<List<Genre>> getGenresNames() {

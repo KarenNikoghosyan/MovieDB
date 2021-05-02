@@ -12,7 +12,7 @@
         android:icon="@drawable/ic_baseline_home_24"/>
 
     <item
-        android:id="@+id/nav_favorites"
+        android:id="@+id/nav_bookmarks"
         android:icon="@drawable/icon_bookmark_unselected"
         android:title="@string/bookmarks"/>
 

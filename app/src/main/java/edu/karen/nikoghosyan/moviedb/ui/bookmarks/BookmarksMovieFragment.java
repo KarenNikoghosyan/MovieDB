@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,6 +35,7 @@ public class BookmarksMovieFragment extends Fragment {
 
     private BookmarksMovieViewModel bookmarksMovieViewModel;
     private RecyclerView rvBookmarks;
+    private BookmarksAdapter adapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -44,6 +46,10 @@ public class BookmarksMovieFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        adapter = new BookmarksAdapter();
+        System.out.println(adapter.movieList);
+
+        //adapter.notifyDataSetChanged();
         //bookmarksMovieViewModel.updateBookmarks();
     }
 
@@ -57,12 +63,15 @@ public class BookmarksMovieFragment extends Fragment {
 
         bookmarksMovieViewModel.getBookmarkedMovies().observe(getViewLifecycleOwner(), movies -> {
             rvBookmarks.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-            rvBookmarks.setAdapter(new BookmarksAdapter(movies));
 
+            adapter = new BookmarksAdapter(movies);
+            rvBookmarks.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
         });
     }
 
     public void updateData(){
-        //bookmarksMovieViewModel.updateBookmarks();
+//        bookmarksMovieViewModel = new ViewModelProvider(this).get(BookmarksMovieViewModel.class);
+//        bookmarksMovieViewModel.updateBookmarks();
     }
 }

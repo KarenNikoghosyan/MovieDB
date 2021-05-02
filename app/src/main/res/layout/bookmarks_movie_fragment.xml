@@ -9,26 +9,18 @@
     android:focusable="true"
     tools:context=".ui.bookmarks.BookmarksMovieFragment">
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="33dp"
-        android:layout_height="33dp"
-        android:layout_marginTop="3dp"
-        android:src="@drawable/icon_bookmark"
-        app:layout_constraintBottom_toBottomOf="@+id/textView15"
-        app:layout_constraintStart_toEndOf="@+id/textView15"
-        app:layout_constraintTop_toTopOf="@+id/textView15" />
-
     <TextView
         android:id="@+id/textView15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:fontFamily="@font/playfair_display_bold"
-        android:text="Bookmarks"
+        android:text="Bookmarks..."
         android:textColor="@color/white"
         android:textSize="36sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline6"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -54,4 +46,5 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.08" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bookmarksCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -29,7 +30,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:fontFamily="@font/alfa_slab_one"
             android:text="TextView"
@@ -49,7 +50,7 @@
             android:fontFamily="@font/abeezee"
             android:text="TextView"
             android:textColor="@color/white"
-            android:textSize="15sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivBookmarkPoster"
             app:layout_constraintTop_toBottomOf="@+id/tvBookmarkTitle" />
@@ -64,7 +65,7 @@
             android:fontFamily="@font/abeezee"
             android:text="TextView"
             android:textColor="@color/white"
-            android:textSize="15sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivBookmarkPoster"
             app:layout_constraintTop_toBottomOf="@+id/tvBookmarkReleaseDate" />
@@ -73,10 +74,11 @@
             android:id="@+id/tvBookmarkLanguage"
             android:layout_width="80dp"
             android:layout_height="17dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/abeezee"
             android:text="TextView"
             android:textColor="@color/white"
-            android:textSize="15sp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/TextView7"
             app:layout_constraintStart_toEndOf="@+id/TextView7"
             app:layout_constraintTop_toTopOf="@+id/TextView7" />
@@ -87,10 +89,10 @@
             android:layout_height="17dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:fontFamily="@font/abeezee"
+            android:fontFamily="@font/alfa_slab_one"
             android:text="@string/language"
             android:textColor="@color/white"
-            android:textSize="15sp"
+            android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/ivBookmarkPoster"
             app:layout_constraintTop_toBottomOf="@+id/tvBookmarkGenre" />
 
@@ -109,9 +111,9 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivBookmarkPoster"
-            app:layout_constraintTop_toBottomOf="@+id/TextView7"
             app:srcCompat="@drawable/icon_star" />
 
         <TextView
@@ -130,12 +132,12 @@
             android:id="@+id/ibBookmarkSwitch"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
             android:background="?selectableItemBackgroundBorderless"
             android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/TextView7"
             app:srcCompat="@drawable/icon_bookmark_selected" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

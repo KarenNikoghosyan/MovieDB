@@ -15,11 +15,9 @@ public class BookmarksMovieViewModel extends ViewModel {
     private final MutableLiveData<List<Movie>> bookmarkedMovies = new MutableLiveData<>();
     private final BookmarksAPIManager bookmarksAPIManager;
 
-
     public BookmarksMovieViewModel(){
         bookmarksAPIManager = new BookmarksAPIManager();
         bookmarksAPIManager.getMovies(bookmarkedMovies);
-        bookmarksAPIManager.getSingleMovie(bookmarkedMovies);
     }
 
     public MutableLiveData<List<Movie>> getBookmarkedMovies() {
@@ -28,7 +26,5 @@ public class BookmarksMovieViewModel extends ViewModel {
 
     public void updateBookmarks(){
         bookmarksAPIManager.getMovies(bookmarkedMovies);
-        BookmarksAdapter bookmarksAdapter = new BookmarksAdapter();
-        bookmarksAdapter.notifyDataSetChanged();
     }
 }

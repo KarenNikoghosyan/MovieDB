@@ -11,6 +11,7 @@ public class Constants {
     public static final String MOVIE_RATING = "movieRating";
     public static final String MOVIE_BACKDROP_URL = "movieBackdropURL";
     public static final String MOVIE_GENRE_IDS = "movieGenreIDs";
+    public static final String MOVIE_GENRE = "movieGenre";
     public static final String MOVIE_RELEASE_DATE = "movieReleaseDate";
     public static final String MOVIE_OVERVIEW = "movieOverview";
     public static final String MOVIE_IMAGE_URL = "movieImageURL";

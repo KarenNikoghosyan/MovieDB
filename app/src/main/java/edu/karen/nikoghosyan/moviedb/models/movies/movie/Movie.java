@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Arrays;
 
+import edu.karen.nikoghosyan.moviedb.models.movies.genre.GenreObject;
+
 public class Movie {
 
     @SerializedName("backdrop_path")
@@ -13,7 +15,7 @@ public class Movie {
     private int[] genresIDs;
 
     @SerializedName("genres")
-    private Object[] genres;
+    private GenreObject[] genres;
 
     @SerializedName("id")
     private int movieID;
@@ -52,10 +54,10 @@ public class Movie {
     public void setGenresIDs(int[] genres) {
         this.genresIDs = genres;
     }
-    public Object[] getGenres() {
+    public GenreObject[] getGenres() {
         return genres;
     }
-    public void setGenres(Object[] genres) {
+    public void setGenres(GenreObject[] genres) {
         this.genres = genres;
     }
     public int getMovieID() {
