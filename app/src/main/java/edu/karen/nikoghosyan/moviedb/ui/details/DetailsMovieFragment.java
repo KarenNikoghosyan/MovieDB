@@ -32,11 +32,13 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import edu.karen.nikoghosyan.moviedb.Constants;
 import edu.karen.nikoghosyan.moviedb.R;
 import edu.karen.nikoghosyan.moviedb.SharedViewModel;
+import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
 import edu.karen.nikoghosyan.moviedb.ui.bookmarks.BookmarksMovieFragment;
 import edu.karen.nikoghosyan.moviedb.ui.bookmarks.BookmarksMovieViewModel;
 import edu.karen.nikoghosyan.moviedb.ui.bookmarks.adapters.BookmarksAdapter;
@@ -149,18 +151,18 @@ public class DetailsMovieFragment extends Fragment {
 
                             //TODO:
                             detailsMovieViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
-                            //detailsMovieViewModel.updateBookmarks();
-                            detailsMovieViewModel.getBookmarkedMovies().observe(getViewLifecycleOwner(), movies -> {
+                            detailsMovieViewModel.updateBookmarks();
 
-                                BookmarksAdapter.movieList.clear();
-                                System.out.println(BookmarksAdapter.movieList);
-                                BookmarksAdapter.movieList.addAll(movies);
-                                System.out.println(BookmarksAdapter.movieList);
-                                adapter = new BookmarksAdapter(movies);
-                                adapter.notifyDataSetChanged();
-                                BookmarksMovieFragment.rvBookmarks.setAdapter(adapter);
+//                            BookmarksMovieFragment.rvBookmarks.setAdapter(null);
+//                            detailsMovieViewModel.getBookmarkedMovies().observe(getViewLifecycleOwner(), movies -> {
 
-                            });
+//                                BookmarksAdapter.movieList.clear();
+//                                BookmarksAdapter.movieList.addAll(movies);
+//                                adapter = new BookmarksAdapter(movies);
+//                                adapter.notifyDataSetChanged();
+//                                BookmarksMovieFragment.rvBookmarks.setAdapter(adapter);
+//
+//                            });
 
                         } else {
                             documentReference.set(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was added for user" + userID));
@@ -250,6 +252,7 @@ public class DetailsMovieFragment extends Fragment {
         detailsMovieViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
 
         detailsMovieViewModel.getGenresNames().observe(getViewLifecycleOwner(), (genres -> {
+
             int[] moviesIDs = getArguments().getIntArray(Constants.MOVIE_GENRE_IDS);
             if (moviesIDs != null) {
                 StringBuilder genresNames = new StringBuilder();

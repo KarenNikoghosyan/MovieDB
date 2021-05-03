@@ -7,6 +7,7 @@ import java.util.List;
 
 import edu.karen.nikoghosyan.moviedb.models.api.bookmarks.BookmarksAPIManager;
 import edu.karen.nikoghosyan.moviedb.models.api.details.DetailsAPIManager;
+import edu.karen.nikoghosyan.moviedb.models.api.genre.GenreAPIManager;
 import edu.karen.nikoghosyan.moviedb.models.movies.genre.Genre;
 import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
 
@@ -23,6 +24,9 @@ public class SharedViewModel extends ViewModel {
 
         bookmarksAPIManager = new BookmarksAPIManager();
         bookmarksAPIManager.getMovies(bookmarkedMovies);
+
+        GenreAPIManager genreManager = new GenreAPIManager();
+        genreManager.getGenreNames(genresNames);
 
         DetailsAPIManager manager = new DetailsAPIManager();
         manager.getMoviesBySimilarID(similarMoviesByID, Constants.MOVIE_ID);
