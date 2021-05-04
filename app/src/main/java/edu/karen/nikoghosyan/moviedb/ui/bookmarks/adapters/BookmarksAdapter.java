@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
@@ -22,7 +23,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +31,7 @@ import edu.karen.nikoghosyan.moviedb.Constants;
 import edu.karen.nikoghosyan.moviedb.R;
 import edu.karen.nikoghosyan.moviedb.models.movies.genre.GenreObject;
 import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
+import edu.karen.nikoghosyan.moviedb.ui.bookmarks.BookmarksMovieFragment;
 import edu.karen.nikoghosyan.moviedb.ui.details.DetailsMovieFragment;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
@@ -44,7 +45,7 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.View
     private StringBuilder genresNames;
 
     public BookmarksAdapter(List<Movie> movieList) {
-        this.movieList = movieList;
+        BookmarksAdapter.movieList = movieList;
     }
 
     @NonNull
@@ -61,6 +62,8 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.View
         holder.ibBookmarkSwitch.setOnClickListener(v -> {
             movie = movieList.get(position);
 
+            BookmarksMovieFragment.showSnackBar(v);
+
             movieList.remove(position);
             notifyItemRemoved(position);
             notifyItemRangeChanged(position, getItemCount());
@@ -72,7 +75,7 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.View
 
             Map<String, Object> user = new HashMap<>();
             user.put("movieIDs", FieldValue.arrayRemove(movie.getMovieID()));
-            user.put("" + movie.getTitle(), FieldValue.delete());
+            user.put("" + movie.getMovieID(), FieldValue.delete());
 
             documentReference.update(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was removed for user" + userID));
         });
@@ -173,5 +176,9 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.View
         args.putString(Constants.MOVIE_IMAGE_URL, movie.getImageURL());
         args.putString(Constants.MOVIE_Language, movie.getLanguage());
         fragment.setArguments(args);
+    }
+
+    public static void showSnackBar(View v){
+        Snackbar.make(v, "Movie Was Removed", Snackbar.LENGTH_SHORT).show();
     }
 }

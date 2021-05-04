@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,30 +12,29 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.android.material.snackbar.Snackbar;
 
-import java.util.ArrayList;
-
-import edu.karen.nikoghosyan.moviedb.Constants;
 import edu.karen.nikoghosyan.moviedb.R;
-import edu.karen.nikoghosyan.moviedb.SharedViewModel;
 import edu.karen.nikoghosyan.moviedb.ui.bookmarks.adapters.BookmarksAdapter;
+import edu.karen.nikoghosyan.moviedb.ui.details.DetailsMovieFragment;
+import edu.karen.nikoghosyan.moviedb.ui.details.SharedViewModel;
 
 public class BookmarksMovieFragment extends Fragment {
 
     private SharedViewModel bookmarksMovieViewModel;
     public static RecyclerView rvBookmarks;
     private BookmarksAdapter adapter;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (DetailsMovieFragment.isClickedBookmark){
+            bookmarksMovieViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
+            bookmarksMovieViewModel.updateBookmarks();
+
+            DetailsMovieFragment.isClickedBookmark = false;
+        }
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -47,7 +45,6 @@ public class BookmarksMovieFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         rvBookmarks = view.findViewById(R.id.rvBookmarks);
 
         bookmarksMovieViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
@@ -59,5 +56,9 @@ public class BookmarksMovieFragment extends Fragment {
             rvBookmarks.setAdapter(adapter);
             adapter.notifyDataSetChanged();
         });
+    }
+
+    public static void showSnackBar(View v){
+        Snackbar.make(v, "Movie Was Removed", Snackbar.LENGTH_SHORT).show();
     }
 }

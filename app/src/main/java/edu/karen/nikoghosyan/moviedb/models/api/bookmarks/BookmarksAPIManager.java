@@ -2,6 +2,7 @@ package edu.karen.nikoghosyan.moviedb.models.api.bookmarks;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -12,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import edu.karen.nikoghosyan.moviedb.Constants;
 import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
@@ -23,11 +23,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BookmarksAPIManager {
-    private DocumentReference documentReference;
-    private FirebaseFirestore fStore;
-    private String userID;
     private ArrayList<Long> movieIDs;
-    private List<Movie> movieList = new ArrayList<>();
+    private final List<Movie> movieList = new ArrayList<>();
 
     ConnectionPool pool = new ConnectionPool(5, 30000, TimeUnit.MILLISECONDS);
     OkHttpClient client = new OkHttpClient
@@ -48,22 +45,22 @@ public class BookmarksAPIManager {
     public void getMovies(MutableLiveData<List<Movie>> moviesLiveData) {
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-            fStore = FirebaseFirestore.getInstance();
-            userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            FirebaseFirestore fStore = FirebaseFirestore.getInstance();
+            String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-            documentReference = fStore.collection("users").document(userID);
+            DocumentReference documentReference = fStore.collection("users").document(userID);
             documentReference.get().addOnSuccessListener(documentSnapshot -> {
                 if (documentSnapshot.exists()) {
                     movieIDs = (ArrayList<Long>) documentSnapshot.get("movieIDs");
 
                     if (movieIDs != null) {
+
                         for (int i = 0; i < movieIDs.size(); i++) {
                             Call<Movie> movieHTTPRequest = bookmarksService.getMovies(movieIDs.get(i).intValue());
                             movieHTTPRequest.enqueue(new Callback<Movie>() {
                                 @Override
-                                public void onResponse(Call<Movie> call, Response<Movie> response) {
+                                public void onResponse(@NonNull Call<Movie> call, @NonNull Response<Movie> response) {
                                     Movie movieResponse = response.body();
-
                                     if (movieResponse != null) {
                                         movieList.add(movieResponse);
                                         moviesLiveData.postValue(movieList);
@@ -71,11 +68,12 @@ public class BookmarksAPIManager {
                                 }
 
                                 @Override
-                                public void onFailure(Call<Movie> call, Throwable t) {
+                                public void onFailure(@NonNull Call<Movie> call, @NonNull Throwable t) {
                                     Log.w("MyTag", "requestFailed", t);
                                 }
                             });
                         }
+                        movieList.clear();
                     }
                 }
             });

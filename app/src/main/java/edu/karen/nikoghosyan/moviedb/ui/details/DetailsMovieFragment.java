@@ -20,27 +20,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import edu.karen.nikoghosyan.moviedb.Constants;
 import edu.karen.nikoghosyan.moviedb.R;
-import edu.karen.nikoghosyan.moviedb.SharedViewModel;
-import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
 import edu.karen.nikoghosyan.moviedb.ui.bookmarks.BookmarksMovieFragment;
-import edu.karen.nikoghosyan.moviedb.ui.bookmarks.BookmarksMovieViewModel;
 import edu.karen.nikoghosyan.moviedb.ui.bookmarks.adapters.BookmarksAdapter;
 import edu.karen.nikoghosyan.moviedb.ui.details.adapters.DetailsMovieAdapter;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
@@ -72,6 +65,10 @@ public class DetailsMovieFragment extends Fragment {
     private String userID;
     private boolean isBookmarked = false;
     private BookmarksAdapter adapter;
+
+    public static boolean isClickedBookmark = false;
+    public static boolean isClicked = false;
+
 
     private SharedViewModel detailsMovieViewModel;
 
@@ -118,7 +115,7 @@ public class DetailsMovieFragment extends Fragment {
             userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
             documentReference = fStore.collection("users").document(userID);
             documentReference.get().addOnSuccessListener(documentSnapshot -> {
-                if (documentSnapshot.contains("" + getArguments().getString(Constants.MOVIE_TITLE))) {
+                if (documentSnapshot.contains("" + Constants.MOVIE_ID)) {
                     ibBookmark.setImageResource(R.drawable.icon_bookmark_selected);
                     isBookmarked = true;
                 } else {
@@ -143,27 +140,17 @@ public class DetailsMovieFragment extends Fragment {
 
                     Map<String, Object> user = new HashMap<>();
                     user.put("movieIDs", FieldValue.arrayUnion(Constants.MOVIE_ID));
-                    user.put("" + getArguments().getString(Constants.MOVIE_TITLE), "Bookmarked");
+                    user.put("" + Constants.MOVIE_ID, "Bookmarked");
 
                     documentReference.get().addOnSuccessListener(documentSnapshot -> {
                         if (documentSnapshot.exists()) {
                             documentReference.update(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was added for user" + userID));
 
-                            //TODO:
-                            detailsMovieViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
-                            detailsMovieViewModel.updateBookmarks();
+                            if (!isClicked){
+                                isClickedBookmark = true;
+                            }
 
-//                            BookmarksMovieFragment.rvBookmarks.setAdapter(null);
-//                            detailsMovieViewModel.getBookmarkedMovies().observe(getViewLifecycleOwner(), movies -> {
-
-//                                BookmarksAdapter.movieList.clear();
-//                                BookmarksAdapter.movieList.addAll(movies);
-//                                adapter = new BookmarksAdapter(movies);
-//                                adapter.notifyDataSetChanged();
-//                                BookmarksMovieFragment.rvBookmarks.setAdapter(adapter);
-//
-//                            });
-
+                            updateMovieData();
                         } else {
                             documentReference.set(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was added for user" + userID));
                         }
@@ -180,11 +167,18 @@ public class DetailsMovieFragment extends Fragment {
 
                 Map<String, Object> user = new HashMap<>();
                 user.put("movieIDs", FieldValue.arrayRemove(Constants.MOVIE_ID));
-                user.put("" + getArguments().getString(Constants.MOVIE_TITLE), FieldValue.delete());
+                user.put("" + Constants.MOVIE_ID, FieldValue.delete());
 
-                documentReference.update(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was removed for user" + userID));
+                documentReference.get().addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()){
+                        documentReference.update(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was removed for user" + userID));
+                        updateMovieData();
+                        if (BookmarksAdapter.movieList.size() == 1){
+                            BookmarksAdapter.movieList.clear();
+                        }
+                    }
+                });
 
-                //TODO:
             }
         });
 
@@ -312,5 +306,17 @@ public class DetailsMovieFragment extends Fragment {
                 inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             }
         }
+    }
+
+    public void updateMovieData(){
+        detailsMovieViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
+
+        detailsMovieViewModel.updateBookmarks();
+        detailsMovieViewModel.getBookmarkedMovies().observe(getViewLifecycleOwner(), movies -> {
+
+            adapter = new BookmarksAdapter(movies);
+            adapter.notifyDataSetChanged();
+            BookmarksMovieFragment.rvBookmarks.setAdapter(adapter);
+        });
     }
 }
