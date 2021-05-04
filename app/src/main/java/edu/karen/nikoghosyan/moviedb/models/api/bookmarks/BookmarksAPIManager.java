@@ -23,7 +23,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BookmarksAPIManager {
-    private ArrayList<Long> movieIDs;
+    private ArrayList<Long> movieIDs = new ArrayList<>();
     private final List<Movie> movieList = new ArrayList<>();
 
     ConnectionPool pool = new ConnectionPool(5, 30000, TimeUnit.MILLISECONDS);
@@ -50,31 +50,28 @@ public class BookmarksAPIManager {
 
             DocumentReference documentReference = fStore.collection("users").document(userID);
             documentReference.get().addOnSuccessListener(documentSnapshot -> {
+                movieIDs = (ArrayList<Long>) documentSnapshot.get("movieIDs");
+
                 if (documentSnapshot.exists()) {
-                    movieIDs = (ArrayList<Long>) documentSnapshot.get("movieIDs");
-
-                    if (movieIDs != null) {
-
-                        for (int i = 0; i < movieIDs.size(); i++) {
-                            Call<Movie> movieHTTPRequest = bookmarksService.getMovies(movieIDs.get(i).intValue());
-                            movieHTTPRequest.enqueue(new Callback<Movie>() {
-                                @Override
-                                public void onResponse(@NonNull Call<Movie> call, @NonNull Response<Movie> response) {
-                                    Movie movieResponse = response.body();
-                                    if (movieResponse != null) {
-                                        movieList.add(movieResponse);
-                                        moviesLiveData.postValue(movieList);
-                                    }
+                    if (movieIDs == null) return;
+                    for (int i = 0; i < movieIDs.size(); i++) {
+                        Call<Movie> movieHTTPRequest = bookmarksService.getMovies(movieIDs.get(i).intValue());
+                        movieHTTPRequest.enqueue(new Callback<Movie>() {
+                            @Override
+                            public void onResponse(@NonNull Call<Movie> call, @NonNull Response<Movie> response) {
+                                Movie movieResponse = response.body();
+                                if (movieResponse != null) {
+                                    movieList.add(movieResponse);
+                                    moviesLiveData.postValue(movieList);
                                 }
-
-                                @Override
-                                public void onFailure(@NonNull Call<Movie> call, @NonNull Throwable t) {
-                                    Log.w("MyTag", "requestFailed", t);
-                                }
-                            });
-                        }
-                        movieList.clear();
+                            }
+                            @Override
+                            public void onFailure(@NonNull Call<Movie> call, @NonNull Throwable t) {
+                                Log.w("MyTag", "requestFailed", t);
+                            }
+                        });
                     }
+                    movieList.clear();
                 }
             });
         }

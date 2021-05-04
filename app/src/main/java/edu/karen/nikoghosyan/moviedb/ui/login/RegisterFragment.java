@@ -3,6 +3,7 @@ package edu.karen.nikoghosyan.moviedb.ui.login;
 import android.app.ProgressDialog;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import edu.karen.nikoghosyan.moviedb.R;
 
 
@@ -30,6 +34,10 @@ public class RegisterFragment extends Fragment {
     private EditText etEmailRegister;
     private EditText etPasswordRegister;
     private EditText etConfirmPassword;
+
+    private DocumentReference documentReference;
+    private FirebaseFirestore fStore;
+    private String userID;
 
     @Nullable
     @Override
@@ -68,7 +76,17 @@ public class RegisterFragment extends Fragment {
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
             mAuth.createUserWithEmailAndPassword(getEmail(), getPassword())
                     .addOnSuccessListener(getActivity(), authResult -> {
-                        gotoLoginFragment();
+                        fStore = FirebaseFirestore.getInstance();
+
+                        userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                        documentReference = fStore.collection("users").document(userID);
+                        Map<String, Object> user = new HashMap<>();
+
+                        documentReference.get().addOnSuccessListener(documentSnapshot -> {
+                            documentReference.set(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was added for user" + userID));
+                            gotoLoginFragment();
+                        });
+
                     }).addOnFailureListener(getActivity(), e -> {
                 showError(e);
             });

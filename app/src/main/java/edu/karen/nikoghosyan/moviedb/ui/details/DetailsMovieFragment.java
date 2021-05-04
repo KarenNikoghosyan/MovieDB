@@ -156,7 +156,8 @@ public class DetailsMovieFragment extends Fragment {
                         }
                     });
                 }
-            } else {
+            }
+            else {
                 isBookmarked = false;
 
                 ibBookmark.setImageResource(R.drawable.icon_bookmark_unselected);

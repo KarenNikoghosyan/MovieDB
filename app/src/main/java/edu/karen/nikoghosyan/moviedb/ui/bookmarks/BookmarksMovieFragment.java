@@ -1,5 +1,6 @@
 package edu.karen.nikoghosyan.moviedb.ui.bookmarks;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,6 +38,16 @@ public class BookmarksMovieFragment extends Fragment {
         }
     }
 
+    private void getCurrentScreenOrientation() {
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            rvBookmarks.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        }
+
+        else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            rvBookmarks.setLayoutManager(new GridLayoutManager(getContext(), 2));        }
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -47,10 +59,11 @@ public class BookmarksMovieFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         rvBookmarks = view.findViewById(R.id.rvBookmarks);
 
+        getCurrentScreenOrientation();
+
         bookmarksMovieViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
 
         bookmarksMovieViewModel.getBookmarkedMovies().observe(getViewLifecycleOwner(), movies -> {
-            rvBookmarks.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 
             adapter = new BookmarksAdapter(movies);
             rvBookmarks.setAdapter(adapter);
@@ -60,5 +73,16 @@ public class BookmarksMovieFragment extends Fragment {
 
     public static void showSnackBar(View v){
         Snackbar.make(v, "Movie Was Removed", Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            rvBookmarks.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        }
+        else if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            rvBookmarks.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        }
     }
 }
