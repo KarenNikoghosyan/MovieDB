@@ -81,7 +81,7 @@ public class TopTrendingAdapter extends RecyclerView.Adapter<TopTrendingAdapter.
 
     @Override
     public int getItemCount() {
-        return moviesList.size();
+        return moviesList == null ? 0 : moviesList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

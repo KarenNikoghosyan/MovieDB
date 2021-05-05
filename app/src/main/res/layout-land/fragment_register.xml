@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#1C212F"
+        android:background="@drawable/dark_blue_gradient"
         tools:context=".ui.login.RegisterFragment">
 
         <TextView
@@ -60,8 +60,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/email"
-                android:textColor="@color/white"
-                android:maxLines="1"/>
+                android:maxLength="50"
+                android:maxLines="1"
+                android:textColor="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -92,8 +93,9 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/password"
                 android:inputType="textPassword"
-                android:textColor="@color/white"
-                android:maxLines="1"/>
+                android:maxLength="50"
+                android:maxLines="1"
+                android:textColor="@color/white" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -168,8 +170,9 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/confirm_password"
                 android:inputType="textPassword"
-                android:textColor="@color/white"
-                android:maxLines="1"/>
+                android:maxLength="50"
+                android:maxLines="1"
+                android:textColor="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

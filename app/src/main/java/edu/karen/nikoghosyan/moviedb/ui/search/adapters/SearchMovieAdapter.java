@@ -83,7 +83,7 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
 
     @Override
     public int getItemCount() {
-        return movieList.size();
+        return movieList == null ? 0 : movieList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

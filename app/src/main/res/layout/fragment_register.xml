@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1C212F"
+    android:background="@drawable/dark_blue_gradient"
     tools:context=".ui.login.LoginFragment">
 
     <TextView
@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.18" />
+        app:layout_constraintGuide_percent="0.16" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
@@ -32,20 +32,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
         android:textColorHint="@color/white"
-        app:boxStrokeColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline11"
         app:boxCornerRadiusBottomEnd="15dp"
         app:boxCornerRadiusBottomStart="15dp"
         app:boxCornerRadiusTopEnd="15dp"
         app:boxCornerRadiusTopStart="15dp"
+        app:boxStrokeColor="@color/white"
         app:endIconMode="clear_text"
         app:endIconTint="@color/white"
         app:errorEnabled="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline11"
         app:startIconDrawable="@drawable/ic_baseline_mail_outline_24"
         app:startIconTint="@color/white">
 
@@ -54,8 +54,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email"
-            android:textColor="@color/white"
-            android:maxLines="1"/>
+            android:maxLength="50"
+            android:maxLines="1"
+            android:textColor="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -87,8 +88,9 @@
             android:layout_height="wrap_content"
             android:hint="@string/password"
             android:inputType="textPassword"
-            android:textColor="@color/white"
-            android:maxLines="1"/>
+            android:maxLength="50"
+            android:maxLines="1"
+            android:textColor="@color/white" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -161,8 +163,9 @@
             android:layout_height="wrap_content"
             android:hint="@string/confirm_password"
             android:inputType="textPassword"
-            android:textColor="@color/white"
-            android:maxLines="1"/>
+            android:maxLength="50"
+            android:maxLines="1"
+            android:textColor="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

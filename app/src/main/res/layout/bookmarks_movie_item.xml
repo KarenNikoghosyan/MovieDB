@@ -12,12 +12,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#22293A">
+        android:background="#222E4C">
 
         <ImageView
             android:id="@+id/ivBookmarkPoster"
             android:layout_width="140dp"
-            android:layout_height="200dp"
+            android:layout_height="190dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"

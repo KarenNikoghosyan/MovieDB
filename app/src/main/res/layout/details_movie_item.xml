@@ -16,7 +16,7 @@
             android:id="@+id/ivInformation"
             android:layout_width="90dp"
             android:layout_height="130dp"
-            android:background="#1C212F"
+            android:background="#101A2F"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -9,28 +9,28 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#1C212F"
+        android:background="@drawable/dark_blue_gradient"
         tools:context=".ui.login.LoginFragment">
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/playfair_display_bold"
             android:text="@string/login"
             android:textColor="@color/white"
             android:textSize="36sp"
-            app:layout_constraintBottom_toTopOf="@+id/guideline11"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.18" />
+            app:layout_constraintGuide_percent="0.15" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout"
@@ -59,8 +59,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/email"
-                android:textColor="@color/white"
-                android:maxLines="1"/>
+                android:maxLength="50"
+                android:maxLines="1"
+                android:textColor="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -91,8 +92,9 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/password"
                 android:inputType="textPassword"
-                android:textColor="@color/white"
-                android:maxLines="1"/>
+                android:maxLength="50"
+                android:maxLines="1"
+                android:textColor="@color/white" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -142,6 +144,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="24dp"
             android:textColorHint="@color/white"
             app:boxCornerRadiusBottomEnd="15dp"
@@ -163,8 +166,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Name"
-                android:textColor="@color/white"
-                android:maxLines="1"/>
+                android:maxLength="50"
+                android:maxLines="1"
+                android:textColor="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

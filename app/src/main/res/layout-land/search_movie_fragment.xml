@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1C212F"
+    android:background="#101A2F"
     android:clickable="true"
     android:focusable="true"
     tools:context=".ui.search.SearchMovieFragment">
@@ -36,6 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/search"
+            android:maxLength="30"
             android:maxLines="1"
             android:textColor="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>

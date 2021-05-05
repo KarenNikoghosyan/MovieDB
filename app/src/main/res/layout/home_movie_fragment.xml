@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#1C212F"
+        android:background="#101A2F"
         android:clickable="true"
         android:focusable="true"
         tools:context=".ui.home.HomeMovieFragment">

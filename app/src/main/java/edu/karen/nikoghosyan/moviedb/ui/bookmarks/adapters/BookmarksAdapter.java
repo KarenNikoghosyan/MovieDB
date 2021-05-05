@@ -153,7 +153,6 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.View
     }
 
     @Override
-    //TODO: Add this condition to more places
     public int getItemCount() {
         return movieList == null ? 0 : movieList.size();
     }

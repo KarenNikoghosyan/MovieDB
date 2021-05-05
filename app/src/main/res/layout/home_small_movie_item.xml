@@ -15,7 +15,7 @@
             android:id="@+id/ivHome"
             android:layout_width="100dp"
             android:layout_height="140dp"
-            android:background="#1C212F"
+            android:background="#101A2F"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
