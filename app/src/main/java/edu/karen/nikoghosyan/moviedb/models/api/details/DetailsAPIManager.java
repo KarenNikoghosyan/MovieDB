@@ -34,7 +34,7 @@ public class DetailsAPIManager {
 
     private final DetailsMovieService detailsService = retrofit.create(DetailsMovieService.class);
 
-    public void getMoviesBySimilarID(MutableLiveData<List<Movie>> moviesLiveData, int movieID) {
+    public void getMoviesBySimilarID(MutableLiveData<List<Movie>> moviesLiveData, MutableLiveData<Throwable> exceptionCallback,int movieID) {
 
         Call<MovieResponse> movieHTTPRequest = detailsService.getMoviesBySimilarID(movieID);
         movieHTTPRequest.enqueue(new Callback<MovieResponse>() {
@@ -50,7 +50,7 @@ public class DetailsAPIManager {
 
             @Override
             public void onFailure(Call<MovieResponse> call, Throwable t) {
-                t.getMessage();
+                exceptionCallback.postValue(t);
             }
         });
     }

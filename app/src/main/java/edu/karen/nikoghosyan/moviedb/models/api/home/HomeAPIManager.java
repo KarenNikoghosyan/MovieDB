@@ -34,7 +34,7 @@ public class HomeAPIManager {
 
     private final HomeMovieService homeMovieService = retrofit.create(HomeMovieService.class);
 
-    public void getTopTrending(MutableLiveData<List<Movie>> moviesLiveData) {
+    public void getTopTrending(MutableLiveData<List<Movie>> moviesLiveData, MutableLiveData<Throwable> exceptionCallback) {
 
         Call<MovieResponse> movieHTTPRequest = homeMovieService.getTopTrending();
 
@@ -53,7 +53,7 @@ public class HomeAPIManager {
 
             @Override
             public void onFailure(Call<MovieResponse> call, Throwable t) {
-                t.getMessage();
+                exceptionCallback.postValue(t);
             }
         });
     }

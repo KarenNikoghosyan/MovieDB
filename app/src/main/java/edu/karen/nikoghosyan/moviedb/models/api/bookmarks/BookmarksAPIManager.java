@@ -1,7 +1,5 @@
 package edu.karen.nikoghosyan.moviedb.models.api.bookmarks;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
@@ -42,7 +40,7 @@ public class BookmarksAPIManager {
 
     private final BookmarksMovieService bookmarksService = retrofit.create(BookmarksMovieService.class);
 
-    public void getMovies(MutableLiveData<List<Movie>> moviesLiveData) {
+    public void getMovies(MutableLiveData<List<Movie>> moviesLiveData, MutableLiveData<Throwable> exceptionCallback) {
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             FirebaseFirestore fStore = FirebaseFirestore.getInstance();
@@ -67,7 +65,7 @@ public class BookmarksAPIManager {
                             }
                             @Override
                             public void onFailure(@NonNull Call<Movie> call, @NonNull Throwable t) {
-                                Log.w("MyTag", "requestFailed", t);
+                                exceptionCallback.postValue(t);
                             }
                         });
                     }

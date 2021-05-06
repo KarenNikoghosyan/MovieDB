@@ -3,7 +3,6 @@ package edu.karen.nikoghosyan.moviedb.ui.home;
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,13 +95,30 @@ public class HomeMovieFragment extends Fragment {
                     });
 
             AlertDialog dialog = builder.show();
-            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getContext().getColor(R.color.dark_purple));
-            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getContext().getColor(R.color.dark_purple));
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(requireActivity().getColor(R.color.dark_purple));
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(requireActivity().getColor(R.color.dark_purple));
         });
     }
 
     private void getLiveDataObservers() {
         homeMovieViewModel = new ViewModelProvider(this).get(HomeMovieViewModel.class);
+        homeMovieViewModel.getException().observe(getViewLifecycleOwner(), throwable -> {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
+                    .setTitle("Fatal Error")
+                    .setCancelable(false)
+                    .setIcon(R.drawable.ic_baseline_error_outline_24)
+                    .setMessage("Couldn't load data. Please check your internet connection.")
+                    .setPositiveButton("OK", (dialog, which) -> {
+                        requireActivity().finishAffinity();
+                        requireActivity().finish();
+                    });
+
+            AlertDialog dialog = builder.show();
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(requireActivity().getColor(R.color.dark_purple));
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(requireActivity().getColor(R.color.dark_purple));
+        });
+
         homeMovieViewModel.getTopTrendingLiveData().observe(getViewLifecycleOwner(), (movies -> {
 
             rvMoviesHome.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));

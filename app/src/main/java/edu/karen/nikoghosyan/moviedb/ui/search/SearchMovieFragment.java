@@ -1,14 +1,13 @@
 package edu.karen.nikoghosyan.moviedb.ui.search;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -124,8 +123,20 @@ public class SearchMovieFragment extends Fragment {
         }, 2000);
 
         searchMovieViewModel.getException().observe(getViewLifecycleOwner(), (throwable -> {
-            //TODO: Add error dialog and clSearch to another place
-            clSearch.setVisibility(View.VISIBLE);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
+                    .setTitle("Fatal Error")
+                    .setCancelable(false)
+                    .setIcon(R.drawable.ic_baseline_error_outline_24)
+                    .setMessage("Couldn't load data. Please check your internet connection.")
+                    .setPositiveButton("OK", (dialog, which) -> {
+                        requireActivity().finishAffinity();
+                        requireActivity().finish();
+                    });
+
+            AlertDialog dialog = builder.show();
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(requireActivity().getColor(R.color.dark_purple));
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(requireActivity().getColor(R.color.dark_purple));
         }));
     }
 

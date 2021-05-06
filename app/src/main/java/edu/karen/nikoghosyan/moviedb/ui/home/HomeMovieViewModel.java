@@ -2,7 +2,6 @@ package edu.karen.nikoghosyan.moviedb.ui.home;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
 
 import java.util.List;
@@ -21,10 +20,12 @@ public class HomeMovieViewModel extends ViewModel {
     private final MutableLiveData<List<Movie>> animationLiveData = new MutableLiveData<>();
     private final MutableLiveData<List<Movie>> scienceFictionLiveData = new MutableLiveData<>();
 
+    private final MutableLiveData<Throwable> exception = new MutableLiveData<>();
+
     public HomeMovieViewModel(){
 
         HomeAPIManager manager = new HomeAPIManager();
-        manager.getTopTrending(topTrendingLiveData);
+        manager.getTopTrending(topTrendingLiveData, exception);
         manager.getTopRated(topRatedLiveData);
         manager.getUpcoming(upcomingLiveData);
         manager.getHorror(horrorLiveData);
@@ -54,4 +55,8 @@ public class HomeMovieViewModel extends ViewModel {
         return animationLiveData;
     }
     public MutableLiveData<List<Movie>> getScienceFictionLiveData() {return scienceFictionLiveData;}
+
+    public MutableLiveData<Throwable> getException() {
+        return exception;
+    }
 }

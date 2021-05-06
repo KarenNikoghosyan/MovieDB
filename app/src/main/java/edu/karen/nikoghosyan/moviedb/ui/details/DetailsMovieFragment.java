@@ -1,5 +1,6 @@
 package edu.karen.nikoghosyan.moviedb.ui.details;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -250,6 +251,22 @@ public class DetailsMovieFragment extends Fragment {
 
     private void getObservers() {
         detailsMovieViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
+        detailsMovieViewModel.getDetailsException().observe(getViewLifecycleOwner(), throwable -> {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
+                    .setTitle("Fatal Error")
+                    .setCancelable(false)
+                    .setIcon(R.drawable.ic_baseline_error_outline_24)
+                    .setMessage("Couldn't load data. Please check your internet connection.")
+                    .setPositiveButton("OK", (dialog, which) -> {
+                        requireActivity().finishAffinity();
+                        requireActivity().finish();
+                    });
+
+            AlertDialog dialog = builder.show();
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(requireActivity().getColor(R.color.dark_purple));
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(requireActivity().getColor(R.color.dark_purple));
+        });
 
         detailsMovieViewModel.getGenresNames().observe(getViewLifecycleOwner(), (genres -> {
 
