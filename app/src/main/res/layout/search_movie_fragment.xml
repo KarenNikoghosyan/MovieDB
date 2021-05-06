@@ -104,10 +104,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="10dp"
-        android:fontFamily="@font/playfair_display_bold"
+        android:fontFamily="@font/open_sans_extrabold"
         android:text="Discover Movies..."
         android:textColor="#FFFFFF"
-        android:textSize="30sp"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

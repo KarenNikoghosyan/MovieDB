@@ -2,15 +2,13 @@ package edu.karen.nikoghosyan.moviedb;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.widget.ViewPager2;
 
+import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
 import edu.karen.nikoghosyan.moviedb.ui.main.ViewPagerAdapter;
 import nl.joery.animatedbottombar.AnimatedBottomBar;
 
@@ -18,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     private AnimatedBottomBar animatedBottomBar;
     private ViewPager viewPager;
     private ViewPagerAdapter adapter;
+    private Movie movie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +43,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+
+            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             animatedBottomBar.setVisibility(View.VISIBLE);
             viewPager.setVisibility(View.VISIBLE);
-        }
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            getSupportFragmentManager().popBackStack();
+
         } else {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this)

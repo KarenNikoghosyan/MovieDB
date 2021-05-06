@@ -98,7 +98,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
-        android:fontFamily="@font/playfair_display_bold"
+        android:fontFamily="@font/open_sans_extrabold"
         android:text="Discover Movies..."
         android:textColor="@color/white"
         android:textSize="30sp"

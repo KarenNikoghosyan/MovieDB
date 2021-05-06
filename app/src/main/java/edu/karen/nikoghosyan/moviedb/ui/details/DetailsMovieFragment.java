@@ -63,12 +63,11 @@ public class DetailsMovieFragment extends Fragment {
     private DocumentReference documentReference;
     private FirebaseFirestore fStore;
     private String userID;
-    private boolean isBookmarked = false;
     private BookmarksAdapter adapter;
 
+    private boolean isBookmarked = false;
     public static boolean isClickedBookmark = false;
     public static boolean isClicked = false;
-
 
     private SharedViewModel detailsMovieViewModel;
 
@@ -108,24 +107,11 @@ public class DetailsMovieFragment extends Fragment {
 
         ibBookmark = view.findViewById(R.id.ibBookmark);
 
-        fStore = FirebaseFirestore.getInstance();
-
-        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-
-            userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            documentReference = fStore.collection("users").document(userID);
-            documentReference.get().addOnSuccessListener(documentSnapshot -> {
-                if (documentSnapshot.contains("" + Constants.MOVIE_ID)) {
-                    ibBookmark.setImageResource(R.drawable.icon_bookmark_selected);
-                    isBookmarked = true;
-                } else {
-                    ibBookmark.setImageResource(R.drawable.icon_bookmark_unselected);
-                    isBookmarked = false;
-                }
-            });
-        }
+        isBookmarked();
 
         ibBookmark.setOnClickListener(v -> {
+            fStore = FirebaseFirestore.getInstance();
+
             if (!isBookmarked) {
                 isBookmarked = true;
 
@@ -241,6 +227,25 @@ public class DetailsMovieFragment extends Fragment {
         animatedBottomBar.setVisibility(View.INVISIBLE);
 
         getObservers();
+    }
+
+    private void isBookmarked() {
+        fStore = FirebaseFirestore.getInstance();
+
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+
+            userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            documentReference = fStore.collection("users").document(userID);
+            documentReference.get().addOnSuccessListener(documentSnapshot -> {
+                if (documentSnapshot.contains("" + Constants.MOVIE_ID)) {
+                    ibBookmark.setImageResource(R.drawable.icon_bookmark_selected);
+                    isBookmarked = true;
+                } else {
+                    ibBookmark.setImageResource(R.drawable.icon_bookmark_unselected);
+                    isBookmarked = false;
+                }
+            });
+        }
     }
 
     private void getObservers() {
