@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:fontFamily="@font/playfair_display_bold"
+            android:fontFamily="@font/open_sans_extrabold"
             android:text="@string/registration"
             android:textColor="@color/white"
             android:textSize="36sp"
@@ -104,15 +104,12 @@
             android:id="@+id/btnRegister"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            android:backgroundTint="#BDA3A3"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#039CAF"
             android:text="@string/register"
             app:cornerRadius="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintStart_toStartOf="@+id/guideline10"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
 
         <TextView
@@ -174,6 +171,20 @@
                 android:maxLines="1"
                 android:textColor="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.7" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.3" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
