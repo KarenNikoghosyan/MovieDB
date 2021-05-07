@@ -68,6 +68,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
+        <me.ibrahimsn.lib.CirclesLoadingView
+            android:id="@+id/clTopTrending"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@+id/rvMoviesHome"
+            app:layout_constraintEnd_toEndOf="@+id/rvMoviesHome"
+            app:layout_constraintStart_toStartOf="@+id/rvMoviesHome"
+            app:layout_constraintTop_toTopOf="@+id/rvMoviesHome" />
+
         <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
@@ -99,6 +109,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+        <me.ibrahimsn.lib.CirclesLoadingView
+            android:id="@+id/clTopRated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@+id/rvTopRated"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/rvTopRated" />
+
 
         <ImageButton
             android:id="@+id/btnLogout"
@@ -201,6 +222,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
+        <me.ibrahimsn.lib.CirclesLoadingView
+            android:id="@+id/clUpcoming"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@+id/rvUpcoming"
+            app:layout_constraintEnd_toEndOf="@+id/rvUpcoming"
+            app:layout_constraintStart_toStartOf="@+id/rvUpcoming"
+            app:layout_constraintTop_toTopOf="@+id/rvUpcoming" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvHorror"
             android:layout_width="match_parent"
@@ -209,6 +240,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+        <me.ibrahimsn.lib.CirclesLoadingView
+            android:id="@+id/clHorror"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@+id/rvHorror"
+            app:layout_constraintEnd_toEndOf="@+id/rvHorror"
+            app:layout_constraintStart_toStartOf="@+id/rvHorror"
+            app:layout_constraintTop_toTopOf="@+id/rvHorror" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvComedy"
@@ -219,6 +260,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
+        <me.ibrahimsn.lib.CirclesLoadingView
+            android:id="@+id/clComedy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@+id/rvComedy"
+            app:layout_constraintEnd_toEndOf="@+id/rvComedy"
+            app:layout_constraintStart_toStartOf="@+id/rvComedy"
+            app:layout_constraintTop_toTopOf="@+id/rvComedy" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvCrime"
             android:layout_width="match_parent"
@@ -228,25 +279,55 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
+        <me.ibrahimsn.lib.CirclesLoadingView
+            android:id="@+id/clCrime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@+id/rvCrime"
+            app:layout_constraintEnd_toEndOf="@+id/rvCrime"
+            app:layout_constraintStart_toStartOf="@+id/rvCrime"
+            app:layout_constraintTop_toTopOf="@+id/rvCrime" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvAnimation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+        <me.ibrahimsn.lib.CirclesLoadingView
+            android:id="@+id/clAnimation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@+id/rvAnimation"
+            app:layout_constraintEnd_toEndOf="@+id/rvAnimation"
+            app:layout_constraintStart_toStartOf="@+id/rvAnimation"
+            app:layout_constraintTop_toTopOf="@+id/rvAnimation" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvScienceFiction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="64dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView10" />
+            app:layout_constraintTop_toBottomOf="@+id/textView10"
+            android:paddingBottom="70dp"/>
+
+        <me.ibrahimsn.lib.CirclesLoadingView
+            android:id="@+id/clScienceFiction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@+id/rvScienceFiction"
+            app:layout_constraintEnd_toEndOf="@+id/rvScienceFiction"
+            app:layout_constraintStart_toStartOf="@+id/rvScienceFiction"
+            app:layout_constraintTop_toTopOf="@+id/rvScienceFiction" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

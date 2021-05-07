@@ -6,7 +6,7 @@
         <entry key="app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.2984375" />
         <entry key="app/src/main/res/layout-land/activity_loading.xml" value="0.2390625" />
         <entry key="app/src/main/res/layout-land/bookmarks_movie_fragment.xml" value="0.23897707231040563" />
-        <entry key="app/src/main/res/layout-land/details_movie_fragment.xml" value="0.2390625" />
+        <entry key="app/src/main/res/layout-land/details_movie_fragment.xml" value="0.25" />
         <entry key="app/src/main/res/layout-land/fragment_login.xml" value="0.2390625" />
         <entry key="app/src/main/res/layout-land/fragment_register.xml" value="0.2390625" />
         <entry key="app/src/main/res/layout-land/search_movie_fragment.xml" value="0.2390625" />
@@ -18,7 +18,7 @@
         <entry key="app/src/main/res/layout/details_movie_item.xml" value="0.14895833333333333" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/fragment_register.xml" value="0.28229166666666666" />
-        <entry key="app/src/main/res/layout/home_movie_fragment.xml" value="0.19130434782608696" />
+        <entry key="app/src/main/res/layout/home_movie_fragment.xml" value="0.3055242390078918" />
         <entry key="app/src/main/res/layout/home_small_movie_item.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/home_toptrending_item.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/search_movie_fragment.xml" value="0.335" />

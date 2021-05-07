@@ -65,7 +65,6 @@ public class LoginFragment extends Fragment {
                     .navigate(R.id.action_loginFragment_to_registerFragment);
         });
 
-        //TODO: Delete this line
         if (LoadingActivity.isLogged) {
             goToMainActivity();
         }

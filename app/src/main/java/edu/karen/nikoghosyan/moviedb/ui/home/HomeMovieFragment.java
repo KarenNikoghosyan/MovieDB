@@ -23,6 +23,7 @@ import edu.karen.nikoghosyan.moviedb.LoadingActivity;
 import edu.karen.nikoghosyan.moviedb.R;
 import edu.karen.nikoghosyan.moviedb.ui.home.adapters.MovieAdapter;
 import edu.karen.nikoghosyan.moviedb.ui.home.adapters.TopTrendingAdapter;
+import me.ibrahimsn.lib.CirclesLoadingView;
 
 public class HomeMovieFragment extends Fragment {
 
@@ -37,6 +38,15 @@ public class HomeMovieFragment extends Fragment {
     private RecyclerView rvScienceFiction;
     private ImageButton btnLogout;
     private TextView tvName;
+
+    private CirclesLoadingView clTopTrending;
+    private CirclesLoadingView clTopRated;
+    private CirclesLoadingView clUpcoming;
+    private CirclesLoadingView clHorror;
+    private CirclesLoadingView clComedy;
+    private CirclesLoadingView clCrime;
+    private CirclesLoadingView clAnimation;
+    private CirclesLoadingView clScienceFiction;
 
     private SharedPreferences prefs;
 
@@ -62,6 +72,15 @@ public class HomeMovieFragment extends Fragment {
         rvCrime = view.findViewById(R.id.rvCrime);
         rvAnimation = view.findViewById(R.id.rvAnimation);
         rvScienceFiction = view.findViewById(R.id.rvScienceFiction);
+
+        clTopTrending = view.findViewById(R.id.clTopTrending);
+        clTopRated = view.findViewById(R.id.clTopRated);
+        clUpcoming = view.findViewById(R.id.clUpcoming);
+        clHorror = view.findViewById(R.id.clHorror);
+        clComedy = view.findViewById(R.id.clComedy);
+        clCrime = view.findViewById(R.id.clCrime);
+        clAnimation = view.findViewById(R.id.clAnimation);
+        clScienceFiction = view.findViewById(R.id.clScienceFiction);
 
         btnLogout = view.findViewById(R.id.btnLogout);
         tvName = view.findViewById(R.id.tvName);
@@ -123,48 +142,56 @@ public class HomeMovieFragment extends Fragment {
 
             rvMoviesHome.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
             rvMoviesHome.setAdapter(new TopTrendingAdapter(movies));
+            clTopTrending.setVisibility(View.GONE);
         }));
 
         homeMovieViewModel.getTopRatedLiveData().observe(getViewLifecycleOwner(), (movies -> {
 
             rvTopRated.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
             rvTopRated.setAdapter(new MovieAdapter(movies));
+            clTopRated.setVisibility(View.GONE);
         }));
 
         homeMovieViewModel.getUpcomingLiveData().observe(getViewLifecycleOwner(), (movies -> {
 
             rvUpcoming.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
             rvUpcoming.setAdapter(new MovieAdapter(movies));
+            clUpcoming.setVisibility(View.GONE);
         }));
 
         homeMovieViewModel.getHorrorLiveData().observe(getViewLifecycleOwner(), (movies -> {
 
             rvHorror.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
             rvHorror.setAdapter(new MovieAdapter(movies));
+            clHorror.setVisibility(View.GONE);
         }));
 
         homeMovieViewModel.getComedyLiveData().observe(getViewLifecycleOwner(), (movies -> {
 
             rvComedy.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
             rvComedy.setAdapter(new MovieAdapter(movies));
+            clComedy.setVisibility(View.GONE);
         }));
 
         homeMovieViewModel.getCrimeLiveData().observe(getViewLifecycleOwner(), (movies -> {
 
             rvCrime.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
             rvCrime.setAdapter(new MovieAdapter(movies));
+            clCrime.setVisibility(View.GONE);
         }));
 
         homeMovieViewModel.getAnimationLiveData().observe(getViewLifecycleOwner(), (movies -> {
 
             rvAnimation.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
             rvAnimation.setAdapter(new MovieAdapter(movies));
+            clAnimation.setVisibility(View.GONE);
         }));
 
         homeMovieViewModel.getScienceFictionLiveData().observe(getViewLifecycleOwner(), (movies -> {
 
             rvScienceFiction.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
             rvScienceFiction.setAdapter(new MovieAdapter(movies));
+            clScienceFiction.setVisibility(View.GONE);
         }));
     }
 }

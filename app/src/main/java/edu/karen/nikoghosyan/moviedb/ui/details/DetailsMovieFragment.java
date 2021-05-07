@@ -38,6 +38,7 @@ import edu.karen.nikoghosyan.moviedb.ui.bookmarks.BookmarksMovieFragment;
 import edu.karen.nikoghosyan.moviedb.ui.bookmarks.adapters.BookmarksAdapter;
 import edu.karen.nikoghosyan.moviedb.ui.details.adapters.DetailsMovieAdapter;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
+import me.ibrahimsn.lib.CirclesLoadingView;
 import nl.joery.animatedbottombar.AnimatedBottomBar;
 
 public class DetailsMovieFragment extends Fragment {
@@ -60,6 +61,9 @@ public class DetailsMovieFragment extends Fragment {
 
     private RecyclerView rvSimilar;
     private RecyclerView rvRecommendations;
+
+    private CirclesLoadingView clSimilar;
+    private CirclesLoadingView clRecommendations;
 
     private DocumentReference documentReference;
     private FirebaseFirestore fStore;
@@ -92,6 +96,9 @@ public class DetailsMovieFragment extends Fragment {
             return;
         }
 
+        clSimilar = view.findViewById(R.id.clSimilar);
+        clRecommendations = view.findViewById(R.id.clRecommendations);
+
         tvNoSimilarMovies = view.findViewById(R.id.tvNoSimilarMovies);
         tvNoSimilarMovies.setVisibility(View.INVISIBLE);
 
@@ -104,7 +111,8 @@ public class DetailsMovieFragment extends Fragment {
         tvTitle.setText(getArguments().getString(Constants.MOVIE_TITLE));
 
         tvRating = view.findViewById(R.id.tvRating);
-        tvRating.setText(String.valueOf(getArguments().getDouble(Constants.MOVIE_RATING)));
+        double formattedNum = Math.round(getArguments().getDouble(Constants.MOVIE_RATING) * 10.0) / 10.0;
+        tvRating.setText(String.valueOf(formattedNum));
 
         ibBookmark = view.findViewById(R.id.ibBookmark);
 
@@ -309,6 +317,7 @@ public class DetailsMovieFragment extends Fragment {
 
             rvSimilar.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
             rvSimilar.setAdapter(new DetailsMovieAdapter(movies));
+            clSimilar.setVisibility(View.GONE);
         }));
 
         detailsMovieViewModel.getMoviesRecommendations().observe(getViewLifecycleOwner(), (movies -> {
@@ -318,6 +327,7 @@ public class DetailsMovieFragment extends Fragment {
 
             rvRecommendations.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
             rvRecommendations.setAdapter(new DetailsMovieAdapter(movies));
+            clRecommendations.setVisibility(View.GONE);
         }));
     }
 
