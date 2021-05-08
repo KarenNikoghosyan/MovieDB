@@ -114,10 +114,73 @@ public class DetailsMovieFragment extends Fragment {
         double formattedNum = Math.round(getArguments().getDouble(Constants.MOVIE_RATING) * 10.0) / 10.0;
         tvRating.setText(String.valueOf(formattedNum));
 
+        tvReleaseDate = view.findViewById(R.id.tvReleaseDate);
+        tvReleaseDate.setText(getArguments().getString(Constants.MOVIE_RELEASE_DATE));
+
+        tvLanguage = view.findViewById(R.id.tvLanguage);
+        tvLanguage.setText(getArguments().getString(Constants.MOVIE_Language));
+
+        tvOverview = view.findViewById(R.id.tvOverview);
+        tvOverview.setText(getArguments().getString(Constants.MOVIE_OVERVIEW));
+
+        rvSimilar = view.findViewById(R.id.rvSimilar);
+        rvRecommendations = view.findViewById(R.id.rvRecommendations);
+
+        ivBackdrop = view.findViewById(R.id.ivBackdrop);
+        Picasso
+                .get()
+                .load(getArguments().getString(Constants.MOVIE_BACKDROP_URL))
+                .into(ivBackdrop, new Callback() {
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        ivBackdrop.setImageResource(R.drawable.placeholder_image);
+                    }
+                });
+
+        ivSmallPoster = view.findViewById(R.id.ivSmallPoster);
+        Picasso
+                .get()
+                .load(getArguments().getString(Constants.MOVIE_IMAGE_URL))
+                .transform(new RoundedCornersTransformation(15, 15))
+                .fit()
+                .into(ivSmallPoster, new Callback() {
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        ivSmallPoster.setImageResource(R.drawable.placeholder_image);
+                    }
+                });
+
         ibBookmark = view.findViewById(R.id.ibBookmark);
 
         isBookmarked();
 
+        bookmarksToggle();
+
+        ibBack = view.findViewById(R.id.ibBack);
+        ibBack.setOnClickListener(v -> {
+            viewPager.setVisibility(View.VISIBLE);
+
+            getParentFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            animatedBottomBar.setVisibility(View.VISIBLE);
+        });
+
+        animatedBottomBar = requireActivity().findViewById(R.id.animatedBottomBar);
+        animatedBottomBar.setVisibility(View.INVISIBLE);
+
+        getObservers();
+    }
+
+    private void bookmarksToggle() {
         ibBookmark.setOnClickListener(v -> {
             fStore = FirebaseFirestore.getInstance();
 
@@ -177,65 +240,6 @@ public class DetailsMovieFragment extends Fragment {
 
             }
         });
-
-        ivBackdrop = view.findViewById(R.id.ivBackdrop);
-        Picasso
-                .get()
-                .load(getArguments().getString(Constants.MOVIE_BACKDROP_URL))
-                .into(ivBackdrop, new Callback() {
-                    @Override
-                    public void onSuccess() {
-
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-                        ivBackdrop.setImageResource(R.drawable.placeholder_image);
-                    }
-                });
-
-        ivSmallPoster = view.findViewById(R.id.ivSmallPoster);
-        Picasso
-                .get()
-                .load(getArguments().getString(Constants.MOVIE_IMAGE_URL))
-                .transform(new RoundedCornersTransformation(15, 15))
-                .fit()
-                .into(ivSmallPoster, new Callback() {
-                    @Override
-                    public void onSuccess() {
-
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-                        ivSmallPoster.setImageResource(R.drawable.placeholder_image);
-                    }
-                });
-
-        tvReleaseDate = view.findViewById(R.id.tvReleaseDate);
-        tvReleaseDate.setText(getArguments().getString(Constants.MOVIE_RELEASE_DATE));
-
-        tvLanguage = view.findViewById(R.id.tvLanguage);
-        tvLanguage.setText(getArguments().getString(Constants.MOVIE_Language));
-
-        tvOverview = view.findViewById(R.id.tvOverview);
-        tvOverview.setText(getArguments().getString(Constants.MOVIE_OVERVIEW));
-
-        rvSimilar = view.findViewById(R.id.rvSimilar);
-        rvRecommendations = view.findViewById(R.id.rvRecommendations);
-
-        ibBack = view.findViewById(R.id.ibBack);
-        ibBack.setOnClickListener(v -> {
-            viewPager.setVisibility(View.VISIBLE);
-
-            getParentFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            animatedBottomBar.setVisibility(View.VISIBLE);
-        });
-
-        animatedBottomBar = requireActivity().findViewById(R.id.animatedBottomBar);
-        animatedBottomBar.setVisibility(View.INVISIBLE);
-
-        getObservers();
     }
 
     private void isBookmarked() {

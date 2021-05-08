@@ -105,32 +105,36 @@ public class BookmarksMovieFragment extends Fragment {
             rvBookmarks.setAdapter(adapter);
             adapter.notifyDataSetChanged();
 
-            new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-                @Override
-                public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                    return false;
-                }
-
-                @Override
-                public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                    movie = BookmarksAdapter.movieList.get(viewHolder.getAdapterPosition());
-                    showSnackBar(getView());
-
-                    BookmarksAdapter.movieList.remove(viewHolder.getAdapterPosition());
-                    adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
-
-                    fStore = FirebaseFirestore.getInstance();
-                    userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                    documentReference = fStore.collection("users").document(userID);
-
-                    Map<String, Object> user = new HashMap<>();
-                    user.put("movieIDs", FieldValue.arrayRemove(movie.getMovieID()));
-                    user.put("" + movie.getMovieID(), FieldValue.delete());
-
-                    documentReference.update(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was removed for user" + userID));
-                }
-            }).attachToRecyclerView(rvBookmarks);
+            recyclerViewItemSwipe();
         });
+    }
+
+    private void recyclerViewItemSwipe() {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                movie = BookmarksAdapter.movieList.get(viewHolder.getAdapterPosition());
+                showSnackBar(getView());
+
+                BookmarksAdapter.movieList.remove(viewHolder.getAdapterPosition());
+                adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+
+                fStore = FirebaseFirestore.getInstance();
+                userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                documentReference = fStore.collection("users").document(userID);
+
+                Map<String, Object> user = new HashMap<>();
+                user.put("movieIDs", FieldValue.arrayRemove(movie.getMovieID()));
+                user.put("" + movie.getMovieID(), FieldValue.delete());
+
+                documentReference.update(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was removed for user" + userID));
+            }
+        }).attachToRecyclerView(rvBookmarks);
     }
 
     public static void showSnackBar(View v){

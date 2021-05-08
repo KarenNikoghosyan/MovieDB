@@ -15,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
@@ -176,9 +175,5 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.View
         args.putString(Constants.MOVIE_IMAGE_URL, movie.getImageURL());
         args.putString(Constants.MOVIE_Language, movie.getLanguage());
         fragment.setArguments(args);
-    }
-
-    public static void showSnackBar(View v){
-        Snackbar.make(v, "Movie Was Removed", Snackbar.LENGTH_SHORT).show();
     }
 }
