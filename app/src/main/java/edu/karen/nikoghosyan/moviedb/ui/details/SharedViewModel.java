@@ -23,7 +23,6 @@ public class SharedViewModel extends ViewModel {
     private final MutableLiveData<List<Movie>> moviesRecommendations = new MutableLiveData<>();
     private final MutableLiveData<Throwable> detailsException = new MutableLiveData<>();
 
-
     public SharedViewModel(){
 
         bookmarksAPIManager = new BookmarksAPIManager();

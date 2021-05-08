@@ -118,11 +118,19 @@ public class BookmarksMovieFragment extends Fragment {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                movie = BookmarksAdapter.movieList.get(viewHolder.getAdapterPosition());
                 showSnackBar(getView());
+                movie = BookmarksAdapter.movieList.get(viewHolder.getAdapterPosition());
 
-                BookmarksAdapter.movieList.remove(viewHolder.getAdapterPosition());
-                adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                int position = viewHolder.getAdapterPosition();
+                BookmarksAdapter.movieList.remove(position);
+                adapter.notifyItemRemoved(position);
+                rvBookmarks.setAdapter(adapter);
+
+                if (position == BookmarksAdapter.movieList.size() && BookmarksAdapter.movieList.size() >= 2){
+                    position = BookmarksAdapter.movieList.size() - 2;
+                }
+                rvBookmarks.scrollToPosition(position);
+
 
                 fStore = FirebaseFirestore.getInstance();
                 userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
