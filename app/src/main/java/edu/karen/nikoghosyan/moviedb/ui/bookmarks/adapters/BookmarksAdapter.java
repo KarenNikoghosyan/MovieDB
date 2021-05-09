@@ -111,7 +111,7 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.View
             holder.tvBookmarkGenre.setText(genresNames.substring(0, genresNames.length() - 1));
 
         } else {
-            holder.tvBookmarkGenre.setText("No genres were found");
+            holder.tvBookmarkGenre.setText(R.string.no_genres_were_found);
         }
 
         holder.tvBookmarkLanguage.setText(movie.getLanguage());
@@ -141,14 +141,14 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private ImageView ivBookmarkPoster;
-        private ProgressBar pbBookmarkPoster;
-        private ImageButton ibBookmarkSwitch;
-        private TextView tvBookmarkTitle;
-        private TextView tvBookmarkReleaseDate;
-        private TextView tvBookmarkGenre;
-        private TextView tvBookmarkLanguage;
-        private TextView tvBookmarkRating;
+        private final ImageView ivBookmarkPoster;
+        private final ProgressBar pbBookmarkPoster;
+        private final ImageButton ibBookmarkSwitch;
+        private final TextView tvBookmarkTitle;
+        private final TextView tvBookmarkReleaseDate;
+        private final TextView tvBookmarkGenre;
+        private final TextView tvBookmarkLanguage;
+        private final TextView tvBookmarkRating;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

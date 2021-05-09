@@ -1,6 +1,5 @@
 package edu.karen.nikoghosyan.moviedb.ui.search.adapters;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,8 +24,7 @@ import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
 import edu.karen.nikoghosyan.moviedb.ui.details.DetailsMovieFragment;
 
 public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.ViewHolder> {
-    private List<Movie> movieList;
-    private Context mContext;
+    private final List<Movie> movieList;
     private Movie movie;
 
     public SearchMovieAdapter(List<Movie> movieList) {
@@ -36,7 +34,6 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        mContext = parent.getContext();
 
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         return new ViewHolder(layoutInflater.inflate(R.layout.search_movie_item, parent, false));

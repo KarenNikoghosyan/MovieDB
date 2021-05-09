@@ -56,11 +56,9 @@ public class RegisterFragment extends Fragment {
         etPasswordRegister = view.findViewById(R.id.etPasswordLogin);
         etConfirmPassword = view.findViewById(R.id.etConfirmPassword);
 
-        tvLogin.setOnClickListener(v -> {
-            NavHostFragment
-                    .findNavController(this)
-                    .navigate(R.id.action_registerFragment_to_loginFragment);
-        });
+        tvLogin.setOnClickListener(v -> NavHostFragment
+                .findNavController(this)
+                .navigate(R.id.action_registerFragment_to_loginFragment));
 
         btnRegister.setOnClickListener(v -> {
 
@@ -87,9 +85,7 @@ public class RegisterFragment extends Fragment {
                             gotoLoginFragment();
                         });
 
-                    }).addOnFailureListener(getActivity(), e -> {
-                showError(e);
-            });
+                    }).addOnFailureListener(getActivity(), e -> showError(e));
         });
     }
 

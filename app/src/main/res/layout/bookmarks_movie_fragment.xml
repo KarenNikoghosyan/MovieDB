@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#101A2F"
+    android:background="@drawable/dark_blue_gradient"
     android:clickable="true"
     android:focusable="true"
     tools:context=".ui.bookmarks.BookmarksMovieFragment">
@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:fontFamily="@font/open_sans_extrabold"
         android:text="Bookmarks..."
         android:textColor="@color/white"
@@ -43,6 +43,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.08" />
+        app:layout_constraintGuide_percent="0.10" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

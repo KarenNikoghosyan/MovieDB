@@ -82,8 +82,8 @@ public class DetailsMovieAdapter extends RecyclerView.Adapter<DetailsMovieAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private ImageView ivInformation;
-        private ProgressBar pbInformation;
+        private final ImageView ivInformation;
+        private final ProgressBar pbInformation;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

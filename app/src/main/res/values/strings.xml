@@ -23,4 +23,5 @@
     <string name="already_a_member">Already A Member?</string>
     <string name="bookmarks">Bookmarks</string>
     <string name="no_similar_movies_were_found">No Similar Movies Found</string>
+    <string name="no_genres_were_found">No genres were found</string>
 </resources>

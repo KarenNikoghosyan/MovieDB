@@ -8,22 +8,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
-import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
 import edu.karen.nikoghosyan.moviedb.ui.main.ViewPagerAdapter;
 import nl.joery.animatedbottombar.AnimatedBottomBar;
 
 public class MainActivity extends AppCompatActivity {
     private AnimatedBottomBar animatedBottomBar;
     private ViewPager viewPager;
-    private ViewPagerAdapter adapter;
-    private Movie movie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-
-        adapter = new ViewPagerAdapter(getSupportFragmentManager(), 1);
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), 1);
 
         viewPager = findViewById(R.id.viewPager);
         viewPager.setOffscreenPageLimit(2);

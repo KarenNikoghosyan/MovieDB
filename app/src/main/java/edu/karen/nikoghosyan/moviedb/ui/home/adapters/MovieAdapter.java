@@ -1,6 +1,5 @@
 package edu.karen.nikoghosyan.moviedb.ui.home.adapters;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +24,6 @@ import edu.karen.nikoghosyan.moviedb.ui.details.DetailsMovieFragment;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
     private final List<Movie> moviesList;
-    private Context mContext;
     private Movie movie;
 
     public MovieAdapter(List<Movie> movieList) {
@@ -35,7 +33,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        this.mContext = parent.getContext();
 
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         return new ViewHolder(inflater.inflate(R.layout.home_small_movie_item, parent, false));
@@ -85,8 +82,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private ImageView ivHome;
-        private ProgressBar pbHome;
+        private final ImageView ivHome;
+        private final ProgressBar pbHome;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

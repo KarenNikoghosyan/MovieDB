@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#101A2F"
+        android:background="@drawable/dark_blue_gradient"
         android:clickable="true"
         android:focusable="true"
         tools:context=".ui.details.DetailsMovieFragment">
@@ -19,13 +19,13 @@
             android:id="@+id/ibBookmark"
             android:layout_width="40dp"
             android:layout_height="0dp"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
             android:background="?selectableItemBackgroundBorderless"
             android:elevation="1dp"
             android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="@+id/ivBackdrop"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline12"
             app:srcCompat="@drawable/icon_bookmark_unselected" />
 
         <ImageView
@@ -42,7 +42,8 @@
             android:id="@+id/tvRating"
             android:layout_width="wrap_content"
             android:layout_height="24dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
             android:text="4.2"
             android:textColor="#FFFF00"
             android:textSize="18sp"
@@ -54,7 +55,8 @@
             android:id="@+id/ibBack"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
             android:background="?selectableItemBackgroundBorderless"
             app:layout_constraintBottom_toTopOf="@+id/guideline12"
             app:layout_constraintStart_toStartOf="parent"
@@ -72,11 +74,12 @@
             android:id="@+id/ivBackdrop"
             android:layout_width="0dp"
             android:layout_height="200dp"
+            android:elevation="-1dp"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline12" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline18"
@@ -98,9 +101,9 @@
             android:id="@+id/tvOverview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginEnd="16dp"
             android:fontFamily="@font/abeezee"
             android:text="TextView"
             android:textColor="@color/white"

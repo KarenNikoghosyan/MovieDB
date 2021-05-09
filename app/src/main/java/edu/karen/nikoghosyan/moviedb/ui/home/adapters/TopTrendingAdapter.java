@@ -1,6 +1,5 @@
 package edu.karen.nikoghosyan.moviedb.ui.home.adapters;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +24,6 @@ import edu.karen.nikoghosyan.moviedb.ui.details.DetailsMovieFragment;
 
 public class TopTrendingAdapter extends RecyclerView.Adapter<TopTrendingAdapter.ViewHolder> {
     private final List<Movie> moviesList;
-    private Context mContext;
     private Movie movie;
 
     public TopTrendingAdapter(List<Movie> movies) {
@@ -35,7 +33,6 @@ public class TopTrendingAdapter extends RecyclerView.Adapter<TopTrendingAdapter.
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        this.mContext = parent.getContext();
 
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         return new ViewHolder(inflater.inflate(R.layout.home_toptrending_item, parent, false));
@@ -85,8 +82,8 @@ public class TopTrendingAdapter extends RecyclerView.Adapter<TopTrendingAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private ImageView ivTopTrending;
-        private ProgressBar pbHomeTopTrending;
+        private final ImageView ivTopTrending;
+        private final ProgressBar pbHomeTopTrending;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

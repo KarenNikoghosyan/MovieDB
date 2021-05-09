@@ -59,11 +59,9 @@ public class LoginFragment extends Fragment {
         tvRegister = view.findViewById(R.id.tvRegister);
         tvRegister.setPaintFlags(tvRegister.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
-        tvRegister.setOnClickListener(v -> {
-            NavHostFragment
-                    .findNavController(this)
-                    .navigate(R.id.action_loginFragment_to_registerFragment);
-        });
+        tvRegister.setOnClickListener(v -> NavHostFragment
+                .findNavController(this)
+                .navigate(R.id.action_loginFragment_to_registerFragment));
 
         if (LoadingActivity.isLogged) {
             goToMainActivity();
@@ -86,9 +84,7 @@ public class LoginFragment extends Fragment {
                         editor.apply();
 
                         goToMainActivity();
-                    }).addOnFailureListener(getActivity(), e -> {
-                showError(e);
-            });
+                    }).addOnFailureListener(getActivity(), e -> showError(e));
         });
     }
 

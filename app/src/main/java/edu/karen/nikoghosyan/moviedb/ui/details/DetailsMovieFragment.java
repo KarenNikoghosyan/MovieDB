@@ -130,11 +130,10 @@ public class DetailsMovieFragment extends Fragment {
         Picasso
                 .get()
                 .load(getArguments().getString(Constants.MOVIE_BACKDROP_URL))
+                .transform(new RoundedCornersTransformation(2, 2))
                 .into(ivBackdrop, new Callback() {
                     @Override
-                    public void onSuccess() {
-
-                    }
+                    public void onSuccess() {}
 
                     @Override
                     public void onError(Exception e) {
@@ -150,9 +149,7 @@ public class DetailsMovieFragment extends Fragment {
                 .fit()
                 .into(ivSmallPoster, new Callback() {
                     @Override
-                    public void onSuccess() {
-
-                    }
+                    public void onSuccess() {}
 
                     @Override
                     public void onError(Exception e) {
@@ -163,7 +160,6 @@ public class DetailsMovieFragment extends Fragment {
         ibBookmark = view.findViewById(R.id.ibBookmark);
 
         isBookmarked();
-
         bookmarksToggle();
 
         ibBack = view.findViewById(R.id.ibBack);
@@ -281,37 +277,34 @@ public class DetailsMovieFragment extends Fragment {
         });
 
         detailsMovieViewModel.getGenresNames().observe(getViewLifecycleOwner(), (genres -> {
+            if (getArguments() != null) {
+                int[] moviesIDs = getArguments().getIntArray(Constants.MOVIE_GENRE_IDS);
 
-            int[] moviesIDs = getArguments().getIntArray(Constants.MOVIE_GENRE_IDS);
-            if (moviesIDs != null) {
-                StringBuilder genresNames = new StringBuilder();
+                if (moviesIDs != null) {
+                    StringBuilder genresNames = new StringBuilder();
 
-                ((Runnable) () -> {
-                    if (moviesIDs != null) {
-                        int limit = moviesIDs.length;
-                        if (moviesIDs.length > 3) limit = 3;
+                    int limit = moviesIDs.length;
+                    if (moviesIDs.length > 3) limit = 3;
 
-                        for (int i = 0; i < limit; i++) {
-                            for (int j = 0; j < genres.size(); j++) {
-                                if (moviesIDs[i] == genres.get(j).getGenreId()) {
-                                    genresNames.append(genres.get(j).getGenreName()).append(",");
-                                }
+                    for (int i = 0; i < limit; i++) {
+                        for (int j = 0; j < genres.size(); j++) {
+                            if (moviesIDs[i] == genres.get(j).getGenreId()) {
+                                genresNames.append(genres.get(j).getGenreName()).append(",");
                             }
                         }
                     }
-                }).run();
 
-                if (genresNames.length() > 0) {
-                    tvGenre.setText(genresNames.substring(0, genresNames.length() - 1));
+                    if (genresNames.length() > 0) {
+                        tvGenre.setText(genresNames.substring(0, genresNames.length() - 1));
 
-                } else {
-                    tvGenre.setText("No genres were found");
+                    } else {
+                        tvGenre.setText(R.string.no_genres_were_found);
+                    }
+                }
+                else {
+                    tvGenre.setText(getArguments().getString(Constants.MOVIE_GENRE).substring(0, getArguments().getString(Constants.MOVIE_GENRE).length() - 1));
                 }
             }
-            else {
-                tvGenre.setText(getArguments().getString(Constants.MOVIE_GENRE).substring(0, getArguments().getString(Constants.MOVIE_GENRE).length() - 1));
-            }
-
         }));
 
         detailsMovieViewModel.getSimilarMoviesByID().observe(getViewLifecycleOwner(), (movies -> {

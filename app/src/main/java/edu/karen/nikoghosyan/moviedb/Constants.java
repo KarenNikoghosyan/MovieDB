@@ -1,11 +1,5 @@
 package edu.karen.nikoghosyan.moviedb;
 
-import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
-import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
-
 public class Constants {
     public static final String MOVIE_TITLE = "movieTitle";
     public static final String MOVIE_RATING = "movieRating";

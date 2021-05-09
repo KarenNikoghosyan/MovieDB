@@ -67,9 +67,7 @@ public class SearchMovieFragment extends Fragment {
 
         getCurrentScreenOrientation();
 
-        etSearch.addTextChangedListener((TextChangedAdapter) (s, start, before, count) -> {
-            getObservers();
-        });
+        etSearch.addTextChangedListener((TextChangedAdapter) (s, start, before, count) -> getObservers());
 
         onScrollListener();
     }
@@ -147,11 +145,14 @@ public class SearchMovieFragment extends Fragment {
                 super.onScrolled(recyclerView, dx, dy);
                 if (dy != 0) {
 
-                    View view = getActivity().getCurrentFocus();
-                    if (view != null) {
-                        InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                        inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    if (getActivity() != null) {
+                        View view = getActivity().getCurrentFocus();
+                        if (view != null) {
+                            InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                            inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                        }
                     }
+
                 }
             }
         });

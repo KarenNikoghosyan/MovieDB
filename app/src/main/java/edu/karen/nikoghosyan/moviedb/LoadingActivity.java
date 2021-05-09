@@ -3,6 +3,7 @@ package edu.karen.nikoghosyan.moviedb;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,25 +17,25 @@ public class LoadingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
 
-        new Handler().postDelayed(() -> {
+        new Handler().postDelayed(() -> FirebaseAuth.getInstance().addAuthStateListener(firebaseAuth -> {
+            FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
-            FirebaseAuth.getInstance().addAuthStateListener(firebaseAuth -> {
-                FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+            if (currentUser == null) {
+                Intent intentToLoginActivity = new Intent(this, LoginActivity.class);
+                startActivity(intentToLoginActivity);
+                finish();
+            }
 
-                if (currentUser == null) {
-                    Intent intentToLoginActivity = new Intent(this, LoginActivity.class);
-                    startActivity(intentToLoginActivity);
-                    finish();
-                }
-
-                else {
-                    Intent intentToMainActivity = new Intent(this, MainActivity.class);
-                    startActivity(intentToMainActivity);
-                    isLogged = true;
-                    finish();
-                }
-            });
-        },1500);
+            else {
+                Intent intentToMainActivity = new Intent(this, MainActivity.class);
+                startActivity(intentToMainActivity);
+                isLogged = true;
+                finish();
+            }
+        }),1500);
     }
 }
