@@ -178,6 +178,7 @@ public class HomeMovieFragment extends Fragment {
                 .beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_down, R.anim.slide_in_up, R.anim.slide_out_down)
                 .replace(R.id.fragmentContainer, fragment)
+                //TODO: Remove this line
                 .addToBackStack(null)
                 .commit();
     }

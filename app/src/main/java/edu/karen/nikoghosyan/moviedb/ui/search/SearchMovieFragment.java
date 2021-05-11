@@ -68,7 +68,21 @@ public class SearchMovieFragment extends Fragment {
 
         getCurrentScreenOrientation();
 
-        etSearch.addTextChangedListener((TextChangedAdapter) (s, start, before, count) -> getObservers());
+        etSearch.addTextChangedListener((TextChangedAdapter) (s, start, before, count) -> updateMovieSearchResults());
+
+        searchMovieViewModel = new ViewModelProvider(this).get(SearchMovieViewModel.class);
+        searchMovieViewModel.getMoviesWithSearching().observe(getViewLifecycleOwner(), (movies -> {
+            clSearch.setVisibility(View.GONE);
+            moviesList = movies;
+
+            rvMovieSearch.setAdapter(new SearchMovieAdapter(movies));
+            recyclerViewAnimation();
+
+            ivSearchError.setVisibility(View.GONE);
+            tvSearchErrorMessage.setVisibility(View.GONE);
+
+        }));
+        showErrorAfterDelay();
 
         onScrollListener();
     }
@@ -90,37 +104,17 @@ public class SearchMovieFragment extends Fragment {
         }
     }
 
-    private void getObservers() {
+    private void updateMovieSearchResults() {
         Constants.MOVIE_SEARCH = etSearch.getText().toString();
 
         searchMovieViewModel = new ViewModelProvider(this).get(SearchMovieViewModel.class);
-
         searchMovieViewModel.updateMovieWithSearching();
 
-        searchMovieViewModel.getMoviesWithSearching().observe(getViewLifecycleOwner(), (movies -> {
-            clSearch.setVisibility(View.GONE);
-            moviesList = movies;
+        if (etSearch.getText().length() <= 0) {
+            rvMovieSearch.setAdapter(null);
+        }
 
-            rvMovieSearch.setAdapter(new SearchMovieAdapter(movies));
-            recyclerViewAnimation();
-
-            ivSearchError.setVisibility(View.GONE);
-            tvSearchErrorMessage.setVisibility(View.GONE);
-
-            if (etSearch.getText().length() <= 0) {
-                adapter = new SearchMovieAdapter(movies);
-                adapter.updateData(movies);
-            }
-        }));
-
-        new Handler().postDelayed(() -> {
-            if (moviesList == null) return;
-
-            if (moviesList.size() == 0 && etSearch.getText().length() > 0) {
-                ivSearchError.setVisibility(View.VISIBLE);
-                tvSearchErrorMessage.setVisibility(View.VISIBLE);
-            }
-        }, 2000);
+        showErrorAfterDelay();
 
         searchMovieViewModel.getException().observe(getViewLifecycleOwner(), (throwable -> {
 
@@ -138,6 +132,17 @@ public class SearchMovieFragment extends Fragment {
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(requireActivity().getColor(R.color.dark_purple));
             dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(requireActivity().getColor(R.color.dark_purple));
         }));
+    }
+
+    private void showErrorAfterDelay() {
+        new Handler().postDelayed(() -> {
+            if (moviesList == null) return;
+
+            if (moviesList.size() == 0 && etSearch.getText().length() > 0) {
+                ivSearchError.setVisibility(View.VISIBLE);
+                tvSearchErrorMessage.setVisibility(View.VISIBLE);
+            }
+        }, 2000);
     }
 
     private void onScrollListener() {

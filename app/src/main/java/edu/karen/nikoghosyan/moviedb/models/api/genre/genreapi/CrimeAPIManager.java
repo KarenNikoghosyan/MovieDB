@@ -18,7 +18,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CrimeAPIManager {
-    private ArrayList<Movie> moviesList = new ArrayList<>();
+    private ArrayList<Movie> movies = new ArrayList<>();
     private int numberOfCalls = 10;
     private int page = 0;
 
@@ -47,15 +47,14 @@ public class CrimeAPIManager {
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                 MovieResponse movieResponse = response.body();
                 if (movieResponse != null) {
-                    ArrayList<Movie> movies = movieResponse.getMovies();
-                    moviesList.addAll(movies);
+                    movies.addAll(movieResponse.getMovies());
 
                     numberOfCalls--;
                     if (numberOfCalls > 0) {
                         getCrime(moviesLiveData);
                     }
                     else {
-                        moviesLiveData.postValue(moviesList);
+                        moviesLiveData.postValue(movies);
                     }
                 }
             }

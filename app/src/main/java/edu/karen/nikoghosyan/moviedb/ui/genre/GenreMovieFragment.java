@@ -62,6 +62,17 @@ public class GenreMovieFragment extends Fragment {
         ibBackFromGenre.setOnClickListener(v -> {
             viewPager.setVisibility(View.VISIBLE);
 
+//            AppCompatActivity activity = (AppCompatActivity) v.getContext();
+//            Fragment fragment = new HomeMovieFragment();
+
+//            activity
+//                    .getSupportFragmentManager()
+//                    .beginTransaction()
+//                    .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_right, R.anim.slide_out_left)
+//                    .replace(R.id.fragmentContainer, fragment)
+//                    .addToBackStack(null)
+//                    .commit();
+
             getParentFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             animatedBottomBar.setVisibility(View.VISIBLE);
         });

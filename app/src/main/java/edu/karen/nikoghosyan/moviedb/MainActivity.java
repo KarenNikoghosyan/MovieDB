@@ -41,8 +41,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+
+            //Fragment f = getFragmentManager().findFragmentById()
 
             getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             animatedBottomBar.setVisibility(View.VISIBLE);

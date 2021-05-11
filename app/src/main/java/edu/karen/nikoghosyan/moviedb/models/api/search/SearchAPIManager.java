@@ -17,7 +17,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SearchAPIManager {
-    private ArrayList<Movie> moviesList = new ArrayList<>();
 
     ConnectionPool pool = new ConnectionPool(5, 30000, TimeUnit.MILLISECONDS);
     OkHttpClient client = new OkHttpClient
@@ -37,10 +36,7 @@ public class SearchAPIManager {
 
     public void getMoviesWithSearching(MutableLiveData<List<Movie>> moviesLiveData, MutableLiveData<Throwable> exceptionCallback,String query){
 
-        for (int page = 1; page <= 5; page++) {
-
-            System.out.println(page);
-            Call<MovieResponse> movieHTTPRequest = searchMovieService.getMoviesWithSearching(query, page);
+        Call<MovieResponse> movieHTTPRequest = searchMovieService.getMoviesWithSearching(query);
             movieHTTPRequest.enqueue(new Callback<MovieResponse>() {
                 @Override
                 public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
@@ -48,8 +44,8 @@ public class SearchAPIManager {
 
                     if (movieResponse != null) {
                         ArrayList<Movie> movies = movieResponse.getMovies();
-                        moviesList.addAll(movies);
-                        moviesLiveData.postValue(moviesList);
+                        moviesLiveData.postValue(movies);
+
                     }
                 }
 
@@ -58,8 +54,6 @@ public class SearchAPIManager {
                     exceptionCallback.postValue(t);
                 }
             });
-        }
-        moviesList.clear();
     }
 
 }
