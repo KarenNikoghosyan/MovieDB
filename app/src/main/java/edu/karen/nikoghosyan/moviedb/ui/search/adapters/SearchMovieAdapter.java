@@ -96,11 +96,6 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
         }
     }
 
-    public void updateData(List<Movie> movies) {
-        movies.clear();
-        notifyDataSetChanged();
-    }
-
     public void getBundle(Fragment fragment, Movie movie){
         Bundle args = new Bundle();
         args.putString(Constants.MOVIE_TITLE, movie.getTitle());
