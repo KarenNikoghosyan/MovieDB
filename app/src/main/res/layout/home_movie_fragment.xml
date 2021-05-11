@@ -329,6 +329,111 @@
             app:layout_constraintStart_toStartOf="@+id/rvScienceFiction"
             app:layout_constraintTop_toTopOf="@+id/rvScienceFiction" />
 
+        <TextView
+            android:id="@+id/tvTopRatedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:fontFamily="@font/alfa_slab_one"
+            android:text="@string/view_all"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rvMoviesHome" />
+
+        <TextView
+            android:id="@+id/tvUpcomingButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:fontFamily="@font/alfa_slab_one"
+            android:text="@string/view_all"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rvTopRated" />
+
+        <TextView
+            android:id="@+id/tvHorrorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:fontFamily="@font/alfa_slab_one"
+            android:text="@string/view_all"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rvUpcoming" />
+
+        <TextView
+            android:id="@+id/tvComedyButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:fontFamily="@font/alfa_slab_one"
+            android:text="@string/view_all"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rvHorror" />
+
+        <TextView
+            android:id="@+id/tvCrimeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:fontFamily="@font/alfa_slab_one"
+            android:text="@string/view_all"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rvComedy" />
+
+        <TextView
+            android:id="@+id/tvAnimationButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:fontFamily="@font/alfa_slab_one"
+            android:text="@string/view_all"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rvCrime" />
+
+        <TextView
+            android:id="@+id/tvScienceFictionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:fontFamily="@font/alfa_slab_one"
+            android:text="@string/view_all"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rvAnimation" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

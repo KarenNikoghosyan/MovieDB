@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,8 +20,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import edu.karen.nikoghosyan.moviedb.Constants;
 import edu.karen.nikoghosyan.moviedb.LoadingActivity;
 import edu.karen.nikoghosyan.moviedb.R;
+import edu.karen.nikoghosyan.moviedb.ui.genre.GenreMovieFragment;
 import edu.karen.nikoghosyan.moviedb.ui.home.adapters.MovieAdapter;
 import edu.karen.nikoghosyan.moviedb.ui.home.adapters.TopTrendingAdapter;
 import me.ibrahimsn.lib.CirclesLoadingView;
@@ -47,6 +50,14 @@ public class HomeMovieFragment extends Fragment {
     private CirclesLoadingView clCrime;
     private CirclesLoadingView clAnimation;
     private CirclesLoadingView clScienceFiction;
+
+    private TextView tvTopRatedButton;
+    private TextView tvUpcomingButton;
+    private TextView tvHorrorButton;
+    private TextView tvComedyButton;
+    private TextView tvCrimeButton;
+    private TextView tvAnimationButton;
+    private TextView tvScienceFictionButton;
 
     private SharedPreferences prefs;
 
@@ -81,6 +92,43 @@ public class HomeMovieFragment extends Fragment {
         clCrime = view.findViewById(R.id.clCrime);
         clAnimation = view.findViewById(R.id.clAnimation);
         clScienceFiction = view.findViewById(R.id.clScienceFiction);
+
+        tvTopRatedButton = view.findViewById(R.id.tvTopRatedButton);
+        tvUpcomingButton = view.findViewById(R.id.tvUpcomingButton);
+        tvHorrorButton = view.findViewById(R.id.tvHorrorButton);
+        tvComedyButton = view.findViewById(R.id.tvComedyButton);
+        tvCrimeButton = view.findViewById(R.id.tvCrimeButton);
+        tvAnimationButton = view.findViewById(R.id.tvAnimationButton);
+        tvScienceFictionButton = view.findViewById(R.id.tvScienceFictionButton);
+
+        tvTopRatedButton.setOnClickListener(v -> {
+            loadGenreFragmentByName(v, "Top Rated");
+        });
+
+        tvUpcomingButton.setOnClickListener(v -> {
+            loadGenreFragmentByName(v, "Upcoming");
+        });
+
+        tvHorrorButton.setOnClickListener(v -> {
+            loadGenreFragmentByName(v, "Horror");
+        });
+
+        tvComedyButton.setOnClickListener(v -> {
+            loadGenreFragmentByName(v, "Comedy");
+        });
+
+        tvCrimeButton.setOnClickListener(v -> {
+            loadGenreFragmentByName(v, "Crime");
+        });
+
+        tvAnimationButton.setOnClickListener(v -> {
+            loadGenreFragmentByName(v, "Animation");
+        });
+
+        tvScienceFictionButton.setOnClickListener(v -> {
+            loadGenreFragmentByName(v, "Science Fiction");
+        });
+
 
         btnLogout = view.findViewById(R.id.btnLogout);
         tvName = view.findViewById(R.id.tvName);
@@ -117,6 +165,27 @@ public class HomeMovieFragment extends Fragment {
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(requireActivity().getColor(R.color.dark_purple));
             dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(requireActivity().getColor(R.color.dark_purple));
         });
+    }
+
+    private void loadGenreFragmentByName(View v, String s) {
+        AppCompatActivity activity = (AppCompatActivity) v.getContext();
+        Fragment fragment = new GenreMovieFragment();
+
+        getBundle(fragment, s);
+
+        activity
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_down, R.anim.slide_in_up, R.anim.slide_out_down)
+                .replace(R.id.fragmentContainer, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    private void getBundle(Fragment fragment, String s) {
+        Bundle args = new Bundle();
+        args.putString(Constants.GENRE_TYPE, s);
+        fragment.setArguments(args);
     }
 
     private void getLiveDataObservers() {

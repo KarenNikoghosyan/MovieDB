@@ -173,7 +173,7 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.View
         args.putString(Constants.MOVIE_OVERVIEW, movie.getOverview());
         Constants.MOVIE_ID = movie.getMovieID();
         args.putString(Constants.MOVIE_IMAGE_URL, movie.getImageURL());
-        args.putString(Constants.MOVIE_Language, movie.getLanguage());
+        args.putString(Constants.MOVIE_LANGUAGE, movie.getLanguage());
         fragment.setArguments(args);
     }
 }

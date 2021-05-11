@@ -17,6 +17,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SearchAPIManager {
+    private ArrayList<Movie> moviesList = new ArrayList<>();
 
     ConnectionPool pool = new ConnectionPool(5, 30000, TimeUnit.MILLISECONDS);
     OkHttpClient client = new OkHttpClient
@@ -36,24 +37,29 @@ public class SearchAPIManager {
 
     public void getMoviesWithSearching(MutableLiveData<List<Movie>> moviesLiveData, MutableLiveData<Throwable> exceptionCallback,String query){
 
-        Call<MovieResponse> movieHTTPRequest = searchMovieService.getMoviesWithSearching(query);
-        movieHTTPRequest.enqueue(new Callback<MovieResponse>() {
-            @Override
-            public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
-                MovieResponse movieResponse = response.body();
+        for (int page = 1; page <= 5; page++) {
 
-                if (movieResponse != null) {
+            System.out.println(page);
+            Call<MovieResponse> movieHTTPRequest = searchMovieService.getMoviesWithSearching(query, page);
+            movieHTTPRequest.enqueue(new Callback<MovieResponse>() {
+                @Override
+                public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+                    MovieResponse movieResponse = response.body();
 
-                    ArrayList<Movie> movies = movieResponse.getMovies();
-                    moviesLiveData.postValue(movies);
+                    if (movieResponse != null) {
+                        ArrayList<Movie> movies = movieResponse.getMovies();
+                        moviesList.addAll(movies);
+                        moviesLiveData.postValue(moviesList);
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<MovieResponse> call, Throwable t) {
-                exceptionCallback.postValue(t);
-            }
-        });
+                @Override
+                public void onFailure(Call<MovieResponse> call, Throwable t) {
+                    exceptionCallback.postValue(t);
+                }
+            });
+        }
+        moviesList.clear();
     }
 
 }

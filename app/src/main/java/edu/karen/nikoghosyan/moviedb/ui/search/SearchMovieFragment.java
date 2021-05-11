@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -101,6 +102,7 @@ public class SearchMovieFragment extends Fragment {
             moviesList = movies;
 
             rvMovieSearch.setAdapter(new SearchMovieAdapter(movies));
+            recyclerViewAnimation();
 
             ivSearchError.setVisibility(View.GONE);
             tvSearchErrorMessage.setVisibility(View.GONE);
@@ -167,5 +169,25 @@ public class SearchMovieFragment extends Fragment {
         else if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             rvMovieSearch.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
         }
+    }
+
+    private void recyclerViewAnimation() {
+        rvMovieSearch.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                clSearch.setVisibility(View.GONE);
+                rvMovieSearch.getViewTreeObserver().removeOnPreDrawListener(this);
+
+                for (int i = 0; i < rvMovieSearch.getChildCount(); i++) {
+                    View v = rvMovieSearch.getChildAt(i);
+                    v.setAlpha(0.0f);
+                    v.animate().alpha(1.0f)
+                            .setDuration(300)
+                            .setStartDelay(i * 50)
+                            .start();
+                }
+                return true;
+            }
+        });
     }
 }

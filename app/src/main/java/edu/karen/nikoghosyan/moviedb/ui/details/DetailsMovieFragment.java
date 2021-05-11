@@ -118,7 +118,7 @@ public class DetailsMovieFragment extends Fragment {
         tvReleaseDate.setText(getArguments().getString(Constants.MOVIE_RELEASE_DATE));
 
         tvLanguage = view.findViewById(R.id.tvLanguage);
-        tvLanguage.setText(getArguments().getString(Constants.MOVIE_Language));
+        tvLanguage.setText(getArguments().getString(Constants.MOVIE_LANGUAGE));
 
         tvOverview = view.findViewById(R.id.tvOverview);
         tvOverview.setText(getArguments().getString(Constants.MOVIE_OVERVIEW));

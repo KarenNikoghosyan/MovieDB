@@ -1,4 +1,4 @@
-package edu.karen.nikoghosyan.moviedb.models.api.genre;
+package edu.karen.nikoghosyan.moviedb.models.api.genreIDs;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -16,7 +16,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class GenreAPIManager {
+public class GenreIDAPIManager {
 
     ConnectionPool pool = new ConnectionPool(5, 30000, TimeUnit.MILLISECONDS);
     OkHttpClient client = new OkHttpClient
@@ -32,11 +32,11 @@ public class GenreAPIManager {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
-    private final GenreService genreService = retrofit.create(GenreService.class);
+    private final GenreIDService genreIDService = retrofit.create(GenreIDService.class);
 
     public void getGenreNames(MutableLiveData<List<Genre>> genreLiveDate) {
 
-        Call<GenreResponse> genreHTTPRequest = genreService.getGenresNames();
+        Call<GenreResponse> genreHTTPRequest = genreIDService.getGenresNames();
         genreHTTPRequest.enqueue(new Callback<GenreResponse>() {
 
             @Override

@@ -7,6 +7,6 @@ import retrofit2.http.Query;
 
 public interface SearchMovieService {
 
-    @GET("search/movie?api_key=e40d9c03e1a4a736af381ffa2799b376&language=en-US&page=1&include_adult=false")
-    Call<MovieResponse> getMoviesWithSearching(@Query("query") String query);
+    @GET("search/movie?api_key=e40d9c03e1a4a736af381ffa2799b376&language=en-US&include_adult=false")
+    Call<MovieResponse> getMoviesWithSearching(@Query("query") String query, @Query("page") int page);
 }
