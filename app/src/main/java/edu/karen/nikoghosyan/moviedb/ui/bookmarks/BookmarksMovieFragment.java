@@ -26,6 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
+import edu.karen.nikoghosyan.moviedb.MainActivity;
 import edu.karen.nikoghosyan.moviedb.R;
 import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
 import edu.karen.nikoghosyan.moviedb.ui.bookmarks.adapters.BookmarksAdapter;
@@ -146,7 +147,7 @@ public class BookmarksMovieFragment extends Fragment {
     }
 
     public static void showSnackBar(View v){
-        Snackbar.make(v, "Movie Was Removed", Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(v, "Movie Was Removed", Snackbar.LENGTH_SHORT).setAnchorView(MainActivity.animatedBottomBar).show();
     }
 
     @Override

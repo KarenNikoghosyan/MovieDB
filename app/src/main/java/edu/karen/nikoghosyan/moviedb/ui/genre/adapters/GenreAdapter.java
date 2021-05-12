@@ -21,6 +21,7 @@ import edu.karen.nikoghosyan.moviedb.Constants;
 import edu.karen.nikoghosyan.moviedb.R;
 import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
 import edu.karen.nikoghosyan.moviedb.ui.details.DetailsMovieFragment;
+import edu.karen.nikoghosyan.moviedb.ui.home.HomeMovieFragment;
 
 public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.ViewHolder>{
     private final List<Movie> moviesList;
@@ -58,6 +59,7 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.ViewHolder>{
                 });
 
         holder.itemView.setOnClickListener(v -> {
+            HomeMovieFragment.isGenre = true;
             movie = moviesList.get(position);
 
             AppCompatActivity activity = (AppCompatActivity) v.getContext();

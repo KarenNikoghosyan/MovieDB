@@ -12,4 +12,16 @@
     <string name="release_date">Дата Выпуска:</string>
     <string name="language">Язык:</string>
     <string name="similar_movies">Похожие Фильмы</string>
+    <string name="login">Логин</string>
+    <string name="password">Пороль</string>
+    <string name="email">Электронная почта</string>
+    <string name="registration">Регистрация</string>
+    <string name="register">Запись</string>
+    <string name="confirm_password">Подтвердить пароль</string>
+    <string name="click_here_to_login">Нажмите здесь, чтобы войти</string>
+    <string name="already_a_member">Есть пользователь?</string>
+    <string name="bookmarks">Закладки</string>
+    <string name="view_all">Посмотреть все</string>
+    <string name="no_genres_were_found">Жанры не найдены</string>
+    <string name="no_similar_movies_were_found">Похожих фильмов не найдено</string>
 </resources>

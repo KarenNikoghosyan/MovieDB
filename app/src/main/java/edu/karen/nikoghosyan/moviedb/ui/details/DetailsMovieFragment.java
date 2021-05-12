@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
@@ -37,6 +38,7 @@ import edu.karen.nikoghosyan.moviedb.R;
 import edu.karen.nikoghosyan.moviedb.ui.bookmarks.BookmarksMovieFragment;
 import edu.karen.nikoghosyan.moviedb.ui.bookmarks.adapters.BookmarksAdapter;
 import edu.karen.nikoghosyan.moviedb.ui.details.adapters.DetailsMovieAdapter;
+import edu.karen.nikoghosyan.moviedb.ui.home.HomeMovieFragment;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 import me.ibrahimsn.lib.CirclesLoadingView;
 import nl.joery.animatedbottombar.AnimatedBottomBar;
@@ -166,8 +168,23 @@ public class DetailsMovieFragment extends Fragment {
         ibBack.setOnClickListener(v -> {
             viewPager.setVisibility(View.VISIBLE);
 
-            getParentFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            animatedBottomBar.setVisibility(View.VISIBLE);
+            Fragment genre = getParentFragmentManager().findFragmentByTag("GenreTag");
+            AppCompatActivity activity = (AppCompatActivity) v.getContext();
+            if (HomeMovieFragment.isGenre && genre != null){
+
+                activity
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_right, R.anim.slide_out_left)
+                        .replace(R.id.fragmentContainer, genre)
+                        .addToBackStack(null)
+                        .commit();
+                HomeMovieFragment.isGenre = false;
+            }
+            else{
+                getParentFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                animatedBottomBar.setVisibility(View.VISIBLE);
+            }
         });
 
         animatedBottomBar = requireActivity().findViewById(R.id.animatedBottomBar);

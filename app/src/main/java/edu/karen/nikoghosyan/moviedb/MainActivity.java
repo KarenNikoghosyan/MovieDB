@@ -5,14 +5,17 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
+import edu.karen.nikoghosyan.moviedb.ui.genre.GenreMovieFragment;
+import edu.karen.nikoghosyan.moviedb.ui.home.HomeMovieFragment;
 import edu.karen.nikoghosyan.moviedb.ui.main.ViewPagerAdapter;
 import nl.joery.animatedbottombar.AnimatedBottomBar;
 
 public class MainActivity extends AppCompatActivity {
-    private AnimatedBottomBar animatedBottomBar;
+    public static AnimatedBottomBar animatedBottomBar;
     private ViewPager viewPager;
 
     @Override
@@ -43,11 +46,29 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
 
-            //Fragment f = getFragmentManager().findFragmentById()
+            Fragment f = getSupportFragmentManager().findFragmentByTag("GenreTag");
+            if (f instanceof GenreMovieFragment) {
+                getSupportFragmentManager().popBackStack();
+                animatedBottomBar.setVisibility(View.VISIBLE);
+                viewPager.setVisibility(View.VISIBLE);
+            }
 
-            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            animatedBottomBar.setVisibility(View.VISIBLE);
-            viewPager.setVisibility(View.VISIBLE);
+            FragmentManager fm = getSupportFragmentManager();
+            Fragment fragment = fm.findFragmentByTag("GenreTag");
+            if (HomeMovieFragment.isGenre && fragment != null) {
+                fm
+                        .beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_right, R.anim.slide_out_left)
+                        .replace(R.id.fragmentContainer, fragment)
+                        .addToBackStack(null)
+                        .commit();
+                HomeMovieFragment.isGenre = false;
+            }
+            else {
+                getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                animatedBottomBar.setVisibility(View.VISIBLE);
+                viewPager.setVisibility(View.VISIBLE);
+            }
 
         } else {
 

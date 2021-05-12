@@ -60,6 +60,7 @@ public class HomeMovieFragment extends Fragment {
     private TextView tvScienceFictionButton;
 
     private SharedPreferences prefs;
+    public static boolean isGenre = false;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -168,6 +169,7 @@ public class HomeMovieFragment extends Fragment {
     }
 
     private void loadGenreFragmentByName(View v, String s) {
+        isGenre = true;
         AppCompatActivity activity = (AppCompatActivity) v.getContext();
         Fragment fragment = new GenreMovieFragment();
 
@@ -177,8 +179,7 @@ public class HomeMovieFragment extends Fragment {
                 .getSupportFragmentManager()
                 .beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_down, R.anim.slide_in_up, R.anim.slide_out_down)
-                .replace(R.id.fragmentContainer, fragment)
-                //TODO: Remove this line
+                .replace(R.id.fragmentContainer, fragment, "GenreTag")
                 .addToBackStack(null)
                 .commit();
     }
