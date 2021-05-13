@@ -14,6 +14,7 @@
         <entry key="app/src/main/res/layout-land/fragment_register.xml" value="0.2390625" />
         <entry key="app/src/main/res/layout-land/genre_movie_fragment.xml" value="0.21979166666666666" />
         <entry key="app/src/main/res/layout-land/search_movie_fragment.xml" value="0.2390625" />
+        <entry key="app/src/main/res/layout/activity_custom_app_intro.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/activity_loading.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/bookmarks_movie_fragment.xml" value="0.3437247002635977" />

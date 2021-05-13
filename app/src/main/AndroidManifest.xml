@@ -3,6 +3,7 @@
     package="edu.karen.nikoghosyan.moviedb">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -11,22 +12,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieDB">
+        <activity
+            android:name=".CustomAppIntro">
 
-        <activity android:name=".LoginActivity"
+        </activity>
+        <activity
+            android:name=".LoginActivity"
             android:windowSoftInputMode="stateHidden|adjustResize|adjustNothing">
 
         </activity>
-
-        <activity android:name=".LoadingActivity"
+        <activity
+            android:name=".LoadingActivity"
             android:windowSoftInputMode="stateHidden|adjustResize|adjustNothing">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:windowSoftInputMode="stateHidden|adjustResize|adjustNothing">
 
         </activity>

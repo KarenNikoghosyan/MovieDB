@@ -1,6 +1,7 @@
 package edu.karen.nikoghosyan.moviedb;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoadingActivity extends AppCompatActivity {
     public static boolean isLogged = false;
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +26,14 @@ public class LoadingActivity extends AppCompatActivity {
         new Handler().postDelayed(() -> FirebaseAuth.getInstance().addAuthStateListener(firebaseAuth -> {
             FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
-            if (currentUser == null) {
+            prefs = getApplicationContext().getSharedPreferences("IntroPrefs", 0);
+
+            if (!prefs.contains("intro")) {
+                Intent intentToIntroActivity = new Intent(this, CustomAppIntro.class);
+                startActivity(intentToIntroActivity);
+            }
+
+            else if (currentUser == null) {
                 Intent intentToLoginActivity = new Intent(this, LoginActivity.class);
                 startActivity(intentToLoginActivity);
                 finish();
