@@ -5,9 +5,11 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,8 +27,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import edu.karen.nikoghosyan.moviedb.Constants;
@@ -72,6 +79,10 @@ public class HomeMovieFragment extends Fragment {
     private SharedPreferences prefs;
     public static boolean isGenre = false;
 
+    private String userID;
+    private DocumentReference documentReference;
+    private FirebaseFirestore fStore;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -84,6 +95,23 @@ public class HomeMovieFragment extends Fragment {
 
         if (getActivity() != null) {
             prefs = getActivity().getApplicationContext().getSharedPreferences("MovieDBPrefs", 0);
+        }
+        btnGallery = view.findViewById(R.id.btnGallery);
+
+        if (FirebaseAuth.getInstance().getCurrentUser() != null){
+            fStore = FirebaseFirestore.getInstance();
+            userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+            documentReference = fStore.collection("users").document(userID);
+            documentReference.get().addOnSuccessListener(documentSnapshot -> {
+                if (documentSnapshot.contains("profileImage")) {
+                    String profileImage = (String) documentSnapshot.get("profileImage");
+                    btnGallery.setImageBitmap(decodeBase64(profileImage));
+                }
+                else {
+                    btnGallery.setImageResource(R.drawable.icon_user_default);
+                }
+            });
         }
 
         rvMoviesHome = view.findViewById(R.id.rvMoviesHome);
@@ -177,7 +205,6 @@ public class HomeMovieFragment extends Fragment {
             dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(requireActivity().getColor(R.color.dark_purple));
         });
 
-        btnGallery = view.findViewById(R.id.btnGallery);
         btnGallery.setOnClickListener(v -> {
             Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
             photoPickerIntent.setType("image/*");
@@ -291,10 +318,34 @@ public class HomeMovieFragment extends Fragment {
             Uri selectedImage = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
+
+                if (FirebaseAuth.getInstance().getCurrentUser() != null){
+                    fStore = FirebaseFirestore.getInstance();
+                    userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    documentReference = fStore.collection("users").document(userID);
+
+                    Map<String, Object> user = new HashMap<>();
+                    user.put("profileImage", encodeToBase64(MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage)));
+
+                    documentReference.set(user).addOnSuccessListener(aVoid -> Log.d("TAG", "profile image was set for user: " + userID));
+                }
                 btnGallery.setImageBitmap(bitmap);
             } catch (IOException e) {
                 Log.i("TAG", "Some exception " + e);
             }
         }
+    }
+
+    private String encodeToBase64(Bitmap image){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 70, baos);
+        byte[] b = baos.toByteArray();
+
+        return Base64.encodeToString(b, Base64.DEFAULT);
+    }
+
+    private Bitmap decodeBase64(String input){
+        byte[] decodeByte = Base64.decode(input, 0);
+        return BitmapFactory.decodeByteArray(decodeByte, 0, decodeByte.length);
     }
 }

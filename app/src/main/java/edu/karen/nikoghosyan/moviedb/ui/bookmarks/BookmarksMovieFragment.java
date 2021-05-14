@@ -141,7 +141,7 @@ public class BookmarksMovieFragment extends Fragment {
                 user.put("movieIDs", FieldValue.arrayRemove(movie.getMovieID()));
                 user.put("" + movie.getMovieID(), FieldValue.delete());
 
-                documentReference.update(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was removed for user" + userID));
+                documentReference.update(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was removed for user: " + userID));
             }
         }).attachToRecyclerView(rvBookmarks);
     }

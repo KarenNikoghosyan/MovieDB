@@ -215,7 +215,7 @@ public class DetailsMovieFragment extends Fragment {
 
                     documentReference.get().addOnSuccessListener(documentSnapshot -> {
                         if (documentSnapshot.exists()) {
-                            documentReference.update(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was added for user" + userID));
+                            documentReference.update(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was added for user: " + userID));
 
                             if (!isClicked){
                                 isClickedBookmark = true;
@@ -223,7 +223,7 @@ public class DetailsMovieFragment extends Fragment {
 
                             updateMovieData();
                         } else {
-                            documentReference.set(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was added for user" + userID));
+                            documentReference.set(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was added for user: " + userID));
                         }
                     });
                 }

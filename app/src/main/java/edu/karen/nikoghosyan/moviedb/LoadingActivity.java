@@ -26,7 +26,7 @@ public class LoadingActivity extends AppCompatActivity {
         new Handler().postDelayed(() -> FirebaseAuth.getInstance().addAuthStateListener(firebaseAuth -> {
             FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
-            prefs = getApplicationContext().getSharedPreferences("IntroPrefs", 0);
+            prefs = getApplicationContext().getSharedPreferences("MovieDBPrefs", 0);
 
             if (!prefs.contains("intro")) {
                 Intent intentToIntroActivity = new Intent(this, CustomAppIntro.class);

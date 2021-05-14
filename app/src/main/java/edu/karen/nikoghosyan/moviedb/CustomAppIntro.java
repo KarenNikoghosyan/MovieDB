@@ -23,17 +23,20 @@ public class CustomAppIntro extends AppIntro2 {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        prefs = getApplicationContext().getSharedPreferences("IntroPrefs", 0);
+        prefs = getApplicationContext().getSharedPreferences("MovieDBPrefs", 0);
         editor = prefs.edit();
 
         addSlide(AppIntroFragment.newInstance(
-                "Welcome!", "Here's a short intro on how to use the app.", R.drawable.icon_tv, Color.rgb(255, 127, 80)
+                "Welcome to MovieDB!", "Here's a short intro on how to use the app.", R.drawable.icon_tv, Color.rgb(255, 127, 80)
         ));
         addSlide(AppIntroFragment.newInstance(
                 "Navigation", "To navigate between the pages use the bottom navigation bar or by swiping the page.", R.drawable.bottom_nav, Color.rgb(100, 149, 237)
         ));
         addSlide(AppIntroFragment.newInstance(
-                "Bookmarks", "To add/remove movies from bookmarks, tap the bookmark icon as shown in the image.", R.drawable.add_to_bookmarks, Color.rgb(179, 57, 81)
+                "Profile Image", "To change the image profile, tap the profile icon and choose the image from the gallery.", R.drawable.change_profile_image, Color.rgb(25, 42, 81)
+        ));
+        addSlide(AppIntroFragment.newInstance(
+                "Bookmarks", "To add/remove movies from bookmarks, tap the bookmark icon as shown in the image.", R.drawable.add_to_bookmarks, Color.rgb(235, 81, 96)
         ));
         addSlide(AppIntroFragment.newInstance(
                 "Searching", "To search for any movie, just type the movie's name.", R.drawable.movie_search, Color.rgb(170, 161, 200)
