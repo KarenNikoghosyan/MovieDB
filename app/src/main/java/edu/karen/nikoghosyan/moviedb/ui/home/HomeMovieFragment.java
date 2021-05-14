@@ -1,8 +1,14 @@
 package edu.karen.nikoghosyan.moviedb.ui.home;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +26,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.io.IOException;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 import edu.karen.nikoghosyan.moviedb.Constants;
 import edu.karen.nikoghosyan.moviedb.LoadingActivity;
 import edu.karen.nikoghosyan.moviedb.R;
@@ -40,6 +49,7 @@ public class HomeMovieFragment extends Fragment {
     private RecyclerView rvAnimation;
     private RecyclerView rvScienceFiction;
     private ImageButton btnLogout;
+    private CircleImageView btnGallery;
     private TextView tvName;
 
     private CirclesLoadingView clTopTrending;
@@ -166,6 +176,13 @@ public class HomeMovieFragment extends Fragment {
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(requireActivity().getColor(R.color.dark_purple));
             dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(requireActivity().getColor(R.color.dark_purple));
         });
+
+        btnGallery = view.findViewById(R.id.btnGallery);
+        btnGallery.setOnClickListener(v -> {
+            Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+            photoPickerIntent.setType("image/*");
+            startActivityForResult(photoPickerIntent, Constants.IMAGE_CODE);
+        });
     }
 
     private void loadGenreFragmentByName(View v, String s) {
@@ -264,5 +281,20 @@ public class HomeMovieFragment extends Fragment {
             rvScienceFiction.setAdapter(new MovieAdapter(movies));
             clScienceFiction.setVisibility(View.GONE);
         }));
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK)
+        {
+            Uri selectedImage = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
+                btnGallery.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                Log.i("TAG", "Some exception " + e);
+            }
+        }
     }
 }

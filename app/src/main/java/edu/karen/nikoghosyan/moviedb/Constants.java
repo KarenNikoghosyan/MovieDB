@@ -16,4 +16,5 @@ public class Constants {
     public static int MOVIE_ID = 0;
     public static String MOVIE_SEARCH = "";
 
+    public static final int IMAGE_CODE = 1;
 }
