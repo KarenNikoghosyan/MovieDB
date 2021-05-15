@@ -30,12 +30,10 @@ import edu.karen.nikoghosyan.moviedb.MainActivity;
 import edu.karen.nikoghosyan.moviedb.R;
 import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
 import edu.karen.nikoghosyan.moviedb.ui.bookmarks.adapters.BookmarksAdapter;
-import edu.karen.nikoghosyan.moviedb.ui.details.DetailsMovieFragment;
-import edu.karen.nikoghosyan.moviedb.ui.details.SharedViewModel;
 
 public class BookmarksMovieFragment extends Fragment {
 
-    private SharedViewModel bookmarksMovieViewModel;
+    private BookmarksViewModel bookmarksMovieViewModel;
     public static RecyclerView rvBookmarks;
     private BookmarksAdapter adapter;
     private Movie movie;
@@ -43,17 +41,6 @@ public class BookmarksMovieFragment extends Fragment {
     private String userID;
     private DocumentReference documentReference;
     private FirebaseFirestore fStore;
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (DetailsMovieFragment.isClickedBookmark){
-            bookmarksMovieViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
-            bookmarksMovieViewModel.updateBookmarks();
-
-            DetailsMovieFragment.isClickedBookmark = false;
-        }
-    }
 
     private void getCurrentScreenOrientation() {
         int orientation = getResources().getConfiguration().orientation;
@@ -82,7 +69,7 @@ public class BookmarksMovieFragment extends Fragment {
     }
 
     private void getObservers() {
-        bookmarksMovieViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
+        bookmarksMovieViewModel = new ViewModelProvider(this).get(BookmarksViewModel.class);
         bookmarksMovieViewModel.getBookmarksException().observe(getViewLifecycleOwner(), throwable -> {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext())

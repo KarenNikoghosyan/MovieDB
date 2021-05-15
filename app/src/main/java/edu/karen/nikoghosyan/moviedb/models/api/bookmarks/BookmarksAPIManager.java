@@ -22,7 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BookmarksAPIManager {
     private ArrayList<Long> movieIDs = new ArrayList<>();
-    private final List<Movie> movieList = new ArrayList<>();
+    public static final List<Movie> movieList = new ArrayList<>();
 
     ConnectionPool pool = new ConnectionPool(5, 30000, TimeUnit.MILLISECONDS);
     OkHttpClient client = new OkHttpClient
@@ -69,7 +69,6 @@ public class BookmarksAPIManager {
                             }
                         });
                     }
-                    movieList.clear();
                 }
             });
         }

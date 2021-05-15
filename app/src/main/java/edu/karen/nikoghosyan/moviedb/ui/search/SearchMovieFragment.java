@@ -45,6 +45,12 @@ public class SearchMovieFragment extends Fragment {
     private SearchMovieViewModel searchMovieViewModel;
 
     @Override
+    public void onResume() {
+        super.onResume();
+        clSearch.setVisibility(View.GONE);
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.search_movie_fragment, container, false);
@@ -85,12 +91,6 @@ public class SearchMovieFragment extends Fragment {
         showErrorAfterDelay();
 
         onScrollListener();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        clSearch.setVisibility(View.GONE);
     }
 
     private void getCurrentScreenOrientation() {

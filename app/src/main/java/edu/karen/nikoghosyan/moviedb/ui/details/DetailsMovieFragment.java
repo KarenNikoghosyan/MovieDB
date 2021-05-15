@@ -73,10 +73,8 @@ public class DetailsMovieFragment extends Fragment {
     private BookmarksAdapter adapter;
 
     private boolean isBookmarked = false;
-    public static boolean isClickedBookmark = false;
-    public static boolean isClicked = false;
 
-    private SharedViewModel detailsMovieViewModel;
+    private DetailsMovieViewModel detailsMovieViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -202,7 +200,7 @@ public class DetailsMovieFragment extends Fragment {
 
                 ibBookmark.setImageResource(R.drawable.icon_bookmark_selected);
                 if (getView() != null)
-                    Snackbar.make(getView(), "Added To Bookmarks", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(getView(), "Added To Bookmarks", Snackbar.LENGTH_SHORT).setAnchorView(animatedBottomBar).show();
 
                 if (FirebaseAuth.getInstance().getCurrentUser() != null) {
 
@@ -217,11 +215,7 @@ public class DetailsMovieFragment extends Fragment {
                         if (documentSnapshot.exists()) {
                             documentReference.update(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was added for user: " + userID));
 
-                            if (!isClicked){
-                                isClickedBookmark = true;
-                            }
-
-                            updateMovieData();
+                            addMovie();
                         } else {
                             documentReference.set(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was added for user: " + userID));
                         }
@@ -233,7 +227,7 @@ public class DetailsMovieFragment extends Fragment {
 
                 ibBookmark.setImageResource(R.drawable.icon_bookmark_unselected);
                 if (getView() != null)
-                    Snackbar.make(getView(), "Removed From Bookmarks", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(getView(), "Removed From Bookmarks", Snackbar.LENGTH_SHORT).setAnchorView(animatedBottomBar).show();
 
                 documentReference = fStore.collection("users").document(userID);
 
@@ -244,13 +238,9 @@ public class DetailsMovieFragment extends Fragment {
                 documentReference.get().addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()){
                         documentReference.update(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was removed for user" + userID));
-                        updateMovieData();
-                        if (BookmarksAdapter.movieList.size() == 1){
-                            BookmarksAdapter.movieList.clear();
-                        }
+                        removeMovie();
                     }
                 });
-
             }
         });
     }
@@ -275,7 +265,7 @@ public class DetailsMovieFragment extends Fragment {
     }
 
     private void getObservers() {
-        detailsMovieViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
+        detailsMovieViewModel = new ViewModelProvider(this).get(DetailsMovieViewModel.class);
         detailsMovieViewModel.getDetailsException().observe(getViewLifecycleOwner(), throwable -> {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
@@ -355,15 +345,25 @@ public class DetailsMovieFragment extends Fragment {
         }
     }
 
-    public void updateMovieData(){
-        detailsMovieViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
+    public void addMovie(){
+        SingleMovieViewModel singleMovieViewModel = new ViewModelProvider(this).get(SingleMovieViewModel.class);
 
-        detailsMovieViewModel.updateBookmarks();
-        detailsMovieViewModel.getBookmarkedMovies().observe(getViewLifecycleOwner(), movies -> {
-
+        singleMovieViewModel.getSingleBookmarkedMovie().observe(getViewLifecycleOwner(), movies -> {
             adapter = new BookmarksAdapter(movies);
-            adapter.notifyDataSetChanged();
             BookmarksMovieFragment.rvBookmarks.setAdapter(adapter);
+            adapter.notifyItemInserted(movies.size() - 1);
         });
+    }
+
+    public void removeMovie(){
+        for (int i = 0; i < BookmarksAdapter.movieList.size(); i++) {
+            if (BookmarksAdapter.movieList.get(i).getMovieID() == Constants.MOVIE_ID) {
+                BookmarksAdapter.movieList.remove(i);
+                adapter = new BookmarksAdapter(BookmarksAdapter.movieList);
+                adapter.notifyItemRemoved(i);
+
+                BookmarksMovieFragment.rvBookmarks.setAdapter(adapter);
+            }
+        }
     }
 }

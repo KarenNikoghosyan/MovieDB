@@ -18,7 +18,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HorrorAPIManager {
-    private ArrayList<Movie> movies = new ArrayList<>();
+    private final ArrayList<Movie> movies = new ArrayList<>();
     private int numberOfCalls = 10;
     private int page = 0;
 
