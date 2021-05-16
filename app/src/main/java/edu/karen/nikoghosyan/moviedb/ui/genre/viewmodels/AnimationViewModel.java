@@ -20,4 +20,7 @@ public class AnimationViewModel extends ViewModel {
     public MutableLiveData<List<Movie>> getAnimationLiveData() {
         return animationLiveData;
     }
+    public MutableLiveData<Throwable> getExceptionAnimation() {
+        return exceptionAnimation;
+    }
 }

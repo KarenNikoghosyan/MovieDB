@@ -22,4 +22,7 @@ public class TopRatedViewModel extends ViewModel {
     public MutableLiveData<List<Movie>> getTopRatedLiveData() {
         return topRatedLiveData;
     }
+    public MutableLiveData<Throwable> getExceptionTopRated() {
+        return exceptionTopRated;
+    }
 }

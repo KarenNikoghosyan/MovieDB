@@ -16,7 +16,11 @@ public class ScienceFictionViewModel extends ViewModel {
         ScienceFictionAPIManager scienceFictionAPIManager = new ScienceFictionAPIManager();
         scienceFictionAPIManager.getScienceFiction(scienceFictionLiveData, exceptionScienceFiction);
     }
+
     public MutableLiveData<List<Movie>> getScienceFictionLiveData() {
         return scienceFictionLiveData;
+    }
+    public MutableLiveData<Throwable> getExceptionScienceFiction() {
+        return exceptionScienceFiction;
     }
 }

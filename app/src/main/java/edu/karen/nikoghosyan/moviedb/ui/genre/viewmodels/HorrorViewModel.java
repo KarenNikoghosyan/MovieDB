@@ -20,4 +20,7 @@ public class HorrorViewModel extends ViewModel {
     public MutableLiveData<List<Movie>> getHorrorLiveData() {
         return horrorLiveData;
     }
+    public MutableLiveData<Throwable> getExceptionHorror() {
+        return exceptionHorror;
+    }
 }

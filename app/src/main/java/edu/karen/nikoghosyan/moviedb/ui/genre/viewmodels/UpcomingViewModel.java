@@ -20,4 +20,7 @@ public class UpcomingViewModel extends ViewModel {
     public MutableLiveData<List<Movie>> getUpcomingLiveData() {
         return upcomingLiveData;
     }
+    public MutableLiveData<Throwable> getExceptionUpcoming() {
+        return exceptionUpcoming;
+    }
 }

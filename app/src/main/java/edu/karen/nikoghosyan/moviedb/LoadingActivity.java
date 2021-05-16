@@ -31,6 +31,7 @@ public class LoadingActivity extends AppCompatActivity {
             if (!prefs.contains("intro")) {
                 Intent intentToIntroActivity = new Intent(this, CustomAppIntro.class);
                 startActivity(intentToIntroActivity);
+                finish();
             }
 
             else if (currentUser == null) {

@@ -1,5 +1,6 @@
 package edu.karen.nikoghosyan.moviedb.ui.genre;
 
+import android.app.AlertDialog;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -83,12 +84,18 @@ public class GenreMovieFragment extends Fragment {
                     rvGenres.setAdapter(new GenreAdapter(movies));
                     recyclerViewAnimation();
                 });
+                topRatedViewModel.getExceptionTopRated().observe(getViewLifecycleOwner(), throwable -> {
+                    showExceptionError();
+                });
                 break;
             case "Upcoming":
                 UpcomingViewModel upcomingViewModel = new ViewModelProvider(this).get(UpcomingViewModel.class);
                 upcomingViewModel.getUpcomingLiveData().observe(getViewLifecycleOwner(), movies -> {
                     rvGenres.setAdapter(new GenreAdapter(movies));
                     recyclerViewAnimation();
+                });
+                upcomingViewModel.getExceptionUpcoming().observe(getViewLifecycleOwner(), throwable -> {
+                    showExceptionError();
                 });
                 break;
             case "Horror":
@@ -97,12 +104,18 @@ public class GenreMovieFragment extends Fragment {
                     rvGenres.setAdapter(new GenreAdapter(movies));
                     recyclerViewAnimation();
                 });
+                horrorViewModel.getExceptionHorror().observe(getViewLifecycleOwner(), throwable -> {
+                    showExceptionError();
+                });
                 break;
             case "Comedy":
                 ComedyViewModel comedyViewModel = new ViewModelProvider(this).get(ComedyViewModel.class);
                 comedyViewModel.getComedyLiveData().observe(getViewLifecycleOwner(), movies -> {
                     rvGenres.setAdapter(new GenreAdapter(movies));
                     recyclerViewAnimation();
+                });
+                comedyViewModel.getExceptionComedy().observe(getViewLifecycleOwner(), throwable -> {
+                    showExceptionError();
                 });
                 break;
             case "Crime":
@@ -111,6 +124,9 @@ public class GenreMovieFragment extends Fragment {
                     rvGenres.setAdapter(new GenreAdapter(movies));
                     recyclerViewAnimation();
                 });
+                crimeViewModel.getExceptionCrime().observe(getViewLifecycleOwner(), throwable -> {
+                    showExceptionError();
+                });
                 break;
             case "Animation":
                 AnimationViewModel animationViewModel = new ViewModelProvider(this).get(AnimationViewModel.class);
@@ -118,12 +134,18 @@ public class GenreMovieFragment extends Fragment {
                     rvGenres.setAdapter(new GenreAdapter(movies));
                     recyclerViewAnimation();
                 });
+                animationViewModel.getExceptionAnimation().observe(getViewLifecycleOwner(), throwable -> {
+                    showExceptionError();
+                });
                 break;
             case "Science Fiction":
                 ScienceFictionViewModel scienceFictionViewModel = new ViewModelProvider(this).get(ScienceFictionViewModel.class);
                 scienceFictionViewModel.getScienceFictionLiveData().observe(getViewLifecycleOwner(), movies -> {
                     rvGenres.setAdapter(new GenreAdapter(movies));
                     recyclerViewAnimation();
+                });
+                scienceFictionViewModel.getExceptionScienceFiction().observe(getViewLifecycleOwner(), throwable -> {
+                    showExceptionError();
                 });
                 break;
         }
@@ -158,6 +180,22 @@ public class GenreMovieFragment extends Fragment {
                 return true;
             }
         });
+    }
+
+    private void showExceptionError(){
+        clGenre.setVisibility(View.GONE);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
+                .setTitle("Fatal Error")
+                .setCancelable(false)
+                .setIcon(R.drawable.ic_baseline_error_outline_24)
+                .setMessage("Couldn't load data. Please check your internet connection.")
+                .setPositiveButton("OK", (dialog, which) -> {
+                });
+
+        AlertDialog dialog = builder.show();
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(requireActivity().getColor(R.color.dark_purple));
+        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(requireActivity().getColor(R.color.dark_purple));
     }
 
     @Override

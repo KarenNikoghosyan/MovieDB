@@ -20,4 +20,7 @@ public class ComedyViewModel extends ViewModel {
     public MutableLiveData<List<Movie>> getComedyLiveData() {
         return comedyLiveData;
     }
+    public MutableLiveData<Throwable> getExceptionComedy() {
+        return exceptionComedy;
+    }
 }

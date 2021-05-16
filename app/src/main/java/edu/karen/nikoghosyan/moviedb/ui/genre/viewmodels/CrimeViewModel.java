@@ -20,4 +20,7 @@ public class CrimeViewModel extends ViewModel {
     public MutableLiveData<List<Movie>> getCrimeLiveData() {
         return crimeLiveData;
     }
+    public MutableLiveData<Throwable> getExceptionCrime() {
+        return exceptionCrime;
+    }
 }
