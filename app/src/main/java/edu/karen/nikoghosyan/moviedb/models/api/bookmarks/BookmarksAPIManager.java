@@ -1,5 +1,7 @@
 package edu.karen.nikoghosyan.moviedb.models.api.bookmarks;
 
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
@@ -12,6 +14,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
+import edu.karen.nikoghosyan.moviedb.ui.bookmarks.BookmarksMovieFragment;
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -50,6 +53,11 @@ public class BookmarksAPIManager {
             DocumentReference documentReference = fStore.collection("users").document(userID);
             documentReference.get().addOnSuccessListener(documentSnapshot -> {
                 movieIDs = (ArrayList<Long>) documentSnapshot.get("movieIDs");
+                if (movieIDs == null || movieIDs.size() == 0) {
+                    BookmarksMovieFragment.clBookmarks.setVisibility(View.GONE);
+                    return;
+                }
+
                 numberOfCalls = movieIDs.size();
                 getMovies(moviesLiveData, exceptionCallback);
             });
@@ -57,7 +65,6 @@ public class BookmarksAPIManager {
     }
 
     public void getMovies(MutableLiveData<List<Movie>> moviesLiveData, MutableLiveData<Throwable> exceptionCallback) {
-        if (movieIDs == null || movieIDs.size() == 0) return;
         Call<Movie> movieHTTPRequest = bookmarksService.getMovies(movieIDs.get(i).intValue());
         i++;
 

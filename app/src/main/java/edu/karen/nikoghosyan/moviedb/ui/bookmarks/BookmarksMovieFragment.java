@@ -35,7 +35,7 @@ import me.ibrahimsn.lib.CirclesLoadingView;
 
 public class BookmarksMovieFragment extends Fragment {
 
-    private CirclesLoadingView clBookmarks;
+    public static CirclesLoadingView clBookmarks;
     private BookmarksViewModel bookmarksMovieViewModel;
     public static RecyclerView rvBookmarks;
     private BookmarksAdapter adapter;
