@@ -39,7 +39,7 @@ public class UpcomingAPIManager {
 
     private final GenreService genreService = retrofit.create(GenreService.class);
 
-    public void getUpcoming(MutableLiveData<List<Movie>> moviesLiveData) {
+    public void getUpcoming(MutableLiveData<List<Movie>> moviesLiveData, MutableLiveData<Throwable> exceptionCallback) {
         page++;
         Call<MovieResponse> movieHTTPRequest = genreService.getUpcoming(page);
 
@@ -48,11 +48,11 @@ public class UpcomingAPIManager {
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                 MovieResponse movieResponse = response.body();
                 if (movieResponse != null) {
+                    System.out.println(movies);
                     movies.addAll(movieResponse.getMovies());
-
                     numberOfCalls--;
                     if (numberOfCalls > 0) {
-                        getUpcoming(moviesLiveData);
+                        getUpcoming(moviesLiveData, exceptionCallback);
                     }
                     else {
                         moviesLiveData.postValue(movies);
@@ -61,7 +61,7 @@ public class UpcomingAPIManager {
             }
             @Override
             public void onFailure(Call<MovieResponse> call, Throwable t) {
-                t.getMessage();
+                exceptionCallback.postValue(t);
             }
         });
     }

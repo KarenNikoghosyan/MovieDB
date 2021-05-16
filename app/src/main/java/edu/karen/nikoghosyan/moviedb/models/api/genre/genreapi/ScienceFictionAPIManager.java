@@ -38,7 +38,7 @@ public class ScienceFictionAPIManager {
 
     private final GenreService genreService = retrofit.create(GenreService.class);
 
-    public void getScienceFiction(MutableLiveData<List<Movie>> moviesLiveData) {
+    public void getScienceFiction(MutableLiveData<List<Movie>> moviesLiveData, MutableLiveData<Throwable> exceptionCallback) {
         page++;
         Call<MovieResponse> movieHTTPRequest = genreService.getScienceFiction(page);
 
@@ -51,7 +51,7 @@ public class ScienceFictionAPIManager {
 
                     numberOfCalls--;
                     if (numberOfCalls > 0) {
-                        getScienceFiction(moviesLiveData);
+                        getScienceFiction(moviesLiveData, exceptionCallback);
                     }
                     else {
                         moviesLiveData.postValue(movies);
@@ -60,7 +60,7 @@ public class ScienceFictionAPIManager {
             }
             @Override
             public void onFailure(Call<MovieResponse> call, Throwable t) {
-                t.getMessage();
+                exceptionCallback.postValue(t);
             }
         });
     }

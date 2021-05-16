@@ -20,7 +20,6 @@ public class BookmarksViewModel extends ViewModel {
     public MutableLiveData<List<Movie>> getBookmarkedMovies() {
         return bookmarkedMovies;
     }
-    //TODO:
     public MutableLiveData<Throwable> getBookmarksException() {
         return bookmarksException;
     }

@@ -38,7 +38,7 @@ public class ComedyAPIManager {
 
     private final GenreService genreService = retrofit.create(GenreService.class);
 
-    public void getComedy(MutableLiveData<List<Movie>> moviesLiveData) {
+    public void getComedy(MutableLiveData<List<Movie>> moviesLiveData, MutableLiveData<Throwable> exceptionCallback) {
         page++;
         Call<MovieResponse> movieHTTPRequest = genreService.getComedy(page);
 
@@ -51,7 +51,7 @@ public class ComedyAPIManager {
 
                     numberOfCalls--;
                     if (numberOfCalls > 0) {
-                        getComedy(moviesLiveData);
+                        getComedy(moviesLiveData, exceptionCallback);
                     }
                     else {
                         moviesLiveData.postValue(movies);
@@ -60,7 +60,7 @@ public class ComedyAPIManager {
             }
             @Override
             public void onFailure(Call<MovieResponse> call, Throwable t) {
-                t.getMessage();
+                exceptionCallback.postValue(t);
             }
         });
     }

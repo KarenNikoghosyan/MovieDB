@@ -38,7 +38,7 @@ public class AnimationAPIManager {
 
     private final GenreService genreService = retrofit.create(GenreService.class);
 
-    public void getAnimation(MutableLiveData<List<Movie>> moviesLiveData) {
+    public void getAnimation(MutableLiveData<List<Movie>> moviesLiveData, MutableLiveData<Throwable> exceptionCallback) {
         page++;
         Call<MovieResponse> movieHTTPRequest = genreService.getAnimation(page);
 
@@ -51,7 +51,7 @@ public class AnimationAPIManager {
 
                     numberOfCalls--;
                     if (numberOfCalls > 0) {
-                        getAnimation(moviesLiveData);
+                        getAnimation(moviesLiveData, exceptionCallback);
                     }
                     else {
                         moviesLiveData.postValue(movies);
@@ -60,7 +60,7 @@ public class AnimationAPIManager {
             }
             @Override
             public void onFailure(Call<MovieResponse> call, Throwable t) {
-                t.getMessage();
+                exceptionCallback.postValue(t);
             }
         });
     }

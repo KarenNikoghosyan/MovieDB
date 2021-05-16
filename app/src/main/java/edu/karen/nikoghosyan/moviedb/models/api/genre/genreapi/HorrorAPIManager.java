@@ -38,7 +38,7 @@ public class HorrorAPIManager {
 
     private final GenreService genreService = retrofit.create(GenreService.class);
 
-    public void getHorror(MutableLiveData<List<Movie>> moviesLiveData) {
+    public void getHorror(MutableLiveData<List<Movie>> moviesLiveData, MutableLiveData<Throwable> exceptionCallback) {
         page++;
         Call<MovieResponse> movieHTTPRequest = genreService.getHorror(page);
 
@@ -51,7 +51,7 @@ public class HorrorAPIManager {
 
                     numberOfCalls--;
                     if (numberOfCalls > 0) {
-                        getHorror(moviesLiveData);
+                        getHorror(moviesLiveData, exceptionCallback);
                     }
                     else {
                         moviesLiveData.postValue(movies);
@@ -60,7 +60,7 @@ public class HorrorAPIManager {
             }
             @Override
             public void onFailure(Call<MovieResponse> call, Throwable t) {
-                t.getMessage();
+                exceptionCallback.postValue(t);
             }
         });
     }

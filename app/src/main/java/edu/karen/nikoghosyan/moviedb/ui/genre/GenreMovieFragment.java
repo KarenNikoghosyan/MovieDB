@@ -21,6 +21,13 @@ import androidx.viewpager.widget.ViewPager;
 import edu.karen.nikoghosyan.moviedb.Constants;
 import edu.karen.nikoghosyan.moviedb.R;
 import edu.karen.nikoghosyan.moviedb.ui.genre.adapters.GenreAdapter;
+import edu.karen.nikoghosyan.moviedb.ui.genre.viewmodels.AnimationViewModel;
+import edu.karen.nikoghosyan.moviedb.ui.genre.viewmodels.ComedyViewModel;
+import edu.karen.nikoghosyan.moviedb.ui.genre.viewmodels.CrimeViewModel;
+import edu.karen.nikoghosyan.moviedb.ui.genre.viewmodels.TopRatedViewModel;
+import edu.karen.nikoghosyan.moviedb.ui.genre.viewmodels.HorrorViewModel;
+import edu.karen.nikoghosyan.moviedb.ui.genre.viewmodels.ScienceFictionViewModel;
+import edu.karen.nikoghosyan.moviedb.ui.genre.viewmodels.UpcomingViewModel;
 import me.ibrahimsn.lib.CirclesLoadingView;
 import nl.joery.animatedbottombar.AnimatedBottomBar;
 
@@ -32,8 +39,6 @@ public class GenreMovieFragment extends Fragment {
     private TextView tvGenreType;
     private RecyclerView rvGenres;
     private CirclesLoadingView clGenre;
-
-    private GenreMovieViewModel genreMovieViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -71,46 +76,52 @@ public class GenreMovieFragment extends Fragment {
         }
         tvGenreType.setText(getArguments().getString(Constants.GENRE_TYPE));
 
-        genreMovieViewModel = new ViewModelProvider(this).get(GenreMovieViewModel.class);
         switch (getArguments().getString(Constants.GENRE_TYPE)) {
             case "Top Rated":
-                genreMovieViewModel.getTopRatedLiveData().observe(getViewLifecycleOwner(), movies -> {
+                TopRatedViewModel topRatedViewModel = new ViewModelProvider(this).get(TopRatedViewModel.class);
+                topRatedViewModel.getTopRatedLiveData().observe(getViewLifecycleOwner(), movies -> {
                     rvGenres.setAdapter(new GenreAdapter(movies));
                     recyclerViewAnimation();
                 });
                 break;
             case "Upcoming":
-                genreMovieViewModel.getUpcomingLiveData().observe(getViewLifecycleOwner(), movies -> {
+                UpcomingViewModel upcomingViewModel = new ViewModelProvider(this).get(UpcomingViewModel.class);
+                upcomingViewModel.getUpcomingLiveData().observe(getViewLifecycleOwner(), movies -> {
                     rvGenres.setAdapter(new GenreAdapter(movies));
                     recyclerViewAnimation();
                 });
                 break;
             case "Horror":
-                genreMovieViewModel.getHorrorLiveData().observe(getViewLifecycleOwner(), movies -> {
+                HorrorViewModel horrorViewModel = new ViewModelProvider(this).get(HorrorViewModel.class);
+                horrorViewModel.getHorrorLiveData().observe(getViewLifecycleOwner(), movies -> {
                     rvGenres.setAdapter(new GenreAdapter(movies));
                     recyclerViewAnimation();
                 });
                 break;
             case "Comedy":
-                genreMovieViewModel.getComedyLiveData().observe(getViewLifecycleOwner(), movies -> {
+                ComedyViewModel comedyViewModel = new ViewModelProvider(this).get(ComedyViewModel.class);
+                comedyViewModel.getComedyLiveData().observe(getViewLifecycleOwner(), movies -> {
                     rvGenres.setAdapter(new GenreAdapter(movies));
                     recyclerViewAnimation();
                 });
                 break;
             case "Crime":
-                genreMovieViewModel.getCrimeLiveData().observe(getViewLifecycleOwner(), movies -> {
+                CrimeViewModel crimeViewModel = new ViewModelProvider(this).get(CrimeViewModel.class);
+                crimeViewModel.getCrimeLiveData().observe(getViewLifecycleOwner(), movies -> {
                     rvGenres.setAdapter(new GenreAdapter(movies));
                     recyclerViewAnimation();
                 });
                 break;
             case "Animation":
-                genreMovieViewModel.getAnimationLiveData().observe(getViewLifecycleOwner(), movies -> {
+                AnimationViewModel animationViewModel = new ViewModelProvider(this).get(AnimationViewModel.class);
+                animationViewModel.getAnimationLiveData().observe(getViewLifecycleOwner(), movies -> {
                     rvGenres.setAdapter(new GenreAdapter(movies));
                     recyclerViewAnimation();
                 });
                 break;
             case "Science Fiction":
-                genreMovieViewModel.getScienceFictionLiveData().observe(getViewLifecycleOwner(), movies -> {
+                ScienceFictionViewModel scienceFictionViewModel = new ViewModelProvider(this).get(ScienceFictionViewModel.class);
+                scienceFictionViewModel.getScienceFictionLiveData().observe(getViewLifecycleOwner(), movies -> {
                     rvGenres.setAdapter(new GenreAdapter(movies));
                     recyclerViewAnimation();
                 });

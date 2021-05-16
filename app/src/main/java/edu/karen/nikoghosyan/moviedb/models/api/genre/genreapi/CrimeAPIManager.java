@@ -38,7 +38,7 @@ public class CrimeAPIManager {
 
     private final GenreService genreService = retrofit.create(GenreService.class);
 
-    public void getCrime(MutableLiveData<List<Movie>> moviesLiveData) {
+    public void getCrime(MutableLiveData<List<Movie>> moviesLiveData, MutableLiveData<Throwable> exceptionCallback) {
         page++;
         Call<MovieResponse> movieHTTPRequest = genreService.getCrime(page);
 
@@ -51,7 +51,7 @@ public class CrimeAPIManager {
 
                     numberOfCalls--;
                     if (numberOfCalls > 0) {
-                        getCrime(moviesLiveData);
+                        getCrime(moviesLiveData, exceptionCallback);
                     }
                     else {
                         moviesLiveData.postValue(movies);
@@ -60,7 +60,7 @@ public class CrimeAPIManager {
             }
             @Override
             public void onFailure(Call<MovieResponse> call, Throwable t) {
-                t.getMessage();
+                exceptionCallback.postValue(t);
             }
         });
     }

@@ -78,8 +78,6 @@ public class BookmarksMovieFragment extends Fragment {
                     .setIcon(R.drawable.ic_baseline_error_outline_24)
                     .setMessage("Couldn't load data. Please check your internet connection.")
                     .setPositiveButton("OK", (dialog, which) -> {
-                        requireActivity().finishAffinity();
-                        requireActivity().finish();
                     });
 
             AlertDialog dialog = builder.show();
