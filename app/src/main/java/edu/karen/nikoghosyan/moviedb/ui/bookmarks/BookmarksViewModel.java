@@ -14,7 +14,7 @@ public class BookmarksViewModel extends ViewModel {
 
     public BookmarksViewModel(){
         BookmarksAPIManager bookmarksAPIManager = new BookmarksAPIManager();
-        bookmarksAPIManager.getMovies(bookmarkedMovies, bookmarksException);
+        bookmarksAPIManager.getMovieIDs(bookmarkedMovies, bookmarksException);
     }
 
     public MutableLiveData<List<Movie>> getBookmarkedMovies() {

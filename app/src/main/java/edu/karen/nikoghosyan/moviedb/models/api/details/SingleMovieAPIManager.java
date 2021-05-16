@@ -33,7 +33,7 @@ public class SingleMovieAPIManager {
 
     private final SingleMovieService singleService = retrofit.create(SingleMovieService.class);
 
-    public void getSingleMovie(MutableLiveData<List<Movie>> moviesLiveData){
+    public void getSingleMovie(MutableLiveData<List<Movie>> moviesLiveData, MutableLiveData<Throwable> exceptionCallback){
 
         Call<Movie> movieHTTPRequest = singleService.getMovies(Constants.MOVIE_ID);
         movieHTTPRequest.enqueue(new Callback<Movie>() {
@@ -48,7 +48,7 @@ public class SingleMovieAPIManager {
 
             @Override
             public void onFailure(Call<Movie> call, Throwable t) {
-                t.getMessage();
+                exceptionCallback.postValue(t);
             }
         });
 

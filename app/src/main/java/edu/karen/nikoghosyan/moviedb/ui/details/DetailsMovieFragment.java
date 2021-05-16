@@ -269,7 +269,7 @@ public class DetailsMovieFragment extends Fragment {
         detailsMovieViewModel.getDetailsException().observe(getViewLifecycleOwner(), throwable -> {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
-                    .setTitle("Fatal Error")
+                    .setTitle("Connectivity Error")
                     .setCancelable(false)
                     .setIcon(R.drawable.ic_baseline_error_outline_24)
                     .setMessage("Couldn't load data. Please check your internet connection.")
@@ -354,13 +354,15 @@ public class DetailsMovieFragment extends Fragment {
     }
 
     public void removeMovie(){
-        for (int i = 0; i < BookmarksAdapter.movieList.size(); i++) {
-            if (BookmarksAdapter.movieList.get(i).getMovieID() == Constants.MOVIE_ID) {
-                BookmarksAdapter.movieList.remove(i);
-                adapter = new BookmarksAdapter(BookmarksAdapter.movieList);
-                adapter.notifyItemRemoved(i);
+        if (BookmarksAdapter.movieList != null) {
+            for (int i = 0; i < BookmarksAdapter.movieList.size(); i++) {
+                if (BookmarksAdapter.movieList.get(i).getMovieID() == Constants.MOVIE_ID) {
+                    BookmarksAdapter.movieList.remove(i);
+                    adapter = new BookmarksAdapter(BookmarksAdapter.movieList);
+                    adapter.notifyItemRemoved(i);
 
-                BookmarksMovieFragment.rvBookmarks.setAdapter(adapter);
+                    BookmarksMovieFragment.rvBookmarks.setAdapter(adapter);
+                }
             }
         }
     }

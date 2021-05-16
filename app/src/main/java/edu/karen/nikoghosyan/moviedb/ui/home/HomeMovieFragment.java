@@ -239,7 +239,7 @@ public class HomeMovieFragment extends Fragment {
         homeMovieViewModel.getException().observe(getViewLifecycleOwner(), throwable -> {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
-                    .setTitle("Fatal Error")
+                    .setTitle("Connectivity Error")
                     .setCancelable(false)
                     .setIcon(R.drawable.ic_baseline_error_outline_24)
                     .setMessage("Couldn't load data. Please check your internet connection.")

@@ -11,13 +11,17 @@ import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
 public class SingleMovieViewModel extends ViewModel {
 
     private final MutableLiveData<List<Movie>> singleBookmarkedMovie = new MutableLiveData<>();
+    private final MutableLiveData<Throwable> exceptionSingleMovie = new MutableLiveData<>();
 
     public SingleMovieViewModel() {
         SingleMovieAPIManager singleMovieAPIManager = new SingleMovieAPIManager();
-        singleMovieAPIManager.getSingleMovie(singleBookmarkedMovie);
+        singleMovieAPIManager.getSingleMovie(singleBookmarkedMovie, exceptionSingleMovie);
     }
+
     public MutableLiveData<List<Movie>> getSingleBookmarkedMovie() {
         return singleBookmarkedMovie;
     }
-
+    public MutableLiveData<Throwable> getExceptionSingleMovie() {
+        return exceptionSingleMovie;
+    }
 }

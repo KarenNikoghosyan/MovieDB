@@ -23,6 +23,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class BookmarksAPIManager {
     private ArrayList<Long> movieIDs = new ArrayList<>();
     public static final List<Movie> movieList = new ArrayList<>();
+    private int i = 0;
+    private int numberOfCalls;
 
     ConnectionPool pool = new ConnectionPool(5, 30000, TimeUnit.MILLISECONDS);
     OkHttpClient client = new OkHttpClient
@@ -40,8 +42,7 @@ public class BookmarksAPIManager {
 
     private final BookmarksMovieService bookmarksService = retrofit.create(BookmarksMovieService.class);
 
-    public void getMovies(MutableLiveData<List<Movie>> moviesLiveData, MutableLiveData<Throwable> exceptionCallback) {
-
+    public void getMovieIDs(MutableLiveData<List<Movie>> moviesLiveData, MutableLiveData<Throwable> exceptionCallback) {
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             FirebaseFirestore fStore = FirebaseFirestore.getInstance();
             String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -49,28 +50,37 @@ public class BookmarksAPIManager {
             DocumentReference documentReference = fStore.collection("users").document(userID);
             documentReference.get().addOnSuccessListener(documentSnapshot -> {
                 movieIDs = (ArrayList<Long>) documentSnapshot.get("movieIDs");
-
-                if (documentSnapshot.exists()) {
-                    if (movieIDs == null) return;
-                    for (int i = 0; i < movieIDs.size(); i++) {
-                        Call<Movie> movieHTTPRequest = bookmarksService.getMovies(movieIDs.get(i).intValue());
-                        movieHTTPRequest.enqueue(new Callback<Movie>() {
-                            @Override
-                            public void onResponse(@NonNull Call<Movie> call, @NonNull Response<Movie> response) {
-                                Movie movieResponse = response.body();
-                                if (movieResponse != null) {
-                                    movieList.add(movieResponse);
-                                    moviesLiveData.postValue(movieList);
-                                }
-                            }
-                            @Override
-                            public void onFailure(@NonNull Call<Movie> call, @NonNull Throwable t) {
-                                exceptionCallback.postValue(t);
-                            }
-                        });
-                    }
-                }
+                numberOfCalls = movieIDs.size();
+                getMovies(moviesLiveData, exceptionCallback);
             });
         }
     }
+
+    public void getMovies(MutableLiveData<List<Movie>> moviesLiveData, MutableLiveData<Throwable> exceptionCallback) {
+        if (movieIDs == null || movieIDs.size() == 0) return;
+        Call<Movie> movieHTTPRequest = bookmarksService.getMovies(movieIDs.get(i).intValue());
+        i++;
+
+        movieHTTPRequest.enqueue(new Callback<Movie>() {
+            @Override
+            public void onResponse(@NonNull Call<Movie> call, @NonNull Response<Movie> response) {
+                Movie movieResponse = response.body();
+                if (movieResponse != null) {
+                    movieList.add(movieResponse);
+
+                    numberOfCalls--;
+                    if (numberOfCalls > 0) {
+                        getMovies(moviesLiveData, exceptionCallback);
+                    } else {
+                        moviesLiveData.postValue(movieList);
+                    }
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<Movie> call, @NonNull Throwable t) {
+                exceptionCallback.postValue(t);
+            }
+        });
+    }
 }
+

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,9 +31,11 @@ import edu.karen.nikoghosyan.moviedb.MainActivity;
 import edu.karen.nikoghosyan.moviedb.R;
 import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
 import edu.karen.nikoghosyan.moviedb.ui.bookmarks.adapters.BookmarksAdapter;
+import me.ibrahimsn.lib.CirclesLoadingView;
 
 public class BookmarksMovieFragment extends Fragment {
 
+    private CirclesLoadingView clBookmarks;
     private BookmarksViewModel bookmarksMovieViewModel;
     public static RecyclerView rvBookmarks;
     private BookmarksAdapter adapter;
@@ -61,6 +64,7 @@ public class BookmarksMovieFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        clBookmarks = view.findViewById(R.id.clBookmarks);
         rvBookmarks = view.findViewById(R.id.rvBookmarks);
 
         getCurrentScreenOrientation();
@@ -73,7 +77,7 @@ public class BookmarksMovieFragment extends Fragment {
         bookmarksMovieViewModel.getBookmarksException().observe(getViewLifecycleOwner(), throwable -> {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
-                    .setTitle("Fatal Error")
+                    .setTitle("Connectivity Error")
                     .setCancelable(false)
                     .setIcon(R.drawable.ic_baseline_error_outline_24)
                     .setMessage("Couldn't load data. Please check your internet connection.")
@@ -87,11 +91,32 @@ public class BookmarksMovieFragment extends Fragment {
 
         bookmarksMovieViewModel.getBookmarkedMovies().observe(getViewLifecycleOwner(), movies -> {
 
+            clBookmarks.setVisibility(View.GONE);
             adapter = new BookmarksAdapter(movies);
             rvBookmarks.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
+            recyclerViewAnimation();
 
             recyclerViewItemSwipe();
+        });
+    }
+
+    private void recyclerViewAnimation() {
+        rvBookmarks.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                clBookmarks.setVisibility(View.GONE);
+                rvBookmarks.getViewTreeObserver().removeOnPreDrawListener(this);
+
+                for (int i = 0; i < rvBookmarks.getChildCount(); i++) {
+                    View v = rvBookmarks.getChildAt(i);
+                    v.setAlpha(0.0f);
+                    v.animate().alpha(1.0f)
+                            .setDuration(300)
+                            .setStartDelay(i * 50)
+                            .start();
+                }
+                return true;
+            }
         });
     }
 
