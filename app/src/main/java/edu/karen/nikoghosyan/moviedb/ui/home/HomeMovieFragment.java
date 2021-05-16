@@ -55,6 +55,7 @@ public class HomeMovieFragment extends Fragment {
     private RecyclerView rvCrime;
     private RecyclerView rvAnimation;
     private RecyclerView rvScienceFiction;
+    private RecyclerView rvAction;
     private ImageButton btnLogout;
     private CircleImageView btnGallery;
     private TextView tvName;
@@ -67,6 +68,7 @@ public class HomeMovieFragment extends Fragment {
     private CirclesLoadingView clCrime;
     private CirclesLoadingView clAnimation;
     private CirclesLoadingView clScienceFiction;
+    private CirclesLoadingView clAction;
 
     private TextView tvTopRatedButton;
     private TextView tvUpcomingButton;
@@ -75,6 +77,7 @@ public class HomeMovieFragment extends Fragment {
     private TextView tvCrimeButton;
     private TextView tvAnimationButton;
     private TextView tvScienceFictionButton;
+    private TextView tvActionButton;
 
     private SharedPreferences prefs;
     public static boolean isGenre = false;
@@ -122,6 +125,7 @@ public class HomeMovieFragment extends Fragment {
         rvCrime = view.findViewById(R.id.rvCrime);
         rvAnimation = view.findViewById(R.id.rvAnimation);
         rvScienceFiction = view.findViewById(R.id.rvScienceFiction);
+        rvAction = view.findViewById(R.id.rvAction);
 
         clTopTrending = view.findViewById(R.id.clTopTrending);
         clTopRated = view.findViewById(R.id.clTopRated);
@@ -131,6 +135,7 @@ public class HomeMovieFragment extends Fragment {
         clCrime = view.findViewById(R.id.clCrime);
         clAnimation = view.findViewById(R.id.clAnimation);
         clScienceFiction = view.findViewById(R.id.clScienceFiction);
+        clAction = view.findViewById(R.id.clAction);
 
         tvTopRatedButton = view.findViewById(R.id.tvTopRatedButton);
         tvUpcomingButton = view.findViewById(R.id.tvUpcomingButton);
@@ -139,6 +144,7 @@ public class HomeMovieFragment extends Fragment {
         tvCrimeButton = view.findViewById(R.id.tvCrimeButton);
         tvAnimationButton = view.findViewById(R.id.tvAnimationButton);
         tvScienceFictionButton = view.findViewById(R.id.tvScienceFictionButton);
+        tvActionButton = view.findViewById(R.id.tvActionButton);
 
         tvTopRatedButton.setOnClickListener(v -> {
             loadGenreFragmentByName(v, "Top Rated");
@@ -167,7 +173,9 @@ public class HomeMovieFragment extends Fragment {
         tvScienceFictionButton.setOnClickListener(v -> {
             loadGenreFragmentByName(v, "Science Fiction");
         });
-
+        tvActionButton.setOnClickListener(v -> {
+            loadGenreFragmentByName(v, "Action");
+        });
 
         btnLogout = view.findViewById(R.id.btnLogout);
         tvName = view.findViewById(R.id.tvName);
@@ -306,6 +314,13 @@ public class HomeMovieFragment extends Fragment {
             rvScienceFiction.setAdapter(new MovieAdapter(movies));
             clScienceFiction.setVisibility(View.GONE);
         }));
+
+        homeMovieViewModel.getActionLiveData().observe(getViewLifecycleOwner(), movies -> {
+
+            rvAction.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+            rvAction.setAdapter(new MovieAdapter(movies));
+            clAction.setVisibility(View.GONE);
+        });
     }
 
     @Override

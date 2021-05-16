@@ -22,6 +22,7 @@ import androidx.viewpager.widget.ViewPager;
 import edu.karen.nikoghosyan.moviedb.Constants;
 import edu.karen.nikoghosyan.moviedb.R;
 import edu.karen.nikoghosyan.moviedb.ui.genre.adapters.GenreAdapter;
+import edu.karen.nikoghosyan.moviedb.ui.genre.viewmodels.ActionViewModel;
 import edu.karen.nikoghosyan.moviedb.ui.genre.viewmodels.AnimationViewModel;
 import edu.karen.nikoghosyan.moviedb.ui.genre.viewmodels.ComedyViewModel;
 import edu.karen.nikoghosyan.moviedb.ui.genre.viewmodels.CrimeViewModel;
@@ -145,6 +146,16 @@ public class GenreMovieFragment extends Fragment {
                     recyclerViewAnimation();
                 });
                 scienceFictionViewModel.getExceptionScienceFiction().observe(getViewLifecycleOwner(), throwable -> {
+                    showExceptionError();
+                });
+                break;
+            case "Action":
+                ActionViewModel actionViewModel = new ViewModelProvider(this).get(ActionViewModel.class);
+                actionViewModel.getActionLiveData().observe(getViewLifecycleOwner(), movies -> {
+                    rvGenres.setAdapter(new GenreAdapter(movies));
+                    recyclerViewAnimation();
+                });
+                actionViewModel.getExceptionAction().observe(getViewLifecycleOwner(), throwable -> {
                     showExceptionError();
                 });
                 break;

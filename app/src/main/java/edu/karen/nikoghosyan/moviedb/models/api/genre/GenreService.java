@@ -26,5 +26,8 @@ public interface GenreService {
 
     @GET("discover/movie?api_key=e40d9c03e1a4a736af381ffa2799b376&with_genres=878")
     Call<MovieResponse> getScienceFiction(@Query("page") int page);
+
+    @GET("discover/movie?api_key=e40d9c03e1a4a736af381ffa2799b376&with_genres=28")
+    Call<MovieResponse> getAction(@Query("page") int page);
 }
 

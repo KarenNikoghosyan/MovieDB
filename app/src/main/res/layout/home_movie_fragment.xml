@@ -209,11 +209,11 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/alfa_slab_one"
-            android:text="Science Fiction"
+            android:text="Action"
             android:textColor="@color/white"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rvAnimation" />
+            app:layout_constraintTop_toBottomOf="@+id/rvScienceFiction" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvUpcoming"
@@ -317,7 +317,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:paddingBottom="70dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView10" />
@@ -332,6 +331,16 @@
             app:layout_constraintStart_toStartOf="@+id/rvScienceFiction"
             app:layout_constraintTop_toTopOf="@+id/rvScienceFiction" />
 
+        <me.ibrahimsn.lib.CirclesLoadingView
+            android:id="@+id/clAction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@+id/rvAction"
+            app:layout_constraintEnd_toEndOf="@+id/rvAction"
+            app:layout_constraintStart_toStartOf="@+id/rvAction"
+            app:layout_constraintTop_toTopOf="@+id/rvAction" />
+
         <TextView
             android:id="@+id/tvTopRatedButton"
             android:layout_width="wrap_content"
@@ -339,8 +348,8 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
             android:fontFamily="@font/alfa_slab_one"
+            android:foreground="?android:attr/selectableItemBackground"
             android:text="@string/view_all"
             android:textColor="@color/white"
             android:textSize="14sp"
@@ -354,8 +363,8 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
             android:fontFamily="@font/alfa_slab_one"
+            android:foreground="?android:attr/selectableItemBackground"
             android:text="@string/view_all"
             android:textColor="@color/white"
             android:textSize="14sp"
@@ -369,8 +378,8 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
             android:fontFamily="@font/alfa_slab_one"
+            android:foreground="?android:attr/selectableItemBackground"
             android:text="@string/view_all"
             android:textColor="@color/white"
             android:textSize="14sp"
@@ -384,8 +393,8 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
             android:fontFamily="@font/alfa_slab_one"
+            android:foreground="?android:attr/selectableItemBackground"
             android:text="@string/view_all"
             android:textColor="@color/white"
             android:textSize="14sp"
@@ -399,8 +408,8 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
             android:fontFamily="@font/alfa_slab_one"
+            android:foreground="?android:attr/selectableItemBackground"
             android:text="@string/view_all"
             android:textColor="@color/white"
             android:textSize="14sp"
@@ -414,8 +423,8 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
             android:fontFamily="@font/alfa_slab_one"
+            android:foreground="?android:attr/selectableItemBackground"
             android:text="@string/view_all"
             android:textColor="@color/white"
             android:textSize="14sp"
@@ -429,13 +438,28 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
             android:fontFamily="@font/alfa_slab_one"
+            android:foreground="?android:attr/selectableItemBackground"
             android:text="@string/view_all"
             android:textColor="@color/white"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rvAnimation" />
+
+        <TextView
+            android:id="@+id/tvActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:clickable="true"
+            android:fontFamily="@font/alfa_slab_one"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:text="@string/view_all"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rvScienceFiction" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/btnGallery"
@@ -449,6 +473,17 @@
             app:layout_constraintBottom_toBottomOf="@+id/btnLogout"
             app:layout_constraintEnd_toStartOf="@+id/btnLogout"
             app:layout_constraintTop_toTopOf="@+id/btnLogout" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvAction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:paddingBottom="70dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -19,6 +19,7 @@ public class HomeMovieViewModel extends ViewModel {
     private final MutableLiveData<List<Movie>> crimeLiveData = new MutableLiveData<>();
     private final MutableLiveData<List<Movie>> animationLiveData = new MutableLiveData<>();
     private final MutableLiveData<List<Movie>> scienceFictionLiveData = new MutableLiveData<>();
+    private final MutableLiveData<List<Movie>> actionLiveData = new MutableLiveData<>();
 
     private final MutableLiveData<Throwable> exception = new MutableLiveData<>();
 
@@ -33,6 +34,7 @@ public class HomeMovieViewModel extends ViewModel {
         manager.getCrime(crimeLiveData);
         manager.getAnimation(animationLiveData);
         manager.getScienceFiction(scienceFictionLiveData);
+        manager.getAction(actionLiveData);
     }
 
     public LiveData<List<Movie>> getTopTrendingLiveData(){
@@ -55,6 +57,9 @@ public class HomeMovieViewModel extends ViewModel {
         return animationLiveData;
     }
     public MutableLiveData<List<Movie>> getScienceFictionLiveData() {return scienceFictionLiveData;}
+    public MutableLiveData<List<Movie>> getActionLiveData() {
+        return actionLiveData;
+    }
 
     public MutableLiveData<Throwable> getException() {
         return exception;

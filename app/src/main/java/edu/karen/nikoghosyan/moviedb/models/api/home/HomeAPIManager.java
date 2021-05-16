@@ -218,4 +218,27 @@ public class HomeAPIManager {
             }
         });
     }
+
+    public void getAction(MutableLiveData<List<Movie>> movieLiveData) {
+
+        Call<MovieResponse> movieHTTPRequest = homeMovieService.getAction();
+
+        movieHTTPRequest.enqueue(new Callback<MovieResponse>() {
+            @Override
+            public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+                MovieResponse movieResponse = response.body();
+
+                if (movieResponse != null) {
+
+                    ArrayList<Movie> movies = movieResponse.getMovies();
+                    movieLiveData.postValue(movies);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MovieResponse> call, Throwable t) {
+
+            }
+        });
+    }
 }

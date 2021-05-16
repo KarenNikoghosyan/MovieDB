@@ -28,4 +28,7 @@ public interface HomeMovieService {
 
     @GET("discover/movie?api_key=e40d9c03e1a4a736af381ffa2799b376&with_genres=878&page=2")
     Call<MovieResponse> getScienceFiction();
+
+    @GET("discover/movie?api_key=e40d9c03e1a4a736af381ffa2799b376&with_genres=28")
+    Call<MovieResponse> getAction();
 }
