@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,6 +32,7 @@ import edu.karen.nikoghosyan.moviedb.R;
 public class RegisterFragment extends Fragment {
     private TextView tvLogin;
     private Button btnRegister;
+    private EditText etName;
     private EditText etEmailRegister;
     private EditText etPasswordRegister;
     private EditText etConfirmPassword;
@@ -52,6 +54,7 @@ public class RegisterFragment extends Fragment {
         tvLogin = view.findViewById(R.id.tvLogin);
         tvLogin.setPaintFlags(tvLogin.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         btnRegister = view.findViewById(R.id.btnRegister);
+        etName = view.findViewById(R.id.etName);
         etEmailRegister = view.findViewById(R.id.etEmailLogin);
         etPasswordRegister = view.findViewById(R.id.etPasswordLogin);
         etConfirmPassword = view.findViewById(R.id.etConfirmPassword);
@@ -62,14 +65,18 @@ public class RegisterFragment extends Fragment {
 
         btnRegister.setOnClickListener(v -> {
 
-            if (!isConfirmPasswordValid()) { return; }
-            if (!isEmailValid() | !isPasswordValid()) {
+            if (!isConfirmPasswordValid()) {
+                return;
+            }
+            if (!isNameValid() | !isEmailValid() | !isPasswordValid()) {
                 return;
             }
 
             toggleProgressDialog(true);
 
-            if (getActivity() == null) { return; }
+            if (getActivity() == null) {
+                return;
+            }
 
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
             mAuth.createUserWithEmailAndPassword(getEmail(), getPassword())
@@ -79,6 +86,14 @@ public class RegisterFragment extends Fragment {
                         userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         documentReference = fStore.collection("users").document(userID);
                         Map<String, Object> user = new HashMap<>();
+
+                        ArrayList<Long> movieIDs = new ArrayList<>();
+                        user.put("name", etName.getText().toString());
+
+                        String profileImage = "";
+                        user.put("profileImage", profileImage);
+
+                        user.put("movieIDs", movieIDs);
 
                         documentReference.get().addOnSuccessListener(documentSnapshot -> {
                             documentReference.set(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was added for user" + userID));
@@ -102,6 +117,10 @@ public class RegisterFragment extends Fragment {
         Toast.makeText(getContext(), "Account Created Successfully", Toast.LENGTH_LONG).show();
     }
 
+    private String getName() {
+        return etName.getText().toString();
+    }
+
     private String getEmail() {
         return etEmailRegister.getText().toString();
     }
@@ -112,6 +131,14 @@ public class RegisterFragment extends Fragment {
 
     private String getConfirmPassword() {
         return etConfirmPassword.getText().toString();
+    }
+
+    private boolean isNameValid() {
+        boolean isValid = getName().length() > 1;
+        if (!isValid) {
+            etName.setError("Name is too short");
+        }
+        return isValid;
     }
 
     private boolean isEmailValid() {

@@ -24,4 +24,7 @@
     <string name="no_similar_movies_were_found">No Similar Movies Found</string>
     <string name="no_genres_were_found">No genres were found</string>
     <string name="view_all">View All</string>
+    <string name="not_a_member">Not A Member?</string>
+    <string name="click_here_to_register">Click Here To Register</string>
+    <string name="name">Name</string>
 </resources>

@@ -2,7 +2,6 @@ package edu.karen.nikoghosyan.moviedb.ui.login;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -29,12 +28,8 @@ import maes.tech.intentanim.CustomIntent;
 public class LoginFragment extends Fragment {
     private TextView tvRegister;
     private Button btnLogin;
-    private EditText etName;
     private EditText etEmailLogin;
     private EditText etPasswordLogin;
-
-    private SharedPreferences prefs;
-    private SharedPreferences.Editor editor;
 
     @Nullable
     @Override
@@ -46,13 +41,6 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (getActivity() != null) {
-            prefs = getActivity().getApplicationContext().getSharedPreferences("MovieDBPrefs", 0);
-            editor = prefs.edit();
-        }
-
-
-        etName = view.findViewById(R.id.etName);
         etEmailLogin = view.findViewById(R.id.etEmailLogin);
         etPasswordLogin = view.findViewById(R.id.etPasswordLogin);
         btnLogin = view.findViewById(R.id.btnLogin);
@@ -69,7 +57,7 @@ public class LoginFragment extends Fragment {
 
         btnLogin.setOnClickListener(v -> {
 
-            if (!isNameValid() | !isEmailValid() | !isPasswordValid()) {
+            if (!isEmailValid() | !isPasswordValid()) {
                 return;
             }
 
@@ -80,8 +68,6 @@ public class LoginFragment extends Fragment {
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
             mAuth.signInWithEmailAndPassword(getEmail(), getPassword())
                     .addOnSuccessListener(getActivity(), authResult -> {
-                        editor.putString("name", etName.getText().toString());
-                        editor.apply();
 
                         goToMainActivity();
                     }).addOnFailureListener(getActivity(), e -> showError(e));
@@ -103,22 +89,12 @@ public class LoginFragment extends Fragment {
         getActivity().finish();
     }
 
-    private String getName() { return etName.getText().toString(); }
-
     private String getEmail() {
         return etEmailLogin.getText().toString();
     }
 
     private String getPassword() {
         return etPasswordLogin.getText().toString();
-    }
-
-    private boolean isNameValid() {
-        boolean isValid = getName().length() > 1;
-        if (!isValid) {
-            etName.setError("Name is too short");
-        }
-        return isValid;
     }
 
     private boolean isEmailValid() {

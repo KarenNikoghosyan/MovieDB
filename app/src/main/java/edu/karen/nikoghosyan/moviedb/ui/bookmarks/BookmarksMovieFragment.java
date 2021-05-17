@@ -90,7 +90,6 @@ public class BookmarksMovieFragment extends Fragment {
         });
 
         bookmarksMovieViewModel.getBookmarkedMovies().observe(getViewLifecycleOwner(), movies -> {
-
             clBookmarks.setVisibility(View.GONE);
             adapter = new BookmarksAdapter(movies);
             rvBookmarks.setAdapter(adapter);

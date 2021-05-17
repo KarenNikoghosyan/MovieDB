@@ -48,7 +48,6 @@ public class UpcomingAPIManager {
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                 MovieResponse movieResponse = response.body();
                 if (movieResponse != null) {
-                    System.out.println(movies);
                     movies.addAll(movieResponse.getMovies());
                     numberOfCalls--;
                     if (numberOfCalls > 0) {

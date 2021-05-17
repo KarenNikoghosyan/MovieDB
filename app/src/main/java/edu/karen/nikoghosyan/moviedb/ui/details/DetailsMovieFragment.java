@@ -133,7 +133,8 @@ public class DetailsMovieFragment extends Fragment {
                 .transform(new RoundedCornersTransformation(2, 2))
                 .into(ivBackdrop, new Callback() {
                     @Override
-                    public void onSuccess() {}
+                    public void onSuccess() {
+                    }
 
                     @Override
                     public void onError(Exception e) {
@@ -149,7 +150,8 @@ public class DetailsMovieFragment extends Fragment {
                 .fit()
                 .into(ivSmallPoster, new Callback() {
                     @Override
-                    public void onSuccess() {}
+                    public void onSuccess() {
+                    }
 
                     @Override
                     public void onError(Exception e) {
@@ -168,7 +170,7 @@ public class DetailsMovieFragment extends Fragment {
 
             Fragment genre = getParentFragmentManager().findFragmentByTag("GenreTag");
             AppCompatActivity activity = (AppCompatActivity) v.getContext();
-            if (HomeMovieFragment.isGenre && genre != null){
+            if (HomeMovieFragment.isGenre && genre != null) {
 
                 activity
                         .getSupportFragmentManager()
@@ -178,8 +180,7 @@ public class DetailsMovieFragment extends Fragment {
                         .addToBackStack(null)
                         .commit();
                 HomeMovieFragment.isGenre = false;
-            }
-            else{
+            } else {
                 getParentFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 animatedBottomBar.setVisibility(View.VISIBLE);
             }
@@ -200,7 +201,7 @@ public class DetailsMovieFragment extends Fragment {
 
                 ibBookmark.setImageResource(R.drawable.icon_bookmark_selected);
                 if (getView() != null)
-                    Snackbar.make(getView(), "Added To Bookmarks", Snackbar.LENGTH_SHORT).setAnchorView(animatedBottomBar).show();
+                    Snackbar.make(getView(), "Added To Bookmarks", Snackbar.LENGTH_SHORT).show();
 
                 if (FirebaseAuth.getInstance().getCurrentUser() != null) {
 
@@ -217,12 +218,11 @@ public class DetailsMovieFragment extends Fragment {
 
                             addMovie();
                         } else {
-                            documentReference.set(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was added for user: " + userID));
+                            Log.d("TAG", "User was not found: " + userID);
                         }
                     });
                 }
-            }
-            else {
+            } else {
                 isBookmarked = false;
 
                 ibBookmark.setImageResource(R.drawable.icon_bookmark_unselected);
@@ -236,7 +236,7 @@ public class DetailsMovieFragment extends Fragment {
                 user.put("" + Constants.MOVIE_ID, FieldValue.delete());
 
                 documentReference.get().addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()){
+                    if (documentSnapshot.exists()) {
                         documentReference.update(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was removed for user" + userID));
                         removeMovie();
                     }
@@ -305,8 +305,7 @@ public class DetailsMovieFragment extends Fragment {
                     } else {
                         tvGenre.setText(R.string.no_genres_were_found);
                     }
-                }
-                else {
+                } else {
                     tvGenre.setText(getArguments().getString(Constants.MOVIE_GENRE).substring(0, getArguments().getString(Constants.MOVIE_GENRE).length() - 1));
                 }
             }
@@ -343,7 +342,7 @@ public class DetailsMovieFragment extends Fragment {
         }
     }
 
-    public void addMovie(){
+    public void addMovie() {
         SingleMovieViewModel singleMovieViewModel = new ViewModelProvider(this).get(SingleMovieViewModel.class);
 
         singleMovieViewModel.getSingleBookmarkedMovie().observe(getViewLifecycleOwner(), movies -> {
@@ -353,7 +352,7 @@ public class DetailsMovieFragment extends Fragment {
         });
     }
 
-    public void removeMovie(){
+    public void removeMovie() {
         if (BookmarksAdapter.movieList != null) {
             for (int i = 0; i < BookmarksAdapter.movieList.size(); i++) {
                 if (BookmarksAdapter.movieList.get(i).getMovieID() == Constants.MOVIE_ID) {

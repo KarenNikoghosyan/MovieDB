@@ -3,7 +3,6 @@ package edu.karen.nikoghosyan.moviedb.ui.home;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -39,6 +38,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import edu.karen.nikoghosyan.moviedb.Constants;
 import edu.karen.nikoghosyan.moviedb.LoadingActivity;
 import edu.karen.nikoghosyan.moviedb.R;
+import edu.karen.nikoghosyan.moviedb.models.api.bookmarks.BookmarksAPIManager;
 import edu.karen.nikoghosyan.moviedb.ui.genre.GenreMovieFragment;
 import edu.karen.nikoghosyan.moviedb.ui.home.adapters.MovieAdapter;
 import edu.karen.nikoghosyan.moviedb.ui.home.adapters.TopTrendingAdapter;
@@ -79,7 +79,6 @@ public class HomeMovieFragment extends Fragment {
     private TextView tvScienceFictionButton;
     private TextView tvActionButton;
 
-    private SharedPreferences prefs;
     public static boolean isGenre = false;
 
     private String userID;
@@ -96,10 +95,8 @@ public class HomeMovieFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (getActivity() != null) {
-            prefs = getActivity().getApplicationContext().getSharedPreferences("MovieDBPrefs", 0);
-        }
         btnGallery = view.findViewById(R.id.btnGallery);
+        tvName = view.findViewById(R.id.tvName);
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null){
             fStore = FirebaseFirestore.getInstance();
@@ -107,12 +104,18 @@ public class HomeMovieFragment extends Fragment {
 
             documentReference = fStore.collection("users").document(userID);
             documentReference.get().addOnSuccessListener(documentSnapshot -> {
-                if (documentSnapshot.contains("profileImage")) {
+                if (documentSnapshot.contains("profileImage") && !documentSnapshot.getString("profileImage").isEmpty()) {
                     String profileImage = (String) documentSnapshot.get("profileImage");
                     btnGallery.setImageBitmap(decodeBase64(profileImage));
                 }
                 else {
                     btnGallery.setImageResource(R.drawable.icon_user_default);
+                }
+                if (documentSnapshot.contains("name")) {
+                    tvName.setText(documentSnapshot.getString("name"));
+                }
+                else {
+                    tvName.setText("");
                 }
             });
         }
@@ -178,9 +181,6 @@ public class HomeMovieFragment extends Fragment {
         });
 
         btnLogout = view.findViewById(R.id.btnLogout);
-        tvName = view.findViewById(R.id.tvName);
-
-        tvName.setText(prefs.getString("name", null));
 
         getLiveDataObservers();
 
@@ -200,6 +200,7 @@ public class HomeMovieFragment extends Fragment {
                         if (getActivity() == null) {
                             return;
                         }
+                        BookmarksAPIManager.movieList.clear();
                         getActivity().finishAffinity();
                         getActivity().finish();
 
@@ -340,7 +341,7 @@ public class HomeMovieFragment extends Fragment {
                     Map<String, Object> user = new HashMap<>();
                     user.put("profileImage", encodeToBase64(MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage)));
 
-                    documentReference.set(user).addOnSuccessListener(aVoid -> Log.d("TAG", "profile image was set for user: " + userID));
+                    documentReference.update(user).addOnSuccessListener(aVoid -> Log.d("TAG", "profile image was set for user: " + userID));
                 }
                 btnGallery.setImageBitmap(bitmap);
             } catch (IOException e) {

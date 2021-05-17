@@ -24,4 +24,7 @@
     <string name="view_all">Посмотреть все</string>
     <string name="no_genres_were_found">Жанры не найдены</string>
     <string name="no_similar_movies_were_found">Похожих фильмов не найдено</string>
+    <string name="not_a_member">Нет пользователя?</string>
+    <string name="click_here_to_register">Нажмите здесь, чтобы зарегистрироваться</string>
+    <string name="name">Имя</string>
 </resources>
