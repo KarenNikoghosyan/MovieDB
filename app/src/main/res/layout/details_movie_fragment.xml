@@ -147,7 +147,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/alfa_slab_one"
-                    android:text="Recommendations"
+                    android:text="@string/recommendations"
                     android:textColor="@color/white"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -176,13 +176,25 @@
                     android:id="@+id/textView13"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="6dp"
+                    android:layout_marginTop="8dp"
                     android:fontFamily="@font/alfa_slab_one"
                     android:text="@string/genre"
                     android:textColor="@color/white"
                     android:textSize="13sp"
-                    app:layout_constraintStart_toStartOf="@+id/guideline18"
+                    app:layout_constraintStart_toStartOf="@+id/textView20"
+                    app:layout_constraintTop_toBottomOf="@+id/textView20" />
+
+                <TextView
+                    android:id="@+id/textView20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="@font/alfa_slab_one"
+                    android:text="@string/title"
+                    android:textColor="@color/white"
+                    android:textSize="13sp"
+                    app:layout_constraintStart_toEndOf="@+id/ivSmallPoster"
                     app:layout_constraintTop_toBottomOf="@+id/ivBackdrop" />
 
                 <TextView
@@ -209,6 +221,21 @@
                     app:layout_constraintBottom_toBottomOf="@+id/textView13"
                     app:layout_constraintStart_toEndOf="@+id/textView13"
                     app:layout_constraintTop_toTopOf="@+id/textView13" />
+
+                <TextView
+                    android:id="@+id/tvTitleName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/abeezee"
+                    android:textColor="@color/white"
+                    android:textSize="13sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView20"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textView20"
+                    app:layout_constraintTop_toTopOf="@+id/textView20" />
 
                 <TextView
                     android:id="@+id/tvReleaseDate"
@@ -272,7 +299,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/arbutus_slab"
-                    android:text="No Movie Recommendations Found"
+                    android:text="@string/no_recommendations_found"
                     android:textColor="@color/white"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="@+id/rvRecommendations"

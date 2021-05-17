@@ -38,7 +38,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import edu.karen.nikoghosyan.moviedb.Constants;
 import edu.karen.nikoghosyan.moviedb.LoadingActivity;
 import edu.karen.nikoghosyan.moviedb.R;
-import edu.karen.nikoghosyan.moviedb.models.api.bookmarks.BookmarksAPIManager;
+import edu.karen.nikoghosyan.moviedb.ui.bookmarks.adapters.BookmarksAdapter;
 import edu.karen.nikoghosyan.moviedb.ui.genre.GenreMovieFragment;
 import edu.karen.nikoghosyan.moviedb.ui.home.adapters.MovieAdapter;
 import edu.karen.nikoghosyan.moviedb.ui.home.adapters.TopTrendingAdapter;
@@ -200,7 +200,7 @@ public class HomeMovieFragment extends Fragment {
                         if (getActivity() == null) {
                             return;
                         }
-                        BookmarksAPIManager.movieList.clear();
+                        BookmarksAdapter.movieList.clear();
                         getActivity().finishAffinity();
                         getActivity().finish();
 

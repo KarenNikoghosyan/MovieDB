@@ -22,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +37,7 @@ import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.ViewHolder>{
 
-    public static List<Movie> movieList;
+    public static List<Movie> movieList = new ArrayList<>();
     private Movie movie;
 
     private DocumentReference documentReference;

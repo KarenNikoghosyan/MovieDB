@@ -27,4 +27,7 @@
     <string name="not_a_member">Нет пользователя?</string>
     <string name="click_here_to_register">Нажмите здесь, чтобы зарегистрироваться</string>
     <string name="name">Имя</string>
+    <string name="title">Титул:</string>
+    <string name="recommendations">Рекомендации</string>
+    <string name="no_recommendations_found">Рекомендации не найдены</string>
 </resources>

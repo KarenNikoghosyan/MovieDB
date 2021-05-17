@@ -27,4 +27,8 @@
     <string name="not_a_member">Not A Member?</string>
     <string name="click_here_to_register">Click Here To Register</string>
     <string name="name">Name</string>
+    <string name="no_recommendations_found">No Recommendations Found</string>
+    <string name="no_recommendations_found">No Recommendations Found</string>
+    <string name="title">Title:</string>
+    <string name="recommendations">Recommendations</string>
 </resources>

@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import edu.karen.nikoghosyan.moviedb.Constants;
-import edu.karen.nikoghosyan.moviedb.models.api.bookmarks.BookmarksAPIManager;
 import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
+import edu.karen.nikoghosyan.moviedb.ui.bookmarks.adapters.BookmarksAdapter;
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -41,8 +41,10 @@ public class SingleMovieAPIManager {
             public void onResponse(Call<Movie> call, Response<Movie> response) {
                 Movie movieResponse = response.body();
                 if (movieResponse != null) {
-                    BookmarksAPIManager.movieList.add(movieResponse);
-                    moviesLiveData.postValue(BookmarksAPIManager.movieList);
+                    //BookmarksAPIManager.movieList.add(movieResponse);
+                    //moviesLiveData.postValue(BookmarksAPIManager.movieList);
+                    BookmarksAdapter.movieList.add(movieResponse);
+                    moviesLiveData.postValue(BookmarksAdapter.movieList);
                 }
             }
 

@@ -25,7 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BookmarksAPIManager {
     private ArrayList<Long> movieIDs = new ArrayList<>();
-    public static final List<Movie> movieList = new ArrayList<>();
+    private final List<Movie> movieList = new ArrayList<>();
     private int i = 0;
     private int numberOfCalls;
 

@@ -156,7 +156,11 @@ public class BookmarksMovieFragment extends Fragment {
     }
 
     public static void showSnackBar(View v){
-        Snackbar.make(v, "Movie Was Removed", Snackbar.LENGTH_SHORT).setAnchorView(MainActivity.animatedBottomBar).show();
+        Snackbar.make(v, "Movie Was Removed", Snackbar.LENGTH_SHORT)
+                .setAnchorView(MainActivity.animatedBottomBar)
+                .setAction("DISMISS", v1 -> {
+                })
+                .show();
     }
 
     @Override

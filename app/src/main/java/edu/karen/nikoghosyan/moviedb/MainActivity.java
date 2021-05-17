@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
-import edu.karen.nikoghosyan.moviedb.models.api.bookmarks.BookmarksAPIManager;
+import edu.karen.nikoghosyan.moviedb.ui.bookmarks.adapters.BookmarksAdapter;
 import edu.karen.nikoghosyan.moviedb.ui.genre.GenreMovieFragment;
 import edu.karen.nikoghosyan.moviedb.ui.home.HomeMovieFragment;
 import edu.karen.nikoghosyan.moviedb.ui.main.ViewPagerAdapter;
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                     .setNegativeButton("Cancel", (dialog, which) -> {
 
                     }).setPositiveButton("OK", (dialog, which) -> {
-                        BookmarksAPIManager.movieList.clear();
+                        BookmarksAdapter.movieList.clear();
                         finishAffinity();
                         finish();
                     });

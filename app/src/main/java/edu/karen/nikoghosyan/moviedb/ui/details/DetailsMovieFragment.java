@@ -53,6 +53,7 @@ public class DetailsMovieFragment extends Fragment {
     private ImageButton ibBookmark;
     private ImageView ivBackdrop;
     private ImageView ivSmallPoster;
+    private TextView tvTitleName;
     private TextView tvGenre;
     private TextView tvReleaseDate;
     private TextView tvOverview;
@@ -109,6 +110,9 @@ public class DetailsMovieFragment extends Fragment {
 
         tvTitle = view.findViewById(R.id.tvTitle);
         tvTitle.setText(getArguments().getString(Constants.MOVIE_TITLE));
+
+        tvTitleName = view.findViewById(R.id.tvTitleName);
+        tvTitleName.setText(getArguments().getString(Constants.MOVIE_TITLE));
 
         tvRating = view.findViewById(R.id.tvRating);
         double formattedNum = Math.round(getArguments().getDouble(Constants.MOVIE_RATING) * 10.0) / 10.0;
@@ -201,7 +205,10 @@ public class DetailsMovieFragment extends Fragment {
 
                 ibBookmark.setImageResource(R.drawable.icon_bookmark_selected);
                 if (getView() != null)
-                    Snackbar.make(getView(), "Added To Bookmarks", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(getView(), "Added To Bookmarks", Snackbar.LENGTH_SHORT)
+                            .setAction("DISMISS", v1 -> {
+                            })
+                            .show();
 
                 if (FirebaseAuth.getInstance().getCurrentUser() != null) {
 
