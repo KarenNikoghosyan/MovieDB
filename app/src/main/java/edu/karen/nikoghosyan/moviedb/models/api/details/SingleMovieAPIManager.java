@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import edu.karen.nikoghosyan.moviedb.Constants;
 import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
 import edu.karen.nikoghosyan.moviedb.ui.bookmarks.adapters.BookmarksAdapter;
 import okhttp3.ConnectionPool;
@@ -33,16 +32,14 @@ public class SingleMovieAPIManager {
 
     private final SingleMovieService singleService = retrofit.create(SingleMovieService.class);
 
-    public void getSingleMovie(MutableLiveData<List<Movie>> moviesLiveData, MutableLiveData<Throwable> exceptionCallback){
+    public void getSingleMovie(MutableLiveData<List<Movie>> moviesLiveData, int movieID){
 
-        Call<Movie> movieHTTPRequest = singleService.getMovies(Constants.MOVIE_ID);
+        Call<Movie> movieHTTPRequest = singleService.getMovies(movieID);
         movieHTTPRequest.enqueue(new Callback<Movie>() {
             @Override
             public void onResponse(Call<Movie> call, Response<Movie> response) {
                 Movie movieResponse = response.body();
                 if (movieResponse != null) {
-                    //BookmarksAPIManager.movieList.add(movieResponse);
-                    //moviesLiveData.postValue(BookmarksAPIManager.movieList);
                     BookmarksAdapter.movieList.add(movieResponse);
                     moviesLiveData.postValue(BookmarksAdapter.movieList);
                 }
@@ -50,7 +47,7 @@ public class SingleMovieAPIManager {
 
             @Override
             public void onFailure(Call<Movie> call, Throwable t) {
-                exceptionCallback.postValue(t);
+                t.getMessage();
             }
         });
 

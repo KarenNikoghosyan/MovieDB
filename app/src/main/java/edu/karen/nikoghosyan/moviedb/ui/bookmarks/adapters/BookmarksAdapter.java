@@ -49,6 +49,8 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.View
         BookmarksAdapter.movieList = movieList;
     }
 
+    public BookmarksAdapter(){}
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

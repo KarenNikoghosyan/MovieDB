@@ -38,22 +38,12 @@ public class BookmarksMovieFragment extends Fragment {
     public static CirclesLoadingView clBookmarks;
     private BookmarksViewModel bookmarksMovieViewModel;
     public static RecyclerView rvBookmarks;
-    private BookmarksAdapter adapter;
+    public BookmarksAdapter adapter;
     private Movie movie;
 
     private String userID;
     private DocumentReference documentReference;
     private FirebaseFirestore fStore;
-
-    private void getCurrentScreenOrientation() {
-        int orientation = getResources().getConfiguration().orientation;
-        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            rvBookmarks.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-        }
-
-        else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            rvBookmarks.setLayoutManager(new GridLayoutManager(getContext(), 2));        }
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -67,9 +57,24 @@ public class BookmarksMovieFragment extends Fragment {
         clBookmarks = view.findViewById(R.id.clBookmarks);
         rvBookmarks = view.findViewById(R.id.rvBookmarks);
 
+        adapter = new BookmarksAdapter();
+        rvBookmarks.setAdapter(adapter);
+        recyclerViewItemSwipe();
+
         getCurrentScreenOrientation();
 
         getObservers();
+    }
+
+    private void getCurrentScreenOrientation() {
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            rvBookmarks.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        }
+
+        else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            rvBookmarks.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        }
     }
 
     private void getObservers() {

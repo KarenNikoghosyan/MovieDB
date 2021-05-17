@@ -12,17 +12,16 @@ public class SingleMovieViewModel extends ViewModel {
 
     private SingleMovieAPIManager singleMovieAPIManager;
     private final MutableLiveData<List<Movie>> singleBookmarkedMovie = new MutableLiveData<>();
-    private final MutableLiveData<Throwable> exceptionSingleMovie = new MutableLiveData<>();
 
     public SingleMovieViewModel() {
         singleMovieAPIManager = new SingleMovieAPIManager();
-        singleMovieAPIManager.getSingleMovie(singleBookmarkedMovie, exceptionSingleMovie);
+        singleMovieAPIManager.getSingleMovie(singleBookmarkedMovie, 0);
     }
 
     public MutableLiveData<List<Movie>> getSingleBookmarkedMovie() {
         return singleBookmarkedMovie;
     }
-    public MutableLiveData<Throwable> getExceptionSingleMovie() {
-        return exceptionSingleMovie;
+    public void updateData(int movieID) {
+        singleMovieAPIManager.getSingleMovie(singleBookmarkedMovie, movieID);
     }
 }

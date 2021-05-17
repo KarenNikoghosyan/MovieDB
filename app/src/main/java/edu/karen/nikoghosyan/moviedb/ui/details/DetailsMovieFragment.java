@@ -234,8 +234,10 @@ public class DetailsMovieFragment extends Fragment {
 
                 ibBookmark.setImageResource(R.drawable.icon_bookmark_unselected);
                 if (getView() != null)
-                    Snackbar.make(getView(), "Removed From Bookmarks", Snackbar.LENGTH_SHORT).setAnchorView(animatedBottomBar).show();
-
+                    Snackbar.make(getView(), "Removed From Bookmarks", Snackbar.LENGTH_SHORT)
+                            .setAction("DISMISS", v1 -> {
+                            })
+                            .show();
                 documentReference = fStore.collection("users").document(userID);
 
                 Map<String, Object> user = new HashMap<>();
@@ -337,6 +339,14 @@ public class DetailsMovieFragment extends Fragment {
             rvRecommendations.setAdapter(new DetailsMovieAdapter(movies));
             clRecommendations.setVisibility(View.GONE);
         }));
+
+        SingleMovieViewModel singleMovieViewModel = new ViewModelProvider(this).get(SingleMovieViewModel.class);
+
+        singleMovieViewModel.getSingleBookmarkedMovie().observe(getViewLifecycleOwner(), movies -> {
+            adapter = new BookmarksAdapter(movies);
+            BookmarksMovieFragment.rvBookmarks.setAdapter(adapter);
+            adapter.notifyItemInserted(BookmarksAdapter.movieList.size() - 1);
+        });
     }
 
     public void hideKeyboard() {
@@ -352,11 +362,7 @@ public class DetailsMovieFragment extends Fragment {
     public void addMovie() {
         SingleMovieViewModel singleMovieViewModel = new ViewModelProvider(this).get(SingleMovieViewModel.class);
 
-        singleMovieViewModel.getSingleBookmarkedMovie().observe(getViewLifecycleOwner(), movies -> {
-            adapter = new BookmarksAdapter(movies);
-            BookmarksMovieFragment.rvBookmarks.setAdapter(adapter);
-            adapter.notifyItemInserted(movies.size() - 1);
-        });
+        singleMovieViewModel.updateData(Constants.MOVIE_ID);
     }
 
     public void removeMovie() {
