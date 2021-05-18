@@ -60,16 +60,15 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        movie = movieList.get(position);
+        movie = movieList.get(holder.getAdapterPosition());
 
         holder.ibBookmarkSwitch.setOnClickListener(v -> {
-            movie = movieList.get(position);
+            movie = movieList.get(holder.getAdapterPosition());
 
             BookmarksMovieFragment.showSnackBar(v);
 
-            movieList.remove(position);
-            notifyItemRemoved(position);
-            notifyItemRangeChanged(position, getItemCount());
+            movieList.remove(holder.getAdapterPosition());
+            notifyItemRemoved(holder.getAdapterPosition());
 
             fStore = FirebaseFirestore.getInstance();
 
@@ -121,7 +120,7 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.View
         holder.tvBookmarkRating.setText(String.valueOf(movie.getRating()));
 
         holder.itemView.setOnClickListener(v -> {
-            movie = movieList.get(position);
+            movie = movieList.get(holder.getAdapterPosition());
 
             AppCompatActivity activity = (AppCompatActivity) v.getContext();
             Fragment fragment = new DetailsMovieFragment();

@@ -21,9 +21,6 @@ public class BookmarksViewModel extends ViewModel {
     public MutableLiveData<List<Movie>> getBookmarkedMovies() {
         return bookmarkedMovies;
     }
-    public void reloadData(){
-        bookmarksAPIManager.getMovieIDs(bookmarkedMovies, bookmarksException);
-    }
     public MutableLiveData<Throwable> getBookmarksException() {
         return bookmarksException;
     }

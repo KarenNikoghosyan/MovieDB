@@ -97,6 +97,7 @@ public class RegisterFragment extends Fragment {
 
                         user.put("movieIDs", movieIDs);
 
+                        //Creates fields in the FireStore's Database: name, profileImage and the movieIDs array.
                         documentReference.get().addOnSuccessListener(documentSnapshot -> {
                             documentReference.set(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was added for user" + userID));
                             gotoLoginFragment();

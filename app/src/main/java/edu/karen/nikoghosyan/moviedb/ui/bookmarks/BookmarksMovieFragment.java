@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,7 +37,6 @@ public class BookmarksMovieFragment extends Fragment {
 
     public static CirclesLoadingView clBookmarks;
     private BookmarksViewModel bookmarksMovieViewModel;
-    public ImageButton ibReload;
     public static RecyclerView rvBookmarks;
     public BookmarksAdapter adapter;
     private Movie movie;
@@ -56,17 +54,9 @@ public class BookmarksMovieFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         clBookmarks = view.findViewById(R.id.clBookmarks);
         rvBookmarks = view.findViewById(R.id.rvBookmarks);
-        ibReload = view.findViewById(R.id.ibReload);
-
-        //Reload button to reload the bookmarks
-        ibReload.setOnClickListener(v -> {
-            ibReload.setEnabled(false);
-            BookmarksAdapter.movieList.clear();
-            bookmarksMovieViewModel = new ViewModelProvider(this).get(BookmarksViewModel.class);
-            bookmarksMovieViewModel.reloadData();
-        });
 
         //Assigns swipe functionality to the recyclerview
         adapter = new BookmarksAdapter();
@@ -113,9 +103,9 @@ public class BookmarksMovieFragment extends Fragment {
             clBookmarks.setVisibility(View.GONE);
             adapter = new BookmarksAdapter(movies);
             rvBookmarks.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
 
             recyclerViewAnimation();
-            ibReload.setEnabled(true);
         });
     }
 
