@@ -37,11 +37,13 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 import edu.karen.nikoghosyan.moviedb.Constants;
 import edu.karen.nikoghosyan.moviedb.LoadingActivity;
+import edu.karen.nikoghosyan.moviedb.LoginActivity;
 import edu.karen.nikoghosyan.moviedb.R;
 import edu.karen.nikoghosyan.moviedb.ui.bookmarks.adapters.BookmarksAdapter;
 import edu.karen.nikoghosyan.moviedb.ui.genre.GenreMovieFragment;
 import edu.karen.nikoghosyan.moviedb.ui.home.adapters.MovieAdapter;
 import edu.karen.nikoghosyan.moviedb.ui.home.adapters.TopTrendingAdapter;
+import maes.tech.intentanim.CustomIntent;
 import me.ibrahimsn.lib.CirclesLoadingView;
 
 public class HomeMovieFragment extends Fragment {
@@ -95,7 +97,6 @@ public class HomeMovieFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         btnGallery = view.findViewById(R.id.btnGallery);
         tvName = view.findViewById(R.id.tvName);
 
@@ -208,7 +209,10 @@ public class HomeMovieFragment extends Fragment {
                             return;
                         }
                         BookmarksAdapter.movieList.clear();
-                        getActivity().finishAffinity();
+                        Intent toLoginActivity = new Intent(getContext(), LoginActivity.class);
+                        startActivity(toLoginActivity);
+                        CustomIntent.customType(getContext(), "right-to-left");
+
                         getActivity().finish();
 
                         LoadingActivity.isLogged = false;

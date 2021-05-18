@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class LoadingActivity extends AppCompatActivity {
     public static boolean isLogged = false;
     private SharedPreferences prefs;
+    private FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,14 +24,15 @@ public class LoadingActivity extends AppCompatActivity {
         decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
 
-        //Handler to delay the loading activity:
-        new Handler().postDelayed(() -> FirebaseAuth.getInstance().addAuthStateListener(firebaseAuth -> {
-            FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        prefs = getApplicationContext().getSharedPreferences("MovieDBPrefs", 0);
 
-            prefs = getApplicationContext().getSharedPreferences("MovieDBPrefs", 0);
+        FirebaseAuth.getInstance().addAuthStateListener(firebaseAuth -> {
+            currentUser = firebaseAuth.getCurrentUser();
+        });
 
-            //Checks if the user opening the app for the first time,
-            //the user will see this screen only once:
+        //Checks if the user opening the app for the first time,
+        //the user will see this screen only once:
+        new Handler().postDelayed(() -> {
             if (!prefs.contains("intro")) {
                 Intent intentToIntroActivity = new Intent(this, CustomAppIntro.class);
                 startActivity(intentToIntroActivity);
@@ -51,6 +53,6 @@ public class LoadingActivity extends AppCompatActivity {
                 isLogged = true;
                 finish();
             }
-        }),1500);
+        }, 3000);
     }
 }

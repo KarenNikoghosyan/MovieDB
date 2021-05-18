@@ -1,6 +1,7 @@
 package edu.karen.nikoghosyan.moviedb.ui.login;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,7 +27,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import edu.karen.nikoghosyan.moviedb.MainActivity;
 import edu.karen.nikoghosyan.moviedb.R;
+import maes.tech.intentanim.CustomIntent;
 
 
 public class RegisterFragment extends Fragment {
@@ -65,7 +68,7 @@ public class RegisterFragment extends Fragment {
 
         btnRegister.setOnClickListener(v -> {
 
-            //Checks if the confirm password is correct:
+            //Checks if the confirmed password is correct:
             if (!isConfirmPasswordValid()) {
                 return;
             }
@@ -100,7 +103,7 @@ public class RegisterFragment extends Fragment {
                         //Creates fields in the FireStore's Database: name, profileImage and the movieIDs array.
                         documentReference.get().addOnSuccessListener(documentSnapshot -> {
                             documentReference.set(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was added for user" + userID));
-                            gotoLoginFragment();
+                            goToMainActivity();
                         });
 
                     }).addOnFailureListener(getActivity(), e -> showError(e));
@@ -112,12 +115,15 @@ public class RegisterFragment extends Fragment {
         Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
     }
 
-    private void gotoLoginFragment() {
+    private void goToMainActivity() {
         toggleProgressDialog(false);
-        NavHostFragment
-                .findNavController(this)
-                .navigate(R.id.action_registerFragment_to_loginFragment);
+
+        Intent toMainActivity = new Intent(getContext(), MainActivity.class);
+        startActivity(toMainActivity);
+        CustomIntent.customType(getContext(), "left-to-right");
+
         Toast.makeText(getContext(), "Account Created Successfully", Toast.LENGTH_LONG).show();
+        requireActivity().finish();
     }
 
     private String getName() {
