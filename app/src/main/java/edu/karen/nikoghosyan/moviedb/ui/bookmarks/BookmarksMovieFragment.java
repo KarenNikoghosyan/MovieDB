@@ -38,7 +38,7 @@ public class BookmarksMovieFragment extends Fragment {
 
     public static CirclesLoadingView clBookmarks;
     private BookmarksViewModel bookmarksMovieViewModel;
-    private ImageButton ibReload;
+    public ImageButton ibReload;
     public static RecyclerView rvBookmarks;
     public BookmarksAdapter adapter;
     private Movie movie;
@@ -60,7 +60,9 @@ public class BookmarksMovieFragment extends Fragment {
         rvBookmarks = view.findViewById(R.id.rvBookmarks);
         ibReload = view.findViewById(R.id.ibReload);
 
+        //Reload button to reload the bookmarks
         ibReload.setOnClickListener(v -> {
+            ibReload.setEnabled(false);
             BookmarksAdapter.movieList.clear();
             bookmarksMovieViewModel = new ViewModelProvider(this).get(BookmarksViewModel.class);
             bookmarksMovieViewModel.reloadData();
@@ -113,6 +115,7 @@ public class BookmarksMovieFragment extends Fragment {
             rvBookmarks.setAdapter(adapter);
 
             recyclerViewAnimation();
+            ibReload.setEnabled(true);
         });
     }
 
@@ -174,7 +177,7 @@ public class BookmarksMovieFragment extends Fragment {
         }).attachToRecyclerView(rvBookmarks);
     }
 
-    //Sncackbar method:
+    //Snackbar method:
     public static void showSnackBar(View v){
         Snackbar.make(v, "Movie Was Removed", Snackbar.LENGTH_SHORT)
                 .setAnchorView(MainActivity.animatedBottomBar)
