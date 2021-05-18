@@ -6,6 +6,7 @@
         <entry key="app/src/main/res/drawable/card_rounded_corners.xml" value="0.2984375" />
         <entry key="app/src/main/res/drawable/dark_blue_gradient.xml" value="0.2984375" />
         <entry key="app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.2984375" />
+        <entry key="app/src/main/res/drawable/round_button.xml" value="0.2984375" />
         <entry key="app/src/main/res/drawable/rounded_corner.xml" value="0.2984375" />
         <entry key="app/src/main/res/layout-land/activity_loading.xml" value="0.2390625" />
         <entry key="app/src/main/res/layout-land/bookmarks_movie_fragment.xml" value="0.23897707231040563" />

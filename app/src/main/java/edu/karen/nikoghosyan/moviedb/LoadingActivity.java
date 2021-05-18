@@ -30,9 +30,9 @@ public class LoadingActivity extends AppCompatActivity {
             currentUser = firebaseAuth.getCurrentUser();
         });
 
-        //Checks if the user opening the app for the first time,
-        //the user will see this screen only once:
         new Handler().postDelayed(() -> {
+            //Checks if the user is opening the app for the first time,
+            //the user will see this screen only once:
             if (!prefs.contains("intro")) {
                 Intent intentToIntroActivity = new Intent(this, CustomAppIntro.class);
                 startActivity(intentToIntroActivity);
