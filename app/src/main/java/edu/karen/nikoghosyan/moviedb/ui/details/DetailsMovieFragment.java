@@ -208,10 +208,12 @@ public class DetailsMovieFragment extends Fragment {
 
                 ibBookmark.setImageResource(R.drawable.icon_bookmark_selected);
                 if (getView() != null)
-                    Snackbar.make(getView(), "Added To Bookmarks", Snackbar.LENGTH_SHORT)
-                            .setAction("DISMISS", v1 -> {
-                            })
-                            .show();
+                    if (getArguments() != null) {
+                        Snackbar.make(getView(), getArguments().getString(Constants.MOVIE_TITLE) + " added to Bookmarks", Snackbar.LENGTH_SHORT)
+                                .setAction("DISMISS", v1 -> {
+                                })
+                                .show();
+                    }
 
                 if (FirebaseAuth.getInstance().getCurrentUser() != null) {
 
@@ -239,10 +241,13 @@ public class DetailsMovieFragment extends Fragment {
 
                 ibBookmark.setImageResource(R.drawable.icon_bookmark_unselected);
                 if (getView() != null)
-                    Snackbar.make(getView(), "Removed From Bookmarks", Snackbar.LENGTH_SHORT)
-                            .setAction("DISMISS", v1 -> {
-                            })
-                            .show();
+                    if (getArguments() != null) {
+                        Snackbar.make(getView(), getArguments().getString(Constants.MOVIE_TITLE) + " removed from Bookmarks", Snackbar.LENGTH_SHORT)
+                                .setAction("DISMISS", v1 -> {
+                                })
+                                .show();
+                    }
+
                 documentReference = fStore.collection("users").document(userID);
 
                 //Removes the requested movie from FireStore's Database

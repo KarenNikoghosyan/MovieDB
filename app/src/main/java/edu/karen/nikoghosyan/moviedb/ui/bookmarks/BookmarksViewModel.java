@@ -9,16 +9,20 @@ import edu.karen.nikoghosyan.moviedb.models.api.bookmarks.BookmarksAPIManager;
 import edu.karen.nikoghosyan.moviedb.models.movies.movie.Movie;
 
 public class BookmarksViewModel extends ViewModel {
+    BookmarksAPIManager bookmarksAPIManager;
     private final MutableLiveData<List<Movie>> bookmarkedMovies = new MutableLiveData<>();
     private final MutableLiveData<Throwable> bookmarksException = new MutableLiveData<>();
 
     public BookmarksViewModel(){
-        BookmarksAPIManager bookmarksAPIManager = new BookmarksAPIManager();
+        bookmarksAPIManager = new BookmarksAPIManager();
         bookmarksAPIManager.getMovieIDs(bookmarkedMovies, bookmarksException);
     }
 
     public MutableLiveData<List<Movie>> getBookmarkedMovies() {
         return bookmarkedMovies;
+    }
+    public void reloadData(){
+        bookmarksAPIManager.getMovieIDs(bookmarkedMovies, bookmarksException);
     }
     public MutableLiveData<Throwable> getBookmarksException() {
         return bookmarksException;

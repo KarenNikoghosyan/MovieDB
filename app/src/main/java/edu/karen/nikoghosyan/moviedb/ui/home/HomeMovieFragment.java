@@ -84,6 +84,7 @@ public class HomeMovieFragment extends Fragment {
     private String userID;
     private DocumentReference documentReference;
     private FirebaseFirestore fStore;
+    private String name = "";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,

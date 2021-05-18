@@ -192,7 +192,7 @@
             android:id="@+id/etName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name"
+            android:hint="@string/name"
             android:maxLength="50"
             android:maxLines="1"
             android:textColor="@color/white" />

@@ -83,6 +83,7 @@ public class BookmarksAPIManager {
                     } else {
                         //Posts the value when the list is ready:
                         moviesLiveData.postValue(movieList);
+                        i = 0;
                     }
                 }
             }
