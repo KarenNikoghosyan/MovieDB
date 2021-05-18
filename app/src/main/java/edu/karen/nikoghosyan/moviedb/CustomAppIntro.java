@@ -26,6 +26,7 @@ public class CustomAppIntro extends AppIntro2 {
         prefs = getApplicationContext().getSharedPreferences("MovieDBPrefs", 0);
         editor = prefs.edit();
 
+        //Creates slides with explanation on how to use the app:
         addSlide(AppIntroFragment.newInstance(
                 "Welcome to MovieDB!", "Here's a short intro on how to use the app.", R.drawable.icon_tv, Color.rgb(255, 127, 80)
         ));
@@ -52,11 +53,6 @@ public class CustomAppIntro extends AppIntro2 {
     }
 
     @Override
-    protected void onSkipPressed(@Nullable Fragment currentFragment) {
-        super.onSkipPressed(currentFragment);
-    }
-
-    @Override
     protected void onDonePressed(@Nullable Fragment currentFragment) {
         super.onDonePressed(currentFragment);
 
@@ -65,6 +61,7 @@ public class CustomAppIntro extends AppIntro2 {
         CustomIntent.customType(this, "left-to-right");
         Toast.makeText(this, "Enjoy!", Toast.LENGTH_LONG).show();
 
+        //Saves to the SharedPreferences that the user read the intro, so the user won't that screen again
         editor.putBoolean("intro", true);
         editor.apply();
 

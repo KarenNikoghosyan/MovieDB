@@ -57,15 +57,16 @@ public class BookmarksMovieFragment extends Fragment {
         clBookmarks = view.findViewById(R.id.clBookmarks);
         rvBookmarks = view.findViewById(R.id.rvBookmarks);
 
+        //Assigns swipe functionality to the recyclerview
         adapter = new BookmarksAdapter();
         rvBookmarks.setAdapter(adapter);
         recyclerViewItemSwipe();
-
         getCurrentScreenOrientation();
 
         getObservers();
     }
 
+    //Checks the current screen orientation:
     private void getCurrentScreenOrientation() {
         int orientation = getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -77,6 +78,7 @@ public class BookmarksMovieFragment extends Fragment {
         }
     }
 
+    //Observers:
     private void getObservers() {
         bookmarksMovieViewModel = new ViewModelProvider(this).get(BookmarksViewModel.class);
         bookmarksMovieViewModel.getBookmarksException().observe(getViewLifecycleOwner(), throwable -> {
@@ -94,16 +96,18 @@ public class BookmarksMovieFragment extends Fragment {
             dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(requireActivity().getColor(R.color.dark_purple));
         });
 
+        //Loads the bookmarks when opening the app, if no movies were found in the FireStore's database
+        //it won't be called
         bookmarksMovieViewModel.getBookmarkedMovies().observe(getViewLifecycleOwner(), movies -> {
             clBookmarks.setVisibility(View.GONE);
             adapter = new BookmarksAdapter(movies);
             rvBookmarks.setAdapter(adapter);
-            recyclerViewAnimation();
 
-            recyclerViewItemSwipe();
+            recyclerViewAnimation();
         });
     }
 
+    //RecyclerView on load animation:
     private void recyclerViewAnimation() {
         rvBookmarks.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
@@ -124,6 +128,7 @@ public class BookmarksMovieFragment extends Fragment {
         });
     }
 
+    //RecyclerView swipe method:
     private void recyclerViewItemSwipe() {
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
@@ -160,6 +165,7 @@ public class BookmarksMovieFragment extends Fragment {
         }).attachToRecyclerView(rvBookmarks);
     }
 
+    //Sncackbar method:
     public static void showSnackBar(View v){
         Snackbar.make(v, "Movie Was Removed", Snackbar.LENGTH_SHORT)
                 .setAnchorView(MainActivity.animatedBottomBar)
@@ -168,6 +174,7 @@ public class BookmarksMovieFragment extends Fragment {
                 .show();
     }
 
+    //Checks in realtime the screen orientation
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);

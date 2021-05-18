@@ -29,15 +29,18 @@ public class MainActivity extends AppCompatActivity {
                 | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), 1);
 
+        //ViewPager setting up:
         viewPager = findViewById(R.id.viewPager);
         viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(1);
 
+        //Sets up the bottom nav menu with viewpager
         animatedBottomBar = findViewById(R.id.animatedBottomBar);
         animatedBottomBar.setupWithViewPager(viewPager);
     }
 
+    //Gets the correct selected tab when returning to the screen:
     @Override
     protected void onResume() {
         super.onResume();

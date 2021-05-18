@@ -23,23 +23,28 @@ public class LoadingActivity extends AppCompatActivity {
         decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
 
+        //Handler to delay the loading activity:
         new Handler().postDelayed(() -> FirebaseAuth.getInstance().addAuthStateListener(firebaseAuth -> {
             FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
             prefs = getApplicationContext().getSharedPreferences("MovieDBPrefs", 0);
 
+            //Checks if the user opening the app for the first time,
+            //the user will see this screen only once:
             if (!prefs.contains("intro")) {
                 Intent intentToIntroActivity = new Intent(this, CustomAppIntro.class);
                 startActivity(intentToIntroActivity);
                 finish();
             }
 
+            //Checks if the user is connected, if not it will send him to the Login Activity:
             else if (currentUser == null) {
                 Intent intentToLoginActivity = new Intent(this, LoginActivity.class);
                 startActivity(intentToLoginActivity);
                 finish();
             }
 
+            //If the user is connected it will send the user to the Main Activity:
             else {
                 Intent intentToMainActivity = new Intent(this, MainActivity.class);
                 startActivity(intentToMainActivity);

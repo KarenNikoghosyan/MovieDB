@@ -66,6 +66,7 @@ public class GenreMovieFragment extends Fragment {
 
         getCurrentScreenOrientation();
 
+        //Return/Back button:
         ibBackFromGenre.setOnClickListener(v -> {
             viewPager.setVisibility(View.VISIBLE);
 
@@ -78,6 +79,7 @@ public class GenreMovieFragment extends Fragment {
         }
         tvGenreType.setText(getArguments().getString(Constants.GENRE_TYPE));
 
+        //Checks the genre type that was sent from the home screen and loads the fragment accordingly:
         switch (getArguments().getString(Constants.GENRE_TYPE)) {
             case "Top Rated":
                 TopRatedViewModel topRatedViewModel = new ViewModelProvider(this).get(TopRatedViewModel.class);
@@ -162,6 +164,7 @@ public class GenreMovieFragment extends Fragment {
         }
     }
 
+    //Gets the current screen orientation:
     private void getCurrentScreenOrientation() {
         int orientation = getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -173,6 +176,7 @@ public class GenreMovieFragment extends Fragment {
         }
     }
 
+    //RecyclerView animation:
     private void recyclerViewAnimation() {
         rvGenres.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
@@ -193,6 +197,7 @@ public class GenreMovieFragment extends Fragment {
         });
     }
 
+    //Shows error dialog if no internet connection was found
     private void showExceptionError(){
         clGenre.setVisibility(View.GONE);
 
@@ -209,6 +214,7 @@ public class GenreMovieFragment extends Fragment {
         dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(requireActivity().getColor(R.color.dark_purple));
     }
 
+    //Screen orientation listener
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);

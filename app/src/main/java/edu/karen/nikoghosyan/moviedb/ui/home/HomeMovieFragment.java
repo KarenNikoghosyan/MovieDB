@@ -98,12 +98,16 @@ public class HomeMovieFragment extends Fragment {
         btnGallery = view.findViewById(R.id.btnGallery);
         tvName = view.findViewById(R.id.tvName);
 
+        //Checks if the current user isn't null
         if (FirebaseAuth.getInstance().getCurrentUser() != null){
             fStore = FirebaseFirestore.getInstance();
             userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+            //Gets the userID document from FireStore:
             documentReference = fStore.collection("users").document(userID);
+            //If successful:
             documentReference.get().addOnSuccessListener(documentSnapshot -> {
+                //Sets the image profile by decoding the string from FireStore:
                 if (documentSnapshot.contains("profileImage") && !documentSnapshot.getString("profileImage").isEmpty()) {
                     String profileImage = (String) documentSnapshot.get("profileImage");
                     btnGallery.setImageBitmap(decodeBase64(profileImage));
@@ -111,6 +115,7 @@ public class HomeMovieFragment extends Fragment {
                 else {
                     btnGallery.setImageResource(R.drawable.icon_user_default);
                 }
+                //Sets the user's name:
                 if (documentSnapshot.contains("name")) {
                     tvName.setText(documentSnapshot.getString("name"));
                 }
@@ -184,6 +189,7 @@ public class HomeMovieFragment extends Fragment {
 
         getLiveDataObservers();
 
+        //Logout button with a dialog:
         btnLogout.setOnClickListener(v -> {
             if (getContext() == null) {
                 return;
@@ -214,6 +220,7 @@ public class HomeMovieFragment extends Fragment {
             dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(requireActivity().getColor(R.color.dark_purple));
         });
 
+        //Opens the gallery to choose an image profile:
         btnGallery.setOnClickListener(v -> {
             Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
             photoPickerIntent.setType("image/*");
@@ -221,6 +228,7 @@ public class HomeMovieFragment extends Fragment {
         });
     }
 
+    //Loads the genre fragment when clicking on "ViewAll" on the home screen:
     private void loadGenreFragmentByName(View v, String s) {
         isGenre = true;
         AppCompatActivity activity = (AppCompatActivity) v.getContext();
@@ -243,6 +251,7 @@ public class HomeMovieFragment extends Fragment {
         fragment.setArguments(args);
     }
 
+    //Observers:
     private void getLiveDataObservers() {
         homeMovieViewModel = new ViewModelProvider(this).get(HomeMovieViewModel.class);
         homeMovieViewModel.getException().observe(getViewLifecycleOwner(), throwable -> {
@@ -338,9 +347,11 @@ public class HomeMovieFragment extends Fragment {
                     userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     documentReference = fStore.collection("users").document(userID);
 
+                    //Encoding the image that was chose to Base64 and sending the string to FireStore database:
                     Map<String, Object> user = new HashMap<>();
                     user.put("profileImage", encodeToBase64(MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage)));
 
+                    //Updates the user document on FireStore, if successful:
                     documentReference.update(user).addOnSuccessListener(aVoid -> Log.d("TAG", "profile image was set for user: " + userID));
                 }
                 btnGallery.setImageBitmap(bitmap);
@@ -350,6 +361,7 @@ public class HomeMovieFragment extends Fragment {
         }
     }
 
+    //Encode to Base64 method:
     private String encodeToBase64(Bitmap image){
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.JPEG, 70, baos);
@@ -358,6 +370,7 @@ public class HomeMovieFragment extends Fragment {
         return Base64.encodeToString(b, Base64.DEFAULT);
     }
 
+    //Decode from Base64 method:
     private Bitmap decodeBase64(String input){
         byte[] decodeByte = Base64.decode(input, 0);
         return BitmapFactory.decodeByteArray(decodeByte, 0, decodeByte.length);

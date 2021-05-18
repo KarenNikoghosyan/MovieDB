@@ -57,6 +57,7 @@ public class LoginFragment extends Fragment {
 
         btnLogin.setOnClickListener(v -> {
 
+            //Checks if the email, password are correct:
             if (!isEmailValid() | !isPasswordValid()) {
                 return;
             }

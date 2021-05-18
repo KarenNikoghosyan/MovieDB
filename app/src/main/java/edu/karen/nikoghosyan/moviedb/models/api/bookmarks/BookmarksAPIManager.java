@@ -50,6 +50,7 @@ public class BookmarksAPIManager {
             FirebaseFirestore fStore = FirebaseFirestore.getInstance();
             String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+            //Gets the array of movie IDs, if no movies were found the getMovies method won't run
             DocumentReference documentReference = fStore.collection("users").document(userID);
             documentReference.get().addOnSuccessListener(documentSnapshot -> {
                 movieIDs = (ArrayList<Long>) documentSnapshot.get("movieIDs");
@@ -77,8 +78,10 @@ public class BookmarksAPIManager {
 
                     numberOfCalls--;
                     if (numberOfCalls > 0) {
+                        //Calls to himself as long as there still movies left:
                         getMovies(moviesLiveData, exceptionCallback);
                     } else {
+                        //Posts the value when the list is ready:
                         moviesLiveData.postValue(movieList);
                     }
                 }

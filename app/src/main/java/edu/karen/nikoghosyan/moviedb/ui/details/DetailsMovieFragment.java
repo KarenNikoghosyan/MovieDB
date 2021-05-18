@@ -165,9 +165,12 @@ public class DetailsMovieFragment extends Fragment {
 
         ibBookmark = view.findViewById(R.id.ibBookmark);
 
+        //Checks from FireStore database whether the bookmark icon is checked or not
         isBookmarked();
+        //Bookmark button toggle, adds or removes a movie from FireStore database and the RecyclerView
         bookmarksToggle();
 
+        //Back button:
         ibBack = view.findViewById(R.id.ibBack);
         ibBack.setOnClickListener(v -> {
             viewPager.setVisibility(View.VISIBLE);
@@ -215,14 +218,16 @@ public class DetailsMovieFragment extends Fragment {
                     userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     documentReference = fStore.collection("users").document(userID);
 
+                    //Adds a movie's ID and also adds the movie's ID to an array on FireStore's Database
                     Map<String, Object> user = new HashMap<>();
                     user.put("movieIDs", FieldValue.arrayUnion(Constants.MOVIE_ID));
                     user.put("" + Constants.MOVIE_ID, "Bookmarked");
 
                     documentReference.get().addOnSuccessListener(documentSnapshot -> {
                         if (documentSnapshot.exists()) {
+                            //Updates the connected user
                             documentReference.update(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was added for user: " + userID));
-
+                            //Making a single retrofit call and adding that movie to a recyclerview
                             addMovie();
                         } else {
                             Log.d("TAG", "User was not found: " + userID);
@@ -240,6 +245,7 @@ public class DetailsMovieFragment extends Fragment {
                             .show();
                 documentReference = fStore.collection("users").document(userID);
 
+                //Removes the requested movie from FireStore's Database
                 Map<String, Object> user = new HashMap<>();
                 user.put("movieIDs", FieldValue.arrayRemove(Constants.MOVIE_ID));
                 user.put("" + Constants.MOVIE_ID, FieldValue.delete());
@@ -247,6 +253,7 @@ public class DetailsMovieFragment extends Fragment {
                 documentReference.get().addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
                         documentReference.update(user).addOnSuccessListener(aVoid -> Log.d("TAG", "Bookmark was removed for user" + userID));
+                        //Removes the movie from the RecyclerView
                         removeMovie();
                     }
                 });
@@ -254,6 +261,7 @@ public class DetailsMovieFragment extends Fragment {
         });
     }
 
+    //Checks from FireStore database whether the bookmark icon is checked or not
     private void isBookmarked() {
         fStore = FirebaseFirestore.getInstance();
 
@@ -273,6 +281,7 @@ public class DetailsMovieFragment extends Fragment {
         }
     }
 
+    //DetailsMovieFragment's observers
     private void getObservers() {
         detailsMovieViewModel = new ViewModelProvider(this).get(DetailsMovieViewModel.class);
         detailsMovieViewModel.getDetailsException().observe(getViewLifecycleOwner(), throwable -> {
@@ -290,24 +299,33 @@ public class DetailsMovieFragment extends Fragment {
             dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(requireActivity().getColor(R.color.dark_purple));
         });
 
+        //Gets the genres response from the server
         detailsMovieViewModel.getGenresNames().observe(getViewLifecycleOwner(), (genres -> {
             if (getArguments() != null) {
+                //Gets the genres IDs for the current movie
                 int[] moviesIDs = getArguments().getIntArray(Constants.MOVIE_GENRE_IDS);
 
                 if (moviesIDs != null) {
                     StringBuilder genresNames = new StringBuilder();
 
+                    //Genres limit of 3
                     int limit = moviesIDs.length;
                     if (moviesIDs.length > 3) limit = 3;
 
                     for (int i = 0; i < limit; i++) {
                         for (int j = 0; j < genres.size(); j++) {
+
+                            //Checks the current movie IDs by comparing the IDs from the movie and the genres response
+                            //As the movie's IDs don't hold the genres names only the IDs
+                            //That's why we call the genres response to get the correct ID name for a particular movie
                             if (moviesIDs[i] == genres.get(j).getGenreId()) {
+                                //Appends the genres request by id to a String Builder
                                 genresNames.append(genres.get(j).getGenreName()).append(",");
                             }
                         }
                     }
 
+                    //Removes "," from the end
                     if (genresNames.length() > 0) {
                         tvGenre.setText(genresNames.substring(0, genresNames.length() - 1));
 
@@ -340,6 +358,7 @@ public class DetailsMovieFragment extends Fragment {
             clRecommendations.setVisibility(View.GONE);
         }));
 
+        //Single movie lister gets called when we adding a movie to the bookmarks
         SingleMovieViewModel singleMovieViewModel = new ViewModelProvider(this).get(SingleMovieViewModel.class);
 
         singleMovieViewModel.getSingleBookmarkedMovie().observe(getViewLifecycleOwner(), movies -> {
@@ -349,6 +368,7 @@ public class DetailsMovieFragment extends Fragment {
         });
     }
 
+    //Hides the keyboard:
     public void hideKeyboard() {
         if (getActivity() != null) {
             View view = getActivity().getCurrentFocus();
@@ -359,12 +379,14 @@ public class DetailsMovieFragment extends Fragment {
         }
     }
 
+    //Making a single retrofit call and adding that movie to a recyclerview
     public void addMovie() {
         SingleMovieViewModel singleMovieViewModel = new ViewModelProvider(this).get(SingleMovieViewModel.class);
 
         singleMovieViewModel.updateData(Constants.MOVIE_ID);
     }
 
+    //Removes the movie from the RecyclerView
     public void removeMovie() {
         if (BookmarksAdapter.movieList != null) {
             for (int i = 0; i < BookmarksAdapter.movieList.size(); i++) {

@@ -65,9 +65,11 @@ public class RegisterFragment extends Fragment {
 
         btnRegister.setOnClickListener(v -> {
 
+            //Checks if the confirm password is correct:
             if (!isConfirmPasswordValid()) {
                 return;
             }
+            //Checks if the name, email, password are correct:
             if (!isNameValid() | !isEmailValid() | !isPasswordValid()) {
                 return;
             }

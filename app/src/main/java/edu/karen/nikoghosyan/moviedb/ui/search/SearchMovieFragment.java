@@ -74,6 +74,7 @@ public class SearchMovieFragment extends Fragment {
 
         getCurrentScreenOrientation();
 
+        //Edit text listener, updates the search results with animation:
         etSearch.addTextChangedListener((TextChangedAdapter) (s, start, before, count) -> updateMovieSearchResults());
 
         searchMovieViewModel = new ViewModelProvider(this).get(SearchMovieViewModel.class);
@@ -108,6 +109,7 @@ public class SearchMovieFragment extends Fragment {
         onScrollListener();
     }
 
+    //Checks the current screen orientation
     private void getCurrentScreenOrientation() {
         int orientation = getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -119,6 +121,7 @@ public class SearchMovieFragment extends Fragment {
         }
     }
 
+    //Updates the movie search results:
     private void updateMovieSearchResults() {
         Constants.MOVIE_SEARCH = etSearch.getText().toString();
 
@@ -128,7 +131,7 @@ public class SearchMovieFragment extends Fragment {
         if (etSearch.getText().length() <= 0) {
             rvMovieSearch.setAdapter(null);
         }
-
+        //Shows no movies were found error after a short delay:
         showErrorAfterDelay();
 
     }
@@ -144,6 +147,7 @@ public class SearchMovieFragment extends Fragment {
         }, 2000);
     }
 
+    //scrolling listener, to dismiss the keyboard on scroll:
     private void onScrollListener() {
         rvMovieSearch.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -164,6 +168,7 @@ public class SearchMovieFragment extends Fragment {
         });
     }
 
+    //Screen orientation listener:
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -175,6 +180,7 @@ public class SearchMovieFragment extends Fragment {
         }
     }
 
+    //RecyclerView animation:
     private void recyclerViewAnimation() {
         rvMovieSearch.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
